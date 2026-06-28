@@ -2,98 +2,339 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { GradientCTA } from "../sections/Shared";
+import { usePathname } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
 
 export function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
+  const [scrolled, setScrolled]         = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
+  const [mobileOpen, setMobileOpen]     = useState(false);
+  const pathname = usePathname();
 
-  // Detect scroll to toggle the white background and text colors
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Shared classes for nav links
-  const linkBase = "transition-colors font-medium";
-  const linkScrolled = "text-dark/70 hover:text-orange";
-  const linkTop = "text-white/80 hover:text-white";
+  const isActive         = (p: string) => pathname === p;
+  const isServicesActive = ["/data-ai", "/real-estate", "/bpo", "/creative"].includes(pathname ?? "");
+
+  // Using Antonio Light (300) for the thin, tall, compressed aesthetic
+  const linkStyle = {
+    fontFamily: "'Antonio', sans-serif",
+    fontSize: "17px", 
+    fontWeight: 300,  
+    textTransform: "uppercase",
+    letterSpacing: "0.08em", 
+  } as const;
+
+  const allServices = [
+    { label: "Data & AI",          href: "/data-ai",      img: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=80&auto=format&q=80" },
+    { label: "Real Estate Media",  href: "/real-estate",  img: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=80&auto=format&q=80" },
+    { label: "BPO & VA",           href: "/bpo",          img: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=80&auto=format&q=80" },
+    { label: "Creative & Media",   href: "/creative",     img: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=80&auto=format&q=80" },
+  ];
 
   return (
-    <nav
-      className={`fixed top-0 inset-x-0 z-50 px-6 lg:px-[8vw] h-20 md:h-24 flex items-center justify-between transition-all duration-300 ${
-        scrolled ? "bg-white shadow-sm border-b border-border" : "bg-transparent"
-      }`}
-    >
-      {/* Logo */}
-      <Link
-        href="/"
-        className={`flex items-center gap-2 font-display font-semibold text-xl transition-colors duration-300 ${
-          scrolled ? "text-dark" : "text-white"
-        }`}
+    <>
+      {/* ── DESKTOP NAV ── */}
+      <nav
+        className="fixed inset-x-0 z-50 flex items-center justify-between pointer-events-none"
+        style={{ top: "28px", padding: "0 8vw" }}
       >
-        <span
-          className="inline-block size-6 md:size-7 rounded-full shrink-0"
-          style={{ background: "linear-gradient(135deg,#F97316,#EA580C)" }}
-        />
-        Annopett
-      </Link>
-
-      {/* Desktop Navigation */}
-      <div className="hidden lg:flex items-center gap-8 text-sm">
-        <Link href="/" className={`${linkBase} ${scrolled ? linkScrolled : linkTop}`}>
-          Home
+        {/* Logo pill */}
+        <Link
+          href="/"
+          className="pointer-events-auto flex items-center gap-2.5 transition-all duration-500"
+          style={{
+            padding: "10px 18px",
+            borderRadius: "12px",
+            background: scrolled ? "rgba(255,255,255,0.92)" : "transparent",
+            backdropFilter: scrolled ? "blur(16px)" : "none",
+            boxShadow: scrolled ? "0 2px 20px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.06)" : "none",
+          }}
+        >
+          <img src="/logo.png" alt="Annopett" style={{ height: "24px", width: "auto" }} />
+          <span
+            style={{
+              ...linkStyle,
+              fontSize: "20px",
+              fontWeight: 400,
+              color: scrolled ? "#1A1209" : "#ffffff",
+              letterSpacing: "0.1em",
+            }}
+          >
+            Annopett
+          </span>
         </Link>
 
-        {/* Services Dropdown */}
-        <div className="relative group">
-          <button className={`flex items-center gap-1.5 ${linkBase} ${scrolled ? linkScrolled : linkTop}`}>
-            Services
-            <svg 
-              className="w-3.5 h-3.5 opacity-70 transition-transform duration-300 group-hover:-rotate-180" 
-              fill="none" 
-              viewBox="0 0 24 24" 
-              stroke="currentColor" 
-              strokeWidth={2.5}
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
+        {/* Center pill */}
+        <div
+          className="pointer-events-auto hidden lg:flex items-center gap-1"
+          style={{
+            padding: "6px 6px",
+            borderRadius: "14px",
+            background: "rgba(255,255,255,0.92)",
+            backdropFilter: "blur(20px)",
+            boxShadow: "0 2px 24px rgba(0,0,0,0.1), 0 0 0 1px rgba(0,0,0,0.06)",
+          }}
+        >
+          {/* Home */}
+          <Link href="/" style={{ ...linkStyle, padding: "8px 16px", borderRadius: "10px", color: isActive("/") ? "#1A1209" : "rgba(26,18,9,0.55)", background: isActive("/") ? "rgba(26,18,9,0.06)" : "transparent", transition: "all 0.2s", display: "block" }}
+            onMouseEnter={e => { if (!isActive("/")) (e.currentTarget as HTMLElement).style.color = "#1A1209" }}
+            onMouseLeave={e => { if (!isActive("/")) (e.currentTarget as HTMLElement).style.color = "rgba(26,18,9,0.55)" }}
+          >
+            Home
+          </Link>
 
-          {/* Dropdown Menu (Hidden by default, shows on hover) */}
-          <div className="absolute top-full left-1/2 -translate-x-1/2 pt-6 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
-            <div className="w-56 bg-white rounded-2xl shadow-xl border border-border p-2 flex flex-col gap-1 relative before:absolute before:-top-2 before:inset-x-0 before:h-4">
-              <Link href="/data-ai" className="px-4 py-2.5 text-[13px] font-medium text-dark/80 hover:text-orange hover:bg-orange/5 rounded-xl transition-colors">
-                Data & AI
-              </Link>
-              <Link href="/real-estate" className="px-4 py-2.5 text-[13px] font-medium text-dark/80 hover:text-orange hover:bg-orange/5 rounded-xl transition-colors">
-                Real Estate Media
-              </Link>
-              <Link href="/bpo" className="px-4 py-2.5 text-[13px] font-medium text-dark/80 hover:text-orange hover:bg-orange/5 rounded-xl transition-colors">
-                BPO & VA
-              </Link>
-              <Link href="/creative" className="px-4 py-2.5 text-[13px] font-medium text-dark/80 hover:text-orange hover:bg-orange/5 rounded-xl transition-colors">
-                Creative & Media
-              </Link>
-            </div>
+          {/* Services dropdown trigger */}
+          <div
+            className="relative"
+            onMouseEnter={() => setServicesOpen(true)}
+            onMouseLeave={() => setServicesOpen(false)}
+          >
+            <button
+              style={{
+                ...linkStyle,
+                padding: "8px 16px",
+                borderRadius: "10px",
+                color: isServicesActive ? "#1A1209" : "rgba(26,18,9,0.55)",
+                background: isServicesActive ? "rgba(26,18,9,0.06)" : "transparent",
+                border: "none",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                gap: "5px",
+                transition: "color 0.2s",
+              }}
+              onMouseEnter={e => { if (!isServicesActive) (e.currentTarget as HTMLElement).style.color = "#1A1209" }}
+              onMouseLeave={e => { if (!isServicesActive) (e.currentTarget as HTMLElement).style.color = "rgba(26,18,9,0.55)" }}
+            >
+              Services
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none" style={{ transition: "transform 0.25s", transform: servicesOpen ? "rotate(180deg)" : "rotate(0deg)" }}>
+                <path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
+
+            {/* Single dropdown panel */}
+            <AnimatePresence>
+              {servicesOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -8, scale: 0.97 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -6, scale: 0.97 }}
+                  transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                  style={{
+                    position: "absolute",
+                    top: "calc(100% + 10px)",
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    width: "260px",
+                    background: "rgba(255,255,255,0.96)",
+                    backdropFilter: "blur(20px)",
+                    borderRadius: "16px",
+                    boxShadow: "0 20px 60px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.06)",
+                    padding: "8px",
+                  }}
+                >
+                  {allServices.map((s) => (
+                    <Link
+                      key={s.href}
+                      href={s.href}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "12px",
+                        padding: "10px 12px",
+                        borderRadius: "10px",
+                        transition: "background 0.15s",
+                        textDecoration: "none",
+                      }}
+                      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "rgba(26,18,9,0.05)" }}
+                      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "transparent" }}
+                    >
+                      <img src={s.img} alt="" style={{ width: "32px", height: "32px", borderRadius: "8px", objectFit: "cover" }} />
+                      <span style={{ ...linkStyle, color: isActive(s.href) ? "#F97316" : "#1A1209", fontSize: "16px", fontWeight: 400 }}>
+                        {s.label}
+                      </span>
+                    </Link>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
+
+          {/* About */}
+          <Link href="/about" style={{ ...linkStyle, padding: "8px 16px", borderRadius: "10px", color: isActive("/about") ? "#1A1209" : "rgba(26,18,9,0.55)", background: isActive("/about") ? "rgba(26,18,9,0.06)" : "transparent", transition: "all 0.2s", display: "block" }}
+            onMouseEnter={e => { if (!isActive("/about")) (e.currentTarget as HTMLElement).style.color = "#1A1209" }}
+            onMouseLeave={e => { if (!isActive("/about")) (e.currentTarget as HTMLElement).style.color = "rgba(26,18,9,0.55)" }}
+          >
+            About
+          </Link>
+
+          {/* Work With Us CTA */}
+          <Link
+            href="/contact"
+            className="transition-all duration-250 group"
+            style={{
+              ...linkStyle,
+              padding: "9px 20px",
+              borderRadius: "10px",
+              background: "#1A1209",
+              color: "#ffffff",
+              marginLeft: "2px",
+              display: "block",
+            }}
+            onMouseEnter={e => {
+              const el = e.currentTarget as HTMLElement;
+              el.style.background = "#ffffff";
+              el.style.color = "#1A1209";
+              el.style.boxShadow = "0 0 0 1px rgba(26,18,9,0.15)";
+            }}
+            onMouseLeave={e => {
+              const el = e.currentTarget as HTMLElement;
+              el.style.background = "#1A1209";
+              el.style.color = "#ffffff";
+              el.style.boxShadow = "none";
+            }}
+          >
+            Work With Us
+          </Link>
         </div>
 
-        <Link href="/about" className={`${linkBase} ${scrolled ? linkScrolled : linkTop}`}>
-          About
-        </Link>
-        <Link href="/contact" className={`${linkBase} ${scrolled ? linkScrolled : linkTop}`}>
-          Contact
-        </Link>
-      </div>
+        {/* Mobile hamburger */}
+        <button
+          onClick={() => setMobileOpen(!mobileOpen)}
+          className="pointer-events-auto flex lg:hidden items-center justify-center"
+          style={{
+            width: "44px", height: "44px",
+            borderRadius: "10px",
+            background: scrolled ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.15)",
+            backdropFilter: "blur(12px)",
+            border: "none", cursor: "pointer",
+          }}
+        >
+          <span style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
+            <motion.span animate={{ rotate: mobileOpen ? 45 : 0, y: mobileOpen ? 7 : 0 }} style={{ display: "block", width: "18px", height: "1.5px", background: scrolled ? "#1A1209" : "#fff", borderRadius: "2px" }} />
+            <motion.span animate={{ opacity: mobileOpen ? 0 : 1 }} style={{ display: "block", width: "18px", height: "1.5px", background: scrolled ? "#1A1209" : "#fff", borderRadius: "2px" }} />
+            <motion.span animate={{ rotate: mobileOpen ? -45 : 0, y: mobileOpen ? -7 : 0 }} style={{ display: "block", width: "18px", height: "1.5px", background: scrolled ? "#1A1209" : "#fff", borderRadius: "2px" }} />
+          </span>
+        </button>
+      </nav>
 
-      {/* CTA Button */}
-      <div className="hidden md:flex items-center gap-4">
-        <GradientCTA to="/contact">Get Started</GradientCTA>
-      </div>
-    </nav>
+      {/* ── MOBILE MENU OVERLAY (Redesigned as a floating card) ── */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -16, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -12, scale: 0.96 }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            style={{
+              position: "fixed", 
+              top: "84px", // Positioned just underneath the fixed nav
+              right: "8vw",
+              left: "8vw",
+              zIndex: 40,
+              background: "rgba(26, 18, 9, 0.98)", // Deep dark background
+              backdropFilter: "blur(20px)",
+              borderRadius: "24px",
+              display: "flex", 
+              flexDirection: "column",
+              padding: "24px 28px 32px",
+              boxShadow: "0 24px 64px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.06)",
+            }}
+          >
+            {/* Main Links */}
+            <div className="flex flex-col gap-1 mb-6">
+              {["Home", "About"].map((label, i) => (
+                <motion.div
+                  key={label}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.05 + 0.1, duration: 0.3 }}
+                >
+                  <Link
+                    href={label === "Home" ? "/" : `/${label.toLowerCase()}`}
+                    onClick={() => setMobileOpen(false)}
+                    style={{
+                      fontFamily: "'Antonio', sans-serif",
+                      textTransform: "uppercase",
+                      fontSize: "36px", // Adjusted for the smaller card
+                      fontWeight: 300,
+                      color: "#FAFAF8",
+                      display: "block",
+                      padding: "8px 0",
+                      borderBottom: "1px solid rgba(255,255,255,0.06)",
+                      textDecoration: "none",
+                    }}
+                  >
+                    {label}
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Services List */}
+            <div className="flex flex-col gap-1 mb-8">
+              {allServices.map((s, i) => (
+                <motion.div
+                  key={s.href}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: (i + 2) * 0.05 + 0.1, duration: 0.3 }}
+                >
+                  <Link
+                    href={s.href}
+                    onClick={() => setMobileOpen(false)}
+                    style={{
+                      fontFamily: "'Antonio', sans-serif",
+                      textTransform: "uppercase",
+                      fontSize: "18px", // Adjusted for the smaller card
+                      fontWeight: 300,
+                      color: "rgba(250,250,248,0.55)",
+                      display: "block",
+                      padding: "8px 0",
+                      borderBottom: "1px solid rgba(255,255,255,0.04)",
+                      textDecoration: "none",
+                    }}
+                  >
+                    {s.label}
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* CTA Button */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.3 }}
+            >
+              <Link
+                href="/contact"
+                onClick={() => setMobileOpen(false)}
+                style={{
+                  display: "block", textAlign: "center",
+                  padding: "16px",
+                  borderRadius: "14px",
+                  background: "linear-gradient(135deg, #F97316, #EA580C)",
+                  fontFamily: "'Antonio', sans-serif",
+                  textTransform: "uppercase",
+                  fontSize: "18px",
+                  fontWeight: 400,
+                  color: "#ffffff",
+                  textDecoration: "none",
+                  letterSpacing: "0.05em",
+                }}
+              >
+                Work With Us
+              </Link>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }

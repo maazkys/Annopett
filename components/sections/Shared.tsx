@@ -210,6 +210,7 @@ export function ImageHero({
   secondary,
   secondaryTo,
   overlay = "linear-gradient(to bottom right, rgba(26,18,9,0.85) 40%, rgba(249,115,22,0.3) 100%)",
+  transitionName,
 }: {
   image: string;
   title: ReactNode;
@@ -219,10 +220,16 @@ export function ImageHero({
   secondary?: string;
   secondaryTo?: string;
   overlay?: string;
+  transitionName?: string;
 }) {
   return (
     <section className="relative h-screen min-h-[640px] w-full overflow-hidden">
-      <img src={img(image)} alt="" className="absolute inset-0 size-full object-cover" />
+      <img
+        src={img(image)}
+        alt=""
+        className="absolute inset-0 size-full object-cover"
+        style={transitionName ? { viewTransitionName: transitionName } : undefined}
+      />
       <div className="absolute inset-0" style={{ background: overlay }} />
       <div className="relative h-full flex flex-col justify-center px-6 lg:px-[8vw] max-w-5xl">
         <FadeIn>

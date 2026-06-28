@@ -13,9 +13,8 @@
   --color-orange-deep: #EA580C;
   --color-orange-light: #FFF7ED;
 
-  --font-display: "Clash Display", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "Satoshi", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "DM Mono", ui-monospace, monospace;
+  --font-sans: var(--font-sans);
+  --font-antonio: var(--font-antonio);
 }
 
 @layer base {
@@ -48,4 +47,38 @@
 
 @utility snap-start-item {
   scroll-snap-align: start;
+}
+
+html, body {
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+ ::view-transition-old(service-image-real-estate),
+::view-transition-new(service-image-real-estate) {
+  animation-duration: 700ms;
+  animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+}
+ 
+::view-transition-old(root) {
+  animation-name: vt-fade-out;
+  animation-duration: 350ms;
+  animation-timing-function: ease-out;
+  animation-fill-mode: both;
+}
+ 
+::view-transition-new(root) {
+  animation-name: vt-fade-in;
+  animation-duration: 500ms;
+  animation-delay: 100ms;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  animation-fill-mode: both;
+}
+ 
+@keyframes vt-fade-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+ 
+@keyframes vt-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }

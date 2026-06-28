@@ -1,53 +1,179 @@
-import Link from "next/link";
+"use client";
 
-const cream = "text-[rgba(250,250,248,0.5)] hover:text-orange transition";
+import Link from "next/link";
+import { motion } from "framer-motion";
+
+const linkStyle = {
+  fontFamily: "'Antonio', sans-serif",
+  textTransform: "uppercase",
+  letterSpacing: "0.06em",
+} as const;
+
+const fadeUp = {
+  initial: { opacity: 0, y: 16 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-80px" },
+  transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const },
+};
+
+const services = [
+  { label: "Data & AI", href: "/data-ai" },
+  { label: "Real Estate Media", href: "/real-estate" },
+  { label: "BPO & VA", href: "/bpo" },
+  { label: "Creative & Media", href: "/creative" },
+];
+
+const company = [
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
+  { label: "Home", href: "/" },
+];
+
+const socials = [
+  { label: "LinkedIn", href: "https://linkedin.com" },
+  { label: "Instagram", href: "https://instagram.com" },
+  { label: "X", href: "https://x.com" },
+];
+
+function FooterLink({ href, children }: { href: string; children: React.ReactNode }) {
+  return (
+    <Link
+      href={href}
+      className="group relative inline-flex items-center font-sans text-[14px] font-light text-[rgba(250,250,248,0.5)] transition-colors duration-300 hover:text-white"
+    >
+      <span className="relative">
+        {children}
+        <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-orange transition-all duration-300 group-hover:w-full" />
+      </span>
+    </Link>
+  );
+}
 
 export function Footer() {
   return (
-    <footer className="bg-dark text-[#FAFAF8] relative">
+    <footer className="relative overflow-hidden bg-[#120d07] text-[#FAFAF8]">
+      {/* top gradient hairline, matches navbar/CTA accent */}
       <div className="h-[3px] w-full" style={{ background: "linear-gradient(90deg,#F97316,#EA580C)" }} />
-      <div className="px-6 lg:px-[8vw] py-16 grid gap-10 md:grid-cols-2 lg:grid-cols-4">
-        <div>
-          <div className="flex items-center gap-2 font-display font-semibold text-lg">
-            <span
-              className="inline-block size-7 rounded-full"
-              style={{ background: "linear-gradient(135deg,#F97316,#EA580C)" }}
-            />
-            Annopett
-          </div>
-          <p className="mt-4 text-[13px] font-light text-[rgba(250,250,248,0.45)] max-w-xs">
-            Precision Work. Remote Power. Real Results.
-          </p>
+
+      {/* ambient glow, consistent with hero/CTA sections */}
+      <div
+        className="pointer-events-none absolute -top-40 left-1/2 h-[480px] w-[80%] -translate-x-1/2 rounded-full blur-[120px]"
+        style={{ background: "radial-gradient(ellipse at center, rgba(249,115,22,0.16) 0%, transparent 70%)" }}
+      />
+
+      <div className="relative z-10 px-6 lg:px-[8vw] pt-24 pb-10">
+        {/* ── Top: big CTA line ── */}
+        <motion.div {...fadeUp} className="flex flex-col gap-10 border-b border-white/10 pb-16 lg:flex-row lg:items-end lg:justify-between">
+          <h2
+            className="leading-[0.95] text-white"
+            style={{ ...linkStyle, fontSize: "clamp(40px,6vw,84px)", fontWeight: 300 }}
+          >
+            Let&apos;s build<br />something great.
+          </h2>
+
+          <Link href="/contact" className="group flex w-fit items-center gap-2 cursor-pointer">
+            <div
+              className="flex items-center h-[56px] px-7 text-white transition-all duration-500 ease-in-out bg-[#F97316] group-hover:bg-[#1a1209]"
+              style={{ ...linkStyle, borderRadius: "12px", fontSize: "16px", fontWeight: 400 }}
+            >
+              Work With Us
+            </div>
+            <div
+              className="flex items-center justify-center w-[56px] h-[56px] transition-all duration-500 ease-in-out bg-[#1a1209] text-white group-hover:bg-[#F97316]"
+              style={{ borderRadius: "12px" }}
+            >
+              <svg width="16" height="16" viewBox="0 0 14 14" fill="none">
+                <path d="M5 2.5L9.5 7L5 11.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
+          </Link>
+        </motion.div>
+
+        {/* ── Middle: brand + link columns ── */}
+        <div className="grid gap-14 py-16 md:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1fr]">
+          <motion.div {...fadeUp}>
+            <Link href="/" className="flex items-center gap-2.5">
+              <img src="/logo.png" alt="Annopett" style={{ height: "28px", width: "auto" }} />
+              <span style={{ ...linkStyle, fontSize: "22px", fontWeight: 400, color: "#fff" }}>
+                Annopett
+              </span>
+            </Link>
+            <p className="mt-5 max-w-xs font-sans text-[14px] font-light leading-relaxed text-[rgba(250,250,248,0.45)]">
+              Precision work, remote power. Data &amp; AI, Real Estate Media, BPO, and Creative services — delivered at scale.
+            </p>
+            <div className="mt-7 flex gap-5">
+              {socials.map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-sans text-[12px] font-medium uppercase tracking-[0.12em] text-[rgba(250,250,248,0.4)] transition-colors duration-300 hover:text-orange"
+                >
+                  {s.label}
+                </a>
+              ))}
+            </div>
+          </motion.div>
+
+          <motion.div {...fadeUp}>
+            <div className="mb-5 font-sans text-[12px] font-medium uppercase tracking-[0.18em] text-[rgba(250,250,248,0.3)]">
+              Services
+            </div>
+            <ul className="flex flex-col gap-3.5">
+              {services.map((s) => (
+                <li key={s.href}><FooterLink href={s.href}>{s.label}</FooterLink></li>
+              ))}
+            </ul>
+          </motion.div>
+
+          <motion.div {...fadeUp}>
+            <div className="mb-5 font-sans text-[12px] font-medium uppercase tracking-[0.18em] text-[rgba(250,250,248,0.3)]">
+              Company
+            </div>
+            <ul className="flex flex-col gap-3.5">
+              {company.map((c) => (
+                <li key={c.href}><FooterLink href={c.href}>{c.label}</FooterLink></li>
+              ))}
+            </ul>
+          </motion.div>
+
+          <motion.div {...fadeUp}>
+            <div className="mb-5 font-sans text-[12px] font-medium uppercase tracking-[0.18em] text-[rgba(250,250,248,0.3)]">
+              Contact
+            </div>
+            <ul className="flex flex-col gap-3.5 font-sans text-[14px] font-light text-[rgba(250,250,248,0.5)]">
+              <li>hello@annopett.com</li>
+              <li>Remote-first, globally</li>
+              <li>24hr response</li>
+            </ul>
+          </motion.div>
         </div>
-        <div>
-          <div className="text-xs uppercase tracking-wider text-[rgba(250,250,248,0.3)] mb-4">Services</div>
-          <ul className="space-y-2.5 text-[13px]">
-            <li><Link href="/data-ai" className={cream}>Data & AI</Link></li>
-            <li><Link href="/real-estate" className={cream}>Real Estate Media</Link></li>
-            <li><Link href="/bpo" className={cream}>BPO & VA</Link></li>
-            <li><Link href="/creative" className={cream}>Creative & Media</Link></li>
-          </ul>
+
+        {/* ── Giant wordmark, awwwards-style signature ── */}
+        <div className="relative -mx-6 lg:-mx-[8vw] select-none overflow-hidden border-t border-white/10 pt-2">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="text-center leading-none text-white/[0.06]"
+            style={{
+              ...linkStyle,
+              fontSize: "clamp(72px,16vw,260px)",
+              fontWeight: 300,
+              whiteSpace: "nowrap",
+            }}
+          >
+            ANNOPETT
+          </motion.div>
         </div>
-        <div>
-          <div className="text-xs uppercase tracking-wider text-[rgba(250,250,248,0.3)] mb-4">Company</div>
-          <ul className="space-y-2.5 text-[13px]">
-            <li><Link href="/about" className={cream}>About</Link></li>
-            <li><Link href="/contact" className={cream}>Contact</Link></li>
-            <li><Link href="/" className={cream}>Home</Link></li>
-          </ul>
+
+        {/* ── Bottom bar ── */}
+        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-white/5 pt-6 font-sans text-[11px] text-[rgba(250,250,248,0.3)]">
+          <span>© {new Date().getFullYear()} Annopett. All rights reserved.</span>
+          <span>Remote-first. Quality-obsessed.</span>
         </div>
-        <div>
-          <div className="text-xs uppercase tracking-wider text-[rgba(250,250,248,0.3)] mb-4">Contact</div>
-          <ul className="space-y-2.5 text-[13px] text-[rgba(250,250,248,0.5)]">
-            <li>hello@annopett.com</li>
-            <li>Remote-first, globally</li>
-            <li>24hr response</li>
-          </ul>
-        </div>
-      </div>
-      <div className="border-t border-white/5 px-6 lg:px-[8vw] py-6 flex flex-wrap items-center justify-between gap-3 text-[11px] text-[rgba(250,250,248,0.25)]">
-        <span>© 2025 Annopett</span>
-        <span>Remote-first. Quality-obsessed.</span>
       </div>
     </footer>
   );
