@@ -2,7 +2,7 @@
 
 @custom-variant dark (&:is(.dark *));
 
-@theme inline {
+@theme {
   --color-background: #FAFAF8;
   --color-white: #FFFFFF;
   --color-surface: #F5F3EF;
@@ -13,8 +13,8 @@
   --color-orange-deep: #EA580C;
   --color-orange-light: #FFF7ED;
 
-  --font-sans: var(--font-sans);
-  --font-antonio: var(--font-antonio);
+  --font-sans: var(--font-lato);
+  --font-display: var(--font-poppins);
 }
 
 @layer base {
@@ -22,10 +22,13 @@
   html, body {
     background-color: var(--color-background);
     color: var(--color-dark);
-    font-family: var(--font-sans);
+    font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
-  h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.01em; }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display), system-ui, -apple-system, sans-serif;
+    letter-spacing: -0.01em;
+  }
 }
 
 @utility text-gradient-orange {
@@ -50,7 +53,7 @@
 }
 
 html, body {
-  font-family: var(--font-sans), system-ui, sans-serif;
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
 }
  ::view-transition-old(service-image-real-estate),
 ::view-transition-new(service-image-real-estate) {

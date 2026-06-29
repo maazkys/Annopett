@@ -1,19 +1,18 @@
 "use client";
 
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import { Link } from "next-view-transitions";
 import { FadeIn, Testimonials, ClientLogos } from "../../components/sections/Shared";
 import { img } from "../../lib/utils";
 
 const capabilities = [
   { name: "Image Annotation", desc: "Bounding boxes, polygons, and high-precision segmentation masks.", image: "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=800" },
   { name: "Text Labelling", desc: "NER, intent classification, sentiment analysis, and context tagging.", image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800" },
-  { name: "LLM Evaluation", desc: "Human-in-the-loop ranking, red-teaming, and rubric scoring.", image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800" },
-  { name: "Dataset Curation", desc: "Sourcing, cleaning, deduplication, and balancing at scale.", image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800" },
-  { name: "Model QA", desc: "Regression test suites, edge case probing, and hallucination checks.", image: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800" },
-  { name: "Research Support", desc: "Literature reviews, structured summarisation, and data prep.", image: "https://images.unsplash.com/photo-1507146426996-ef05306b995a?w=800" },
-  { name: "Audio Transcription", desc: "Timestamped multi-speaker transcripts and linguistic tagging.", image: "https://images.unsplash.com/photo-1589903308904-1010c2294adc?w=800" },
   { name: "Video Annotation", desc: "Frame-level tracking, action recognition, and temporal tagging.", image: "https://images.unsplash.com/photo-1574359411659-15573a27fd0c?w=800" },
+  { name: "Audio Transcription", desc: "Timestamped multi-speaker transcripts and linguistic tagging.", image: "https://images.unsplash.com/photo-1589903308904-1010c2294adc?w=800" },
+  { name: "Dataset Creation", desc: "Sourcing, cleaning, deduplication, and balancing at scale.", image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800" },
+  { name: "AI Research Support", desc: "Literature reviews, structured summarisation, and data prep.", image: "https://images.unsplash.com/photo-1507146426996-ef05306b995a?w=800" },
+  { name: "AI Model Testing", desc: "Regression test suites, edge case probing, and hallucination checks.", image: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800" },
+  { name: "Website Testing", desc: "End-to-end QA, functional validation, and cross-browser performance testing.", image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800" },
 ];
 
 const steps = [
@@ -22,6 +21,8 @@ const steps = [
   { num: "03", t: "Work Delivered",    d: "Batches are annotated, reviewed, and exported to your format." },
   { num: "04", t: "You Approve",       d: "Feedback loops are integrated directly into our QA process." }
 ];
+
+const clients = ["Neural Systems", "CloudScale", "DataWorks", "AI Dynamics", "Tech Innovators", "Nexus AI"];
 
 export function DataAIClient() {
   const reduce = useReducedMotion();
@@ -120,8 +121,8 @@ export function DataAIClient() {
                 style={{ fontSize: "clamp(52px, 8.5vw, 118px)", fontWeight: 300 }}
               >
                 Powering AI<br />
-                With Precision<br />
-                Data.
+                And The Web<br />
+                With Precision.
               </motion.h1>
             </div>
 
@@ -259,8 +260,8 @@ export function DataAIClient() {
         />
       </div>
 
+      {/* ── TESTIMONIALS ── */}
       <Testimonials />
-
     </>
   );
 }

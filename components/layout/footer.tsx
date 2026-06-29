@@ -19,8 +19,7 @@ const fadeUp = {
 const services = [
   { label: "Data & AI", href: "/data-ai" },
   { label: "Real Estate Media", href: "/real-estate" },
-  { label: "BPO & VA", href: "/bpo" },
-  { label: "Creative & Media", href: "/creative" },
+  { label: "BPO & Creative", href: "/bpo-creative" }, // Unified service link
 ];
 
 const company = [
@@ -150,27 +149,8 @@ export function Footer() {
           </motion.div>
         </div>
 
-        {/* ── Giant wordmark, awwwards-style signature ── */}
-        <div className="relative -mx-6 lg:-mx-[8vw] select-none overflow-hidden border-t border-white/10 pt-2">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="text-center leading-none text-white/[0.06]"
-            style={{
-              ...linkStyle,
-              fontSize: "clamp(72px,16vw,260px)",
-              fontWeight: 300,
-              whiteSpace: "nowrap",
-            }}
-          >
-            ANNOPETT
-          </motion.div>
-        </div>
-
         {/* ── Bottom bar ── */}
-        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-white/5 pt-6 font-sans text-[11px] text-[rgba(250,250,248,0.3)]">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-white/5 pt-6 font-sans text-[11px] text-[rgba(250,250,248,0.3)] mt-8">
           <span>© {new Date().getFullYear()} Annopett. All rights reserved.</span>
           <span>Remote-first. Quality-obsessed.</span>
         </div>

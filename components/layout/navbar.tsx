@@ -18,7 +18,7 @@ export function Navbar() {
   }, []);
 
   const isActive         = (p: string) => pathname === p;
-  const isServicesActive = ["/data-ai", "/real-estate", "/bpo", "/creative"].includes(pathname ?? "");
+  const isServicesActive = ["/data-ai", "/real-estate", "/bpo"].includes(pathname ?? "");
 
   // Using Antonio Light (300) for the thin, tall, compressed aesthetic
   const linkStyle = {
@@ -32,8 +32,7 @@ export function Navbar() {
   const allServices = [
     { label: "Data & AI",          href: "/data-ai",      img: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=80&auto=format&q=80" },
     { label: "Real Estate Media",  href: "/real-estate",  img: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=80&auto=format&q=80" },
-    { label: "BPO & VA",           href: "/bpo",          img: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=80&auto=format&q=80" },
-    { label: "Creative & Media",   href: "/creative",     img: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=80&auto=format&q=80" },
+    { label: "BPO & Creative",     href: "/bpo", img: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=80&auto=format&q=80" },
   ];
 
   return (
@@ -233,11 +232,11 @@ export function Navbar() {
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
             style={{
               position: "fixed", 
-              top: "84px", // Positioned just underneath the fixed nav
+              top: "84px", 
               right: "8vw",
               left: "8vw",
               zIndex: 40,
-              background: "rgba(26, 18, 9, 0.98)", // Deep dark background
+              background: "rgba(26, 18, 9, 0.98)", 
               backdropFilter: "blur(20px)",
               borderRadius: "24px",
               display: "flex", 
@@ -261,7 +260,7 @@ export function Navbar() {
                     style={{
                       fontFamily: "'Antonio', sans-serif",
                       textTransform: "uppercase",
-                      fontSize: "36px", // Adjusted for the smaller card
+                      fontSize: "36px",
                       fontWeight: 300,
                       color: "#FAFAF8",
                       display: "block",
@@ -291,7 +290,7 @@ export function Navbar() {
                     style={{
                       fontFamily: "'Antonio', sans-serif",
                       textTransform: "uppercase",
-                      fontSize: "18px", // Adjusted for the smaller card
+                      fontSize: "18px", 
                       fontWeight: 300,
                       color: "rgba(250,250,248,0.55)",
                       display: "block",

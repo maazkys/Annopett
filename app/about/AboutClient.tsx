@@ -124,7 +124,7 @@ export function AboutClient() {
       </section>
 
       {/* ── BIG STAT SECTION ── */}
-      <section className="relative h-[600px] overflow-hidden flex items-center justify-center text-center px-6 border-t border-black/5">
+      {/* <section className="relative h-[600px] overflow-hidden flex items-center justify-center text-center px-6 border-t border-black/5">
         <img
           src={img("https://images.unsplash.com/photo-1531482615713-2afd69097998?w=2000")}
           alt="Collaborative workspace"
@@ -142,7 +142,7 @@ export function AboutClient() {
             </div>
           </FadeIn>
         </div>
-      </section>
+      </section> */}
 
       {/* ── VALUES (2x2 Grid) ── */}
       <section className="bg-[#fafaf8] px-6 lg:px-[8vw] py-28 relative">

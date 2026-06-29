@@ -3,7 +3,6 @@
 // app/bpo/BPOClient.tsx
 
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import { Link } from "next-view-transitions";
 import { FadeIn, Testimonials } from "../../components/sections/Shared";
 import { img } from "../../lib/utils";
 
@@ -12,6 +11,8 @@ const capabilities = [
   { name: "Customer Support", desc: "Live chat, email responses, and complex ticket triage with strict SLAs.", image: "https://images.unsplash.com/photo-1556761175-b413da4baf72?w=800" },
   { name: "Lead Generation", desc: "Prospect sourcing, data enrichment, and outbound sequencing execution.", image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800" },
   { name: "Bookkeeping", desc: "Account reconciliations, AR/AP management, and monthly close preparation.", image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800" },
+  { name: "Graphic Design", desc: "Comprehensive brand systems, compelling pitch decks, performance ads, and premium packaging.", image: "https://images.unsplash.com/photo-1626785774625-ddcddc3445e9?w=800" },
+  { name: "Social Media", desc: "High-retention reels, carousel designs, and full-scale content calendars delivered at pace.", image: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=800" },
 ];
 
 const stats = [
@@ -71,7 +72,7 @@ export function BPOClient() {
               src={img("https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=2000")}
               alt="Remote operations team"
               className="absolute inset-0 w-full h-full object-cover"
-              style={{ viewTransitionName: "service-image-bpo" }}
+              style={{ viewTransitionName: "service-image-bpo-creative" }}
             />
             {/* Dark overlay fading in smoothly */}
             <motion.div
@@ -105,7 +106,7 @@ export function BPOClient() {
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
               className="font-antonio uppercase text-orange tracking-[0.2em] text-sm mb-6"
             >
-              BPO & Virtual Assistants
+              BPO & Creative
             </motion.p>
 
             <div className="max-w-4xl">
@@ -116,8 +117,8 @@ export function BPOClient() {
                 className="font-antonio uppercase text-white leading-[0.95] tracking-tight"
                 style={{ fontSize: "clamp(52px, 8.5vw, 118px)", fontWeight: 300 }}
               >
-                Your Operations.<br />
-                Our Team.
+                Scale Your Ops.<br />
+                Elevate Your Brand.
               </motion.h1>
             </div>
 
@@ -129,7 +130,7 @@ export function BPOClient() {
                 className="font-sans text-white/70 max-w-md leading-relaxed"
                 style={{ fontSize: "clamp(16px, 1.8vw, 20px)", fontWeight: 300 }}
               >
-                Skilled VAs, support, and ops talent. Async-ready from day one.
+                Skilled virtual assistants, support teams, and high-volume creative production. Async-ready from day one.
               </motion.p>
 
               <motion.div
@@ -162,7 +163,7 @@ export function BPOClient() {
         </motion.div>
       </motion.section>
 
-      {/* ── CAPABILITIES — 2x2 Grid Layout ── */}
+      {/* ── CAPABILITIES — Merged 3-Column Grid ── */}
       <section id="capabilities" className="bg-[#fafaf8] px-6 lg:px-[8vw] py-28 relative">
         <FadeIn>
           <div className="mb-16">
@@ -173,14 +174,14 @@ export function BPOClient() {
               What we cover.
             </h2>
             <p className="mt-6 text-[17px] font-light text-dark/70 max-w-lg font-sans leading-relaxed">
-              We provide dedicated professionals who integrate seamlessly into your existing workflows.
+              We provide dedicated professionals who integrate seamlessly into your existing operational and creative workflows.
             </p>
           </div>
         </FadeIn>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {capabilities.map((c, i) => (
-            <FadeIn key={c.name} delay={(i % 4) * 0.08}>
+            <FadeIn key={c.name} delay={(i % 3) * 0.08}>
               <div className="group flex flex-col h-full p-4 rounded-[28px] bg-white border border-black/5 hover:border-orange/30 hover:shadow-2xl hover:shadow-orange/10 transition-all duration-300">
                 <div className="w-full h-48 rounded-[20px] overflow-hidden bg-black/5 mb-5 relative">
                   <img src={img(c.image)} alt={c.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
@@ -201,7 +202,7 @@ export function BPOClient() {
       </section>
 
       {/* ── WHY OUTSOURCE — Sleek Dark Stats Layout ── */}
-      <section className="px-6 lg:px-[8vw] py-28 bg-[#120d07] text-white">
+      {/* <section className="px-6 lg:px-[8vw] py-28 bg-[#120d07] text-white">
         <div className="grid lg:grid-cols-[36%_1fr] gap-12 lg:gap-16 items-center">
           <div>
             <FadeIn>
@@ -236,7 +237,38 @@ export function BPOClient() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
+
+      {/* ── OUR WORK / PORTFOLIO GRID (From Creative) ── */}
+      {/* <section className="bg-[#120d07] px-6 lg:px-[8vw] py-28 text-white border-t border-white/5">
+        <FadeIn>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+            <div>
+              <h2
+                className="font-antonio uppercase text-white leading-[0.95] tracking-tight"
+                style={{ fontSize: "clamp(40px, 5vw, 64px)", fontWeight: 300 }}
+              >
+                Our Work.
+              </h2>
+              <p className="mt-6 text-[16px] font-light text-white/50 max-w-xs font-sans leading-relaxed">
+                A selection of our recent creative projects.
+              </p>
+            </div>
+          </div>
+        </FadeIn>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <FadeIn key={i} delay={0.06 * i}>
+              <div className="rounded-[24px] bg-white/5 border border-white/10 h-64 flex items-center justify-center group hover:bg-white/10 hover:border-white/20 transition-all duration-300">
+                <span className="font-antonio uppercase text-[15px] tracking-widest text-white/30 group-hover:text-white/60 transition-colors">
+                  Portfolio coming soon
+                </span>
+              </div>
+            </FadeIn>
+          ))}
+        </div>
+      </section> */}
 
       {/* ── FULL-WIDTH IMAGE BREAK ── */}
       <div className="h-[480px] overflow-hidden">

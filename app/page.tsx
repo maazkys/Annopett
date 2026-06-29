@@ -9,9 +9,8 @@ import { img } from "../lib/utils";
 
 const services = [
   { name: "Data & AI", href: "/data-ai", desc: "Annotation, datasets, model QA, and research support.", image: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800" },
-  { name: "Real Estate Media", href: "/real-estate", desc: "AutoHDR cleanup, photo and video editing, virtual staging.", image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800" },
-  { name: "BPO & VA", href: "/bpo", desc: "Virtual assistants, support, bookkeeping, lead generation.", image: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=800" },
-  { name: "Creative & Media", href: "/creative", desc: "Graphic design, social content, brand systems.", image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800" },
+  { name: "Real Estate Media", href: "/real-estate", desc: "Photo and video editing, virtual staging.", image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800" },
+  { name: "BPO & Creative", href: "/bpo", desc: "Virtual assistants, support teams, and high-volume creative production.", image: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=800" },
 ];
 
 export default function Home() {
@@ -83,7 +82,7 @@ export default function Home() {
                 initial={reduce ? {} : { opacity: 0, y: 32 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="font-antonio uppercase text-white leading-[0.95] tracking-tight"
+                className="font-display uppercase text-white leading-[0.95] tracking-tight"
                 style={{ fontSize: "clamp(52px, 8.5vw, 118px)", fontWeight: 300 }}
               >
                 Precision Work.<br />
@@ -114,7 +113,7 @@ export default function Home() {
                   <div
                     className="flex items-center h-[56px] px-7 text-white transition-all duration-500 ease-in-out bg-[#1a1209] group-hover:bg-[#F97316]"
                     style={{
-                      fontFamily: "var(--font-antonio), sans-serif", textTransform: "uppercase",
+                      fontFamily: "var(--font-display), sans-serif", textTransform: "uppercase",
                       borderRadius: "12px", fontSize: "16px", fontWeight: 400, letterSpacing: "0.08em",
                     }}
                   >
@@ -142,7 +141,7 @@ export default function Home() {
 
           <div className="lg:sticky lg:top-40 self-start pb-12">
             <FadeIn>
-              <h2 className="font-antonio uppercase font-light tracking-tight text-[clamp(40px,5vw,64px)] text-dark leading-[0.95]">
+              <h2 className="font-display uppercase font-light tracking-tight text-[clamp(40px,5vw,64px)] text-dark leading-[0.95]">
                 One team.<br />Every capability.
               </h2>
               <p className="mt-6 text-[17px] font-light text-dark/70 max-w-sm font-sans leading-relaxed">
@@ -174,7 +173,7 @@ export default function Home() {
                     </div>
                   </div>
 
-                  <h3 className="font-antonio uppercase font-normal tracking-tight text-2xl sm:text-3xl text-dark group-hover:text-orange transition-colors duration-500 ease-in-out">
+                  <h3 className="font-display uppercase font-normal tracking-tight text-2xl sm:text-3xl text-dark group-hover:text-orange transition-colors duration-500 ease-in-out">
                     {s.name}
                   </h3>
                   <p className="font-sans font-light text-dark/60 mt-4 text-base sm:text-lg leading-relaxed max-w-lg">
@@ -193,7 +192,7 @@ export default function Home() {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div>
             <FadeIn>
-              <h2 className="font-antonio uppercase font-light tracking-tight text-[clamp(40px,4.5vw,60px)] leading-[0.95]">
+              <h2 className="font-display uppercase font-light tracking-tight text-[clamp(40px,4.5vw,60px)] leading-[0.95]">
                 Built for scale.
               </h2>
             </FadeIn>
@@ -244,7 +243,7 @@ export default function Home() {
           </p>
           <div className="flex flex-wrap justify-center items-center gap-x-14 gap-y-8">
             {["AutoHDR","Sample Client","Client Co.","AI Startup","Media House","BPO Partner"].map((name) => (
-              <span key={name} className="font-antonio uppercase text-xl sm:text-2xl tracking-tight text-dark/45 hover:text-dark/80 transition-colors duration-500">
+              <span key={name} className="font-display uppercase text-xl sm:text-2xl tracking-tight text-dark/45 hover:text-dark/80 transition-colors duration-500">
                 {name}
               </span>
             ))}

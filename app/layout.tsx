@@ -4,17 +4,26 @@
 // navigation automatically — no per-page useEffect needed anywhere else.
 
 import type { Metadata } from "next";
-import { Antonio } from "next/font/google";
+import { Lato, Poppins } from "next/font/google";
 import { ViewTransitions } from "next-view-transitions";
 import { Navbar } from "../components/layout/navbar";
 import { Footer } from "../components/layout/footer";
 import { ScrollToTop } from "../components/ScrollToTop";
 import "./globals.css";
 
-const antonio = Antonio({
+// Body copy font
+const lato = Lato({
   subsets: ["latin"],
-  weight: ["300", "400", "500"],
-  variable: "--font-antonio",
+  weight: ["300", "400", "700", "900"],
+  variable: "--font-lato",
+  display: "swap",
+});
+
+// Headline font
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-poppins",
   display: "swap",
 });
 
@@ -32,7 +41,11 @@ export default function RootLayout({
   return (
     // ViewTransitions wrapper enables the shared-element page transitions
     <ViewTransitions>
-      <html lang="en" className={antonio.variable} suppressHydrationWarning>
+      <html
+        lang="en"
+        className={`${lato.variable} ${poppins.variable}`}
+        suppressHydrationWarning
+      >
         <body className="bg-[#fafaf8] antialiased">
           {/*
             ScrollToTop fires on every pathname change.
