@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Link } from "next-view-transitions";
 import {
   StatStrip, Testimonials, FadeIn, type ServiceCard,
@@ -15,10 +15,6 @@ const services = [
 
 export default function Home() {
   const reduce = useReducedMotion();
-  const { scrollY } = useScroll();
-  
-  const sectionPadding = useTransform(scrollY, [0, 80], ["0.75rem", "0rem"]);
-  const borderRadius   = useTransform(scrollY, [0, 80], ["16px", "0px"]);
   
   // Custom, slow, buttery-smooth scroll function
   const scrollToServices = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -53,137 +49,127 @@ export default function Home() {
   
   return (
     <>
-      {/* ── HERO SECTION ── */}
-      <motion.section className="bg-white" style={{ padding: sectionPadding }}>
-        <motion.div
-          className="relative h-[calc(100vh-1.5rem)] min-h-[640px] overflow-hidden flex flex-col z-0"
-          style={{ borderRadius }}
-        >
-          {/* Animated Background */}
-          <div className="absolute inset-0 overflow-hidden -z-10" style={{ background: "#120d07" }}>
-            <motion.div
-              animate={reduce ? {} : { x: [0, 60, -40, 20, 0], y: [0, 40, -30, 60, 0], scale: [1, 1.15, 0.95, 1.1, 1] }}
-              transition={{ duration: 4.4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -top-[15%] -left-[5%] w-[75%] h-[85%] rounded-full"
-              style={{ background: "radial-gradient(ellipse at center, rgba(249,115,22,0.55) 0%, rgba(234,88,12,0.3) 40%, transparent 70%)", filter: "blur(80px)" }}
-            />
-            <motion.div
-              animate={reduce ? {} : { x: [0, -80, 40, -20, 0], y: [0, -50, 70, -30, 0], scale: [1, 1.2, 0.9, 1.05, 1] }}
-              transition={{ duration: 5.6, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-[30%] -right-[10%] w-[65%] h-[90%] rounded-full"
-              style={{ background: "radial-gradient(ellipse at center, rgba(234,88,12,0.4) 0%, rgba(154,52,18,0.2) 40%, transparent 70%)", filter: "blur(90px)" }}
-            />
+      {/* ── HERO SECTION (Edge-to-Edge Full Bleed) ── */}
+      <section className="relative h-screen min-h-[640px] overflow-hidden flex flex-col z-0">
+        {/* Animated Background */}
+        <div className="absolute inset-0 overflow-hidden -z-10" style={{ background: "#120d07" }}>
+          <motion.div
+            animate={reduce ? {} : { x: [0, 60, -40, 20, 0], y: [0, 40, -30, 60, 0], scale: [1, 1.15, 0.95, 1.1, 1] }}
+            transition={{ duration: 4.4, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute -top-[15%] -left-[5%] w-[75%] h-[85%] rounded-full"
+            style={{ background: "radial-gradient(ellipse at center, rgba(249,115,22,0.55) 0%, rgba(234,88,12,0.3) 40%, transparent 70%)", filter: "blur(80px)" }}
+          />
+          <motion.div
+            animate={reduce ? {} : { x: [0, -80, 40, -20, 0], y: [0, -50, 70, -30, 0], scale: [1, 1.2, 0.9, 1.05, 1] }}
+            transition={{ duration: 5.6, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-[30%] -right-[10%] w-[65%] h-[90%] rounded-full"
+            style={{ background: "radial-gradient(ellipse at center, rgba(234,88,12,0.4) 0%, rgba(154,52,18,0.2) 40%, transparent 70%)", filter: "blur(90px)" }}
+          />
+        </div>
+
+        <div className="relative z-10 flex flex-col h-full w-full px-6 lg:px-[8vw] pt-32 pb-12">
+          
+          <div className="max-w-5xl">
+            <motion.h1
+              initial={reduce ? {} : { opacity: 0, y: 32 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="font-display uppercase text-white leading-[0.95] tracking-tight"
+              style={{ fontSize: "clamp(52px, 8.5vw, 118px)", fontWeight: 300 }}
+            >
+              Precision Work.<br />
+              Remote Power.
+            </motion.h1>
           </div>
 
-          <div className="relative z-10 flex flex-col h-full w-full px-6 lg:px-[8vw] pt-32 pb-12">
+          <div className="mt-auto flex flex-col md:flex-row justify-between md:items-end gap-8">
             
-            <div className="max-w-5xl">
-              <motion.h1
-                initial={reduce ? {} : { opacity: 0, y: 32 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="font-display uppercase text-white leading-[0.95] tracking-tight"
-                style={{ fontSize: "clamp(52px, 8.5vw, 118px)", fontWeight: 300 }}
-              >
-                Precision Work.<br />
-                Remote Power.
-              </motion.h1>
-            </div>
+            <motion.p
+              initial={reduce ? {} : { opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className="font-sans text-white max-w-md leading-relaxed tracking-tight"
+              style={{ fontSize: "clamp(17px, 2vw, 22px)", fontWeight: 300 }}
+            >
+              Annopett delivers Data, AI, Real Estate Media, BPO, and Creative services at scale.
+            </motion.p>
 
-            <div className="mt-auto flex flex-col md:flex-row justify-between md:items-end gap-8">
-              
-              <motion.p
-                initial={reduce ? {} : { opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                className="font-sans text-white max-w-md leading-relaxed tracking-tight"
-                style={{ fontSize: "clamp(17px, 2vw, 22px)", fontWeight: 300 }}
-              >
-                Annopett delivers Data, AI, Real Estate Media, BPO, and Creative services at scale.
-              </motion.p>
+            {/* Hover-Swap CTA with Custom Slow Scroll */}
+            <motion.div
+              initial={reduce ? {} : { opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <a href="#capabilities" onClick={scrollToServices} className="group flex items-center gap-2 cursor-pointer">
+                {/* Left Pill (Dark Base -> Orange Hover) */}
+                <div
+                  className="flex items-center h-[56px] px-7 text-white transition-all duration-500 ease-in-out bg-[#1a1209] group-hover:bg-[#F97316]"
+                  style={{
+                    fontFamily: "var(--font-display), sans-serif", textTransform: "uppercase",
+                    borderRadius: "12px", fontSize: "16px", fontWeight: 400, letterSpacing: "0.08em",
+                  }}
+                >
+                  Discover our services
+                </div>
+                {/* Right Square (Orange Base -> Dark Hover) */}
+                <div
+                  className="flex items-center justify-center w-[56px] h-[56px] transition-all duration-500 ease-in-out bg-[#F97316] group-hover:bg-[#1a1209]"
+                  style={{ borderRadius: "12px" }}
+                >
+                  <svg width="16" height="16" viewBox="0 0 14 14" fill="none" className="text-white">
+                    <path d="M5 2.5L9.5 7L5 11.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+              </a>
+            </motion.div>
+          </div>
+        </div>
+      </section>
 
-              {/* Hover-Swap CTA with Custom Slow Scroll */}
-              <motion.div
-                initial={reduce ? {} : { opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <a href="#capabilities" onClick={scrollToServices} className="group flex items-center gap-2 cursor-pointer">
-                  {/* Left Pill (Dark Base -> Orange Hover) */}
-                  <div
-                    className="flex items-center h-[56px] px-7 text-white transition-all duration-500 ease-in-out bg-[#1a1209] group-hover:bg-[#F97316]"
-                    style={{
-                      fontFamily: "var(--font-display), sans-serif", textTransform: "uppercase",
-                      borderRadius: "12px", fontSize: "16px", fontWeight: 400, letterSpacing: "0.08em",
-                    }}
-                  >
-                    Discover our services
-                  </div>
-                  {/* Right Square (Orange Base -> Dark Hover) */}
-                  <div
-                    className="flex items-center justify-center w-[56px] h-[56px] transition-all duration-500 ease-in-out bg-[#F97316] group-hover:bg-[#1a1209]"
-                    style={{ borderRadius: "12px" }}
-                  >
-                    <svg width="16" height="16" viewBox="0 0 14 14" fill="none" className="text-white">
-                      <path d="M5 2.5L9.5 7L5 11.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      {/* ── CAPABILITIES SECTION ── */}
+      <section id="capabilities" className="bg-[#fafaf8] px-6 lg:px-[8vw] py-28 relative">
+        <FadeIn>
+          <div className="text-center max-w-2xl mx-auto mb-20">
+            <h2 className="font-display uppercase font-light tracking-tight text-[clamp(40px,5vw,64px)] text-dark leading-[0.95]">
+              One team. Every capability.
+            </h2>
+            <p className="mt-6 text-[17px] font-light text-dark/70 font-sans leading-relaxed">
+              From AI pipelines to real estate media. Remote, skilled, and ready.
+            </p>
+          </div>
+        </FadeIn>
+
+        <div className="grid lg:grid-cols-3 gap-8">
+          {services.map((s, i) => (
+            <FadeIn key={s.name} delay={0.08 * i}>
+              <Link href={s.href} className="group flex flex-col h-full">
+                <div
+                  className="w-full aspect-[4/3] rounded-[28px] overflow-hidden bg-black/5 mb-6 relative"
+                  style={{ viewTransitionName: `service-image-${s.href.replace("/", "")}` }}
+                >
+                  <img
+                    src={img(s.image)}
+                    alt={s.name}
+                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out" />
+
+                  <div className="absolute bottom-5 right-5 flex items-center justify-center w-11 h-11 rounded-full bg-white text-dark opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-400 ease-in-out">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                      <path d="M3 11L11 3M11 3H5M11 3V9" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </div>
-                </a>
-              </motion.div>
-            </div>
-          </div>
-        </motion.div>
-      </motion.section>
+                </div>
 
-      {/* ── CAPABILITIES SECTION (Sticky Left Heading, Scrolling Right Column) ── */}
-      <section id="capabilities" className="bg-[#fafaf8] px-6 lg:px-[8vw] pt-28 pb-12 relative">
-        <div className="grid lg:grid-cols-[36%_1fr] gap-12 lg:gap-16 items-start">
-
-          <div className="lg:sticky lg:top-40 self-start pb-12">
-            <FadeIn>
-              <h2 className="font-display uppercase font-light tracking-tight text-[clamp(40px,5vw,64px)] text-dark leading-[0.95]">
-                One team.<br />Every capability.
-              </h2>
-              <p className="mt-6 text-[17px] font-light text-dark/70 max-w-sm font-sans leading-relaxed">
-                From AI pipelines to real estate media. Remote, skilled, and ready.
-              </p>
+                <h3 className="font-display uppercase font-normal tracking-tight text-2xl text-dark group-hover:text-orange transition-colors duration-500 ease-in-out">
+                  {s.name}
+                </h3>
+                <p className="font-sans font-light text-dark/60 mt-3 text-base leading-relaxed">
+                  {s.desc}
+                </p>
+              </Link>
             </FadeIn>
-          </div>
-
-          {/* Right column — stacked service cards */}
-          <div className="flex flex-col gap-16 pb-20">
-            {services.map((s, i) => (
-              <FadeIn key={s.name} delay={0.08 * i}>
-                <Link href={s.href} className="group flex flex-col w-full">
-                  <div
-                    className="w-full aspect-[16/10] rounded-[28px] overflow-hidden bg-black/5 mb-6 relative"
-                    style={{ viewTransitionName: `service-image-${s.href.replace("/", "")}` }}
-                  >
-                    <img
-                      src={img(s.image)}
-                      alt={s.name}
-                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out" />
-
-                    <div className="absolute bottom-5 right-5 flex items-center justify-center w-11 h-11 rounded-full bg-white text-dark opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-400 ease-in-out">
-                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                        <path d="M3 11L11 3M11 3H5M11 3V9" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    </div>
-                  </div>
-
-                  <h3 className="font-display uppercase font-normal tracking-tight text-2xl sm:text-3xl text-dark group-hover:text-orange transition-colors duration-500 ease-in-out">
-                    {s.name}
-                  </h3>
-                  <p className="font-sans font-light text-dark/60 mt-4 text-base sm:text-lg leading-relaxed max-w-lg">
-                    {s.desc}
-                  </p>
-                </Link>
-              </FadeIn>
-            ))}
-          </div>
-
+          ))}
         </div>
       </section>
 

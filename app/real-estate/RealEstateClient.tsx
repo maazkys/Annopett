@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { Link } from "next-view-transitions";
-import { FadeIn, Testimonials } from "../../components/sections/Shared";
+import { FadeIn } from "../../components/sections/Shared";
 import { img } from "../../lib/utils";
 
 const editingTiers = [
@@ -15,7 +15,7 @@ const editingTiers = [
       "Colour Correction (Furniture, Floor, Walls)",
       "TV Screen Blackout/Replacement",
       "Basic Removal (Photographer/Tripod Reflection)",
-      "Virtual Twilight with AutoHDR",
+      "Virtual Twilight",
       "Image Sequencing for Delivery",
       "Uploading & Scheduling on Delivery Platforms"
     ]
@@ -29,7 +29,7 @@ const editingTiers = [
       "TV Screen Blackout/Replacement",
       "Realistic Fireplace Fire addition",
       "Removal of Unwanted Objects (Reflections, Wires, Vehicles, Trash Cans)",
-      "Virtual Twilight with AutoHDR",
+      "Virtual Twilight",
       "Image Sequencing for Delivery",
       "Uploading & Scheduling on Delivery Platforms"
     ]
@@ -38,7 +38,7 @@ const editingTiers = [
     name: "Luxury",
     price: 2.50,
     features: [
-      "Image sorting for AutoHDR Credit Optimization",
+      "Image sorting for Credit Optimization",
       "Perspective Correction",
       "Customised Lighting & Colour Enhancement",
       "Colour Correction (Furniture, Floor, Walls)",
@@ -46,25 +46,11 @@ const editingTiers = [
       "TV Screen Blackout/Replacement",
       "Realistic Fireplace Fire addition",
       "Removal of Unwanted Objects (Reflections, Wires, Vehicles, Trash Cans)",
-      "Virtual Twilight with AutoHDR",
+      "Virtual Twilight",
       "Image Sequencing for Delivery",
       "Uploading & Scheduling on Delivery Platforms"
     ]
   }
-];
-
-const problems = [
-  "Blown highlights from AutoHDR",
-  "Crooked verticals and warped lines",
-  "Inconsistent color across shots",
-  "Missing finishing touches",
-];
-
-const solutions = [
-  "Manual exposure recovery on every shot",
-  "Vertical and lens correction by hand",
-  "Color matched across the full set",
-  "Final QA before delivery",
 ];
 
 const portfolioImages = [
@@ -85,24 +71,113 @@ const portfolioImages = [
   }
 ];
 
-// Isolated component so each stacked image has its own independent slider state
+const clientLogos = [
+  { name: "Hat Fella Productions", src: "/HFP.png" },
+  { name: "RIPTIDE MEDIA", src: "/riptide.png" },
+  { name: "KILN Media", src: "/kiln.jpg" },
+  { name: "CD HOME", src: "/cdhome.png" },
+  { name: "ONE27 Media", src: "/one27.png" },
+  { name: "ARTHOME PHOTO", src: "/arthome.png" },
+  { name: "Next Creative", src: "/nextcreative.png" },
+  { name: "Proviz Real Estate Media", src: "/proviz.png" },
+];
+
+function TierCard({ tier }: { tier: typeof editingTiers[0] }) {
+  const [shoots, setShoots] = useState(5);
+  const isMax = shoots >= 20;
+
+  // URL formatting for the contact form pre-fill, targeting the #contact-form anchor
+  const href = `/contact?service=Real+Estate+Media&shootType=${tier.name}&shoots=${isMax ? "20%2B" : shoots}#contact-form`;
+
+  return (
+    <div 
+      className={`relative flex flex-col h-full rounded-[32px] p-8 md:p-10 transition-all duration-300
+        ${tier.name === 'Luxury' 
+          ? 'bg-[#120d07] text-white shadow-2xl shadow-orange/10 border border-orange/20' 
+          : 'bg-white text-dark border border-black/5 hover:border-orange/30 hover:shadow-xl'
+        }`}
+    >
+      {tier.name === 'Luxury' && (
+        <div className="absolute top-0 left-10 right-10 h-[2px] bg-gradient-to-r from-[#F97316] to-[#EA580C]" />
+      )}
+      
+      <h3 className={`font-antonio uppercase tracking-tight text-3xl mb-8 ${tier.name === 'Luxury' ? 'text-orange' : 'text-dark'}`} style={{ fontWeight: 300 }}>
+        {tier.name}
+      </h3>
+      
+      <ul className="flex flex-col gap-4 mb-10 flex-grow">
+        {tier.features.map((feature, j) => (
+          <li key={j} className="flex gap-4 items-start">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className={`mt-0.5 shrink-0 ${tier.name === 'Luxury' ? 'text-orange' : 'text-orange'}`}>
+              <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            <span className={`font-sans font-light text-[15px] leading-relaxed ${tier.name === 'Luxury' ? 'text-white/80' : 'text-dark/70'}`}>
+              {feature}
+            </span>
+          </li>
+        ))}
+      </ul>
+
+      {/* Embedded Dynamic Pricing Slider */}
+      <div className={`mt-auto pt-8 border-t ${tier.name === 'Luxury' ? 'border-white/10' : 'border-black/5'}`}>
+        <div className="flex justify-between font-sans font-medium text-sm mb-4">
+          <span className={tier.name === 'Luxury' ? 'text-white/50' : 'text-dark/50'}>Number of shoots per day</span>
+          <span className="text-orange font-bold">{isMax ? '20+' : shoots}</span>
+        </div>
+        
+        <div className="relative h-2 bg-black/10 rounded-full mb-8">
+          <div 
+            className="absolute top-0 left-0 h-full bg-orange rounded-full pointer-events-none" 
+            style={{ width: `${(shoots / 20) * 100}%` }} 
+          />
+          <input 
+            type="range" min="1" max="20" step="1"
+            value={shoots} 
+            onChange={(e) => setShoots(Number(e.target.value))}
+            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+          />
+          <div 
+            className="absolute top-1/2 -translate-y-1/2 w-5 h-5 bg-white border-2 border-orange rounded-full pointer-events-none shadow-md"
+            style={{ left: `calc(${(shoots / 20) * 100}% - 10px)` }}
+          />
+        </div>
+
+        {isMax ? (
+          <div className="flex flex-col items-center">
+             <div className="h-14 flex items-center justify-center font-antonio text-3xl tracking-tight mb-4 text-orange">Custom Volume</div>
+             <Link href={href} className="w-full text-center py-4 rounded-xl bg-orange text-white font-antonio uppercase tracking-widest hover:bg-[#1a1209] transition-colors">
+               Enquire
+             </Link>
+          </div>
+        ) : (
+          <div className="flex flex-col items-center">
+            <div className="flex items-end gap-2 mb-4 h-14">
+              <span className="font-antonio text-5xl leading-none tracking-tight text-orange">${(shoots * tier.price).toFixed(2)}</span>
+              <span className={`font-sans text-sm pb-1 ${tier.name === 'Luxury' ? 'text-white/50' : 'text-dark/50'}`}>/ day</span>
+            </div>
+            <Link href={href} className="w-full text-center py-4 rounded-xl bg-[#1a1209] text-white font-antonio uppercase tracking-widest hover:bg-orange transition-colors">
+              Submit
+            </Link>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function BeforeAfterSlider({ data }: { data: typeof portfolioImages[0] }) {
   const [sliderPos, setSliderPos] = useState(50);
 
   return (
-    <div className="relative w-full aspect-[4/3] rounded-[24px] overflow-hidden bg-black border border-white/10 select-none group">
-      {/* AFTER (Base) */}
+    <div className="relative w-full aspect-[4/3] md:aspect-[16/9] rounded-[24px] overflow-hidden bg-black border border-white/10 select-none group">
       <img src={data.after} alt="Final Edit" className="absolute inset-0 w-full h-full object-cover pointer-events-none" />
-      
-      {/* BEFORE (Overlay with clip-path) */}
       <div 
         className="absolute inset-0 w-full h-full pointer-events-none"
         style={{ clipPath: `inset(0 calc(100% - ${sliderPos}%) 0 0)` }}
       >
-        <img src={data.before} alt="Raw AutoHDR" className="absolute inset-0 w-full h-full object-cover" />
+        <img src={data.before} alt="RAW Image" className="absolute inset-0 w-full h-full object-cover" />
       </div>
 
-      {/* Slider Handle */}
       <div 
         className="absolute top-0 bottom-0 w-[2px] bg-orange shadow-[0_0_20px_rgba(249,115,22,0.8)] pointer-events-none z-10"
         style={{ left: `${sliderPos}%` }}
@@ -114,20 +189,15 @@ function BeforeAfterSlider({ data }: { data: typeof portfolioImages[0] }) {
         </div>
       </div>
 
-      {/* Labels */}
       <div className="absolute top-6 left-6 bg-black/60 backdrop-blur-md px-4 py-2 rounded-lg font-antonio uppercase tracking-widest text-sm text-white/90 pointer-events-none">
-        Raw HDR
+        RAW
       </div>
       <div className="absolute top-6 right-6 bg-orange/90 backdrop-blur-md px-4 py-2 rounded-lg font-antonio uppercase tracking-widest text-sm text-white pointer-events-none">
         {data.name}
       </div>
 
-      {/* Invisible Range Input */}
       <input
-        type="range"
-        min="0"
-        max="100"
-        value={sliderPos}
+        type="range" min="0" max="100" value={sliderPos}
         onChange={(e) => setSliderPos(Number(e.target.value))}
         className="absolute inset-0 w-full h-full opacity-0 cursor-ew-resize z-20"
       />
@@ -136,189 +206,96 @@ function BeforeAfterSlider({ data }: { data: typeof portfolioImages[0] }) {
 }
 
 export function RealEstateClient() {
-  const reduce = useReducedMotion();
-  const { scrollY } = useScroll();
-  
-  // Volume Estimator State
-  const [volume, setVolume] = useState(30);
-  const [selectedTier, setSelectedTier] = useState(0);
+  const [activeIdx, setActiveIdx] = useState(0);
 
-  const sectionPadding = useTransform(scrollY, [0, 80], ["0.75rem", "0rem"]);
-  const borderRadius   = useTransform(scrollY, [0, 80], ["16px", "0px"]);
+  const nextImage = () => setActiveIdx((prev) => (prev + 1) % portfolioImages.length);
+  const prevImage = () => setActiveIdx((prev) => (prev - 1 + portfolioImages.length) % portfolioImages.length);
 
   return (
     <>
-      {/* ── HERO ── */}
-      <motion.section className="bg-white" style={{ padding: sectionPadding }}>
-        <motion.div
-          className="relative h-[calc(100vh-1.5rem)] min-h-[640px] overflow-hidden flex flex-col z-0"
-          style={{ borderRadius }}
-        >
-          <div className="absolute inset-0 overflow-hidden -z-10">
-            <img
-              src={img("https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=2000")}
-              alt="Real estate interior"
-              className="absolute inset-0 w-full h-full object-cover"
-              style={{ viewTransitionName: "service-image-real-estate" }}
-            />
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1.2, ease: "easeInOut", delay: 0.2 }}
-              className="absolute inset-0"
-              style={{ background: "linear-gradient(to bottom right, rgba(18,13,7,0.88) 40%, rgba(249,115,22,0.25) 100%)" }}
-            />
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={reduce ? { opacity: 1 } : { opacity: 1, x: [0, 60, -40, 20, 0], y: [0, 40, -30, 60, 0], scale: [1, 1.15, 0.95, 1.1, 1] }}
-              transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -top-[15%] -left-[5%] w-[60%] h-[70%] rounded-full"
-              style={{ background: "radial-gradient(ellipse at center, rgba(249,115,22,0.22) 0%, transparent 70%)", filter: "blur(80px)" }}
-            />
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={reduce ? { opacity: 1 } : { opacity: 1, x: [0, -80, 40, -20, 0], y: [0, -50, 70, -30, 0], scale: [1, 1.2, 0.9, 1.05, 1] }}
-              transition={{ duration: 28, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-[40%] -right-[10%] w-[55%] h-[80%] rounded-full"
-              style={{ background: "radial-gradient(ellipse at center, rgba(234,88,12,0.18) 0%, transparent 70%)", filter: "blur(90px)" }}
-            />
+      {/* ── HERO (Edge-to-Edge Full Bleed) ── */}
+      <section className="relative h-screen min-h-[640px] overflow-hidden flex flex-col z-0">
+        <div className="absolute inset-0 overflow-hidden -z-10">
+          <img
+            src={img("https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=2000")}
+            alt="Real estate interior"
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{ viewTransitionName: "service-image-real-estate" }}
+          />
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.2, ease: "easeInOut", delay: 0.2 }}
+            className="absolute inset-0"
+            style={{ background: "linear-gradient(to bottom right, rgba(18,13,7,0.88) 40%, rgba(249,115,22,0.25) 100%)" }}
+          />
+        </div>
+
+        <div className="relative z-10 flex flex-col h-full w-full px-6 lg:px-[8vw] pt-32 pb-12">
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="font-antonio uppercase text-orange tracking-[0.2em] text-sm mb-6"
+          >
+            Real Estate Media
+          </motion.p>
+
+          <div className="max-w-4xl">
+            <motion.h1
+              initial={{ opacity: 0, y: 32 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
+              className="font-antonio uppercase text-white leading-[0.95] tracking-tight"
+              style={{ fontSize: "clamp(52px, 8.5vw, 110px)", fontWeight: 300 }}
+            >
+              We Perfect<br />
+              What AI<br />
+              Starts.
+            </motion.h1>
           </div>
 
-          <div className="relative z-10 flex flex-col h-full w-full px-6 lg:px-[8vw] pt-32 pb-12">
+          <div className="mt-auto flex flex-col md:flex-row justify-between md:items-end gap-8">
             <motion.p
-              initial={reduce ? {} : { opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="font-antonio uppercase text-orange tracking-[0.2em] text-sm mb-6"
+              transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className="font-sans text-white/70 max-w-md leading-relaxed"
+              style={{ fontSize: "clamp(16px, 1.8vw, 20px)", fontWeight: 300 }}
             >
-              Real Estate Media
+              Your RAW images deserve a human eye. We QA, correct, and complete every shot.
             </motion.p>
 
-            <div className="max-w-4xl">
-              <motion.h1
-                initial={reduce ? {} : { opacity: 0, y: 32 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
-                className="font-antonio uppercase text-white leading-[0.95] tracking-tight"
-                style={{ fontSize: "clamp(52px, 8.5vw, 110px)", fontWeight: 300 }}
-              >
-                We Perfect<br />
-                What AI<br />
-                Starts.
-              </motion.h1>
-            </div>
-
-            <div className="mt-auto flex flex-col md:flex-row justify-between md:items-end gap-8">
-              <motion.p
-                initial={reduce ? {} : { opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                className="font-sans text-white/70 max-w-md leading-relaxed"
-                style={{ fontSize: "clamp(16px, 1.8vw, 20px)", fontWeight: 300 }}
-              >
-                Your HDR images deserve a human eye. We QA, correct, and complete every shot.
-              </motion.p>
-
-              <motion.div
-                initial={reduce ? {} : { opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <Link href="/contact" className="group flex items-center gap-[2px] cursor-pointer">
-                  <div
-                    className="flex items-center h-[56px] px-7 text-white transition-all duration-300 ease-in-out bg-[#1a1209] group-hover:bg-[#F97316]"
-                    style={{
-                      fontFamily: "var(--font-antonio), sans-serif",
-                      textTransform: "uppercase",
-                      borderRadius: "12px",
-                      fontSize: "16px",
-                      fontWeight: 400,
-                      letterSpacing: "0.08em",
-                    }}
-                  >
-                    Get a Free Sample Edit
-                  </div>
-                  <div
-                    className="flex items-center justify-center w-[56px] h-[56px] transition-all duration-300 ease-in-out bg-[#F97316] group-hover:bg-[#1a1209]"
-                    style={{ borderRadius: "12px" }}
-                  >
-                    <svg width="16" height="16" viewBox="0 0 14 14" fill="none" className="text-white">
-                      <path d="M5 2.5L9.5 7L5 11.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </div>
-                </Link>
-              </motion.div>
-            </div>
-          </div>
-        </motion.div>
-      </motion.section>
-
-      {/* ── PROBLEM / SOLUTION ── */}
-      <section className="grid md:grid-cols-2">
-        <div className="bg-[#fafaf8] px-6 lg:pl-[8vw] lg:pr-16 py-20 lg:py-28">
-          <FadeIn>
-            <h2
-              className="font-antonio uppercase text-dark leading-[0.95] tracking-tight"
-              style={{ fontSize: "clamp(36px, 4vw, 52px)", fontWeight: 300 }}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
             >
-              AI leaves gaps.
-            </h2>
-            <div className="mt-10 flex flex-col gap-5">
-              {problems.map((p) => (
-                <div key={p} className="flex gap-4 items-start">
-                  <span className="mt-0.5 shrink-0 font-antonio text-orange text-lg" style={{ fontWeight: 300 }}>×</span>
-                  <span className="font-sans font-light text-dark/65 text-[15px] leading-relaxed">{p}</span>
+              <Link href="/contact#contact-form" className="group flex items-center gap-[2px] cursor-pointer">
+                <div
+                  className="flex items-center h-[56px] px-7 text-white transition-all duration-300 ease-in-out bg-[#1a1209] group-hover:bg-[#F97316]"
+                  style={{
+                    fontFamily: "var(--font-antonio), sans-serif",
+                    textTransform: "uppercase",
+                    borderRadius: "12px",
+                    fontSize: "16px",
+                    fontWeight: 400,
+                    letterSpacing: "0.08em",
+                  }}
+                >
+                  Get a Free Sample Edit
                 </div>
-              ))}
-            </div>
-          </FadeIn>
-        </div>
-        <div className="px-6 lg:pr-[8vw] lg:pl-16 py-20 lg:py-28" style={{ background: "linear-gradient(135deg, #F97316, #EA580C)" }}>
-          <FadeIn>
-            <h2
-              className="font-antonio uppercase text-white leading-[0.95] tracking-tight"
-              style={{ fontSize: "clamp(36px, 4vw, 52px)", fontWeight: 300 }}
-            >
-              We fill them.
-            </h2>
-            <div className="mt-10 flex flex-col gap-5">
-              {solutions.map((s) => (
-                <div key={s} className="flex gap-4 items-start">
-                  <span className="mt-0.5 shrink-0 font-antonio text-white text-lg" style={{ fontWeight: 300 }}>✓</span>
-                  <span className="font-sans font-light text-white/80 text-[15px] leading-relaxed">{s}</span>
+                <div
+                  className="flex items-center justify-center w-[56px] h-[56px] transition-all duration-300 ease-in-out bg-[#F97316] group-hover:bg-[#1a1209]"
+                  style={{ borderRadius: "12px" }}
+                >
+                  <svg width="16" height="16" viewBox="0 0 14 14" fill="none" className="text-white">
+                    <path d="M5 2.5L9.5 7L5 11.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
                 </div>
-              ))}
-            </div>
-          </FadeIn>
-        </div>
-      </section>
-
-      {/* ── BEFORE / AFTER STICKY PORTFOLIO ── */}
-      <section className="bg-[#120d07] px-6 lg:px-[8vw] pt-28 pb-12 relative text-white">
-        <div className="grid lg:grid-cols-[36%_1fr] gap-12 lg:gap-16 items-start">
-          
-          <div className="lg:sticky lg:top-40 self-start pb-12">
-            <FadeIn>
-              <h2
-                className="font-antonio uppercase text-white leading-[0.95] tracking-tight"
-                style={{ fontSize: "clamp(40px, 5vw, 64px)", fontWeight: 300 }}
-              >
-                See the<br />Difference.
-              </h2>
-              <p className="mt-6 text-[17px] font-light text-white/60 max-w-xs font-sans leading-relaxed">
-                Scroll to view our recent work. Drag the sliders to compare the raw AutoHDR with our final delivery.
-              </p>
-            </FadeIn>
+              </Link>
+            </motion.div>
           </div>
-
-          <div className="flex flex-col gap-16 pb-20">
-            {portfolioImages.map((imgData, i) => (
-              <FadeIn key={imgData.name} delay={0.05}>
-                <BeforeAfterSlider data={imgData} />
-              </FadeIn>
-            ))}
-          </div>
-
         </div>
       </section>
 
@@ -333,117 +310,69 @@ export function RealEstateClient() {
               Our Editing Standards.
             </h2>
             <p className="mt-6 text-[17px] font-light text-dark/60 font-sans leading-relaxed">
-              Choose the level of precision that matches your brand and market.
+              Choose the level of precision that matches your brand and market. Drag the slider to estimate daily volume pricing.
             </p>
           </div>
         </FadeIn>
 
-        <div className="grid lg:grid-cols-3 gap-8 mb-20">
+        <div className="grid lg:grid-cols-3 gap-8">
           {editingTiers.map((tier, i) => (
             <FadeIn key={tier.name} delay={i * 0.1}>
-              <div 
-                className={`relative flex flex-col h-full rounded-[32px] p-8 md:p-10 transition-all duration-300
-                  ${tier.name === 'Luxury' 
-                    ? 'bg-[#120d07] text-white shadow-2xl shadow-orange/10 border border-orange/20' 
-                    : 'bg-white text-dark border border-black/5 hover:border-orange/30 hover:shadow-xl'
-                  }`}
-              >
-                {tier.name === 'Luxury' && (
-                  <div className="absolute top-0 left-10 right-10 h-[2px] bg-gradient-to-r from-[#F97316] to-[#EA580C]" />
-                )}
-                
-                <h3 
-                  className={`font-antonio uppercase tracking-tight text-3xl mb-8 ${tier.name === 'Luxury' ? 'text-orange' : 'text-dark'}`}
-                  style={{ fontWeight: 300 }}
-                >
-                  {tier.name}
-                </h3>
-                
-                <ul className="flex flex-col gap-4 mb-8">
-                  {tier.features.map((feature, j) => (
-                    <li key={j} className="flex gap-4 items-start">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className={`mt-0.5 shrink-0 ${tier.name === 'Luxury' ? 'text-orange' : 'text-orange'}`}>
-                        <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                      <span className={`font-sans font-light text-[15px] leading-relaxed ${tier.name === 'Luxury' ? 'text-white/80' : 'text-dark/70'}`}>
-                        {feature}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <TierCard tier={tier} />
             </FadeIn>
           ))}
         </div>
+      </section>
 
-        {/* ── DYNAMIC VOLUME ESTIMATOR ── */}
+      {/* ── BEFORE / AFTER INTERACTIVE SLIDER ── */}
+      <section className="bg-[#120d07] px-6 lg:px-[8vw] py-28 text-white text-center border-t border-white/5">
         <FadeIn>
-          <div className="max-w-4xl mx-auto bg-white rounded-[32px] border border-black/5 shadow-2xl shadow-black/5 p-8 md:p-12">
-            <h3 className="font-antonio uppercase text-dark tracking-tight text-3xl mb-2" style={{ fontWeight: 300 }}>
-              Volume Estimator
-            </h3>
-            <p className="font-sans font-light text-dark/60 mb-8">Slide to see how pricing scales with your shoot volume.</p>
-            
-            <div className="grid md:grid-cols-[1fr_250px] gap-12 items-center">
-              {/* Controls */}
-              <div className="flex flex-col gap-8">
-                {/* Tier Selector */}
-                <div className="flex bg-black/5 rounded-xl p-1">
-                  {editingTiers.map((tier, idx) => (
-                    <button
-                      key={tier.name}
-                      onClick={() => setSelectedTier(idx)}
-                      className={`flex-1 py-3 px-4 rounded-lg font-antonio uppercase tracking-widest text-sm transition-all duration-300 ${
-                        selectedTier === idx ? 'bg-white text-orange shadow-md' : 'text-dark/40 hover:text-dark'
-                      }`}
-                    >
-                      {tier.name}
-                    </button>
-                  ))}
-                </div>
+          <h2
+            className="font-antonio uppercase text-white leading-[0.95] tracking-tight mb-4"
+            style={{ fontSize: "clamp(40px, 5vw, 64px)", fontWeight: 300 }}
+          >
+            See the Difference.
+          </h2>
+          <p className="text-[17px] font-light text-white/50 font-sans leading-relaxed mb-16 max-w-lg mx-auto">
+            Drag the slider to compare the RAW images with our final delivery.
+          </p>
+        </FadeIn>
 
-                {/* Slider */}
-                <div>
-                  <div className="flex justify-between font-sans font-medium text-dark/60 text-sm mb-4">
-                    <span>10 Photos</span>
-                    <span className="text-orange font-bold">{volume} Photos</span>
-                    <span>100+ Photos</span>
-                  </div>
-                  <div className="relative h-3 bg-black/5 rounded-full">
-                    {/* Active Track */}
-                    <div 
-                      className="absolute top-0 left-0 h-full bg-orange rounded-full pointer-events-none" 
-                      style={{ width: `${(volume / 100) * 100}%` }} 
-                    />
-                    {/* The Input */}
-                    <input 
-                      type="range" 
-                      min="10" 
-                      max="100" 
-                      step="5"
-                      value={volume} 
-                      onChange={(e) => setVolume(Number(e.target.value))}
-                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                    />
-                    {/* Thumb visual */}
-                    <div 
-                      className="absolute top-1/2 -translate-y-1/2 w-6 h-6 bg-white border-2 border-orange rounded-full pointer-events-none shadow-md"
-                      style={{ left: `calc(${(volume / 100) * 100}% - 12px)` }}
-                    />
-                  </div>
-                </div>
+        <FadeIn delay={0.1}>
+          <div className="relative max-w-5xl mx-auto">
+            {/* The Image Container */}
+            <BeforeAfterSlider data={portfolioImages[activeIdx]} key={portfolioImages[activeIdx].name} />
+
+            {/* Controls Below the Image */}
+            <div className="flex items-center justify-between mt-8 px-4">
+              <button 
+                onClick={prevImage}
+                className="w-14 h-14 bg-white/10 text-white rounded-full flex items-center justify-center hover:bg-orange transition-colors shadow-lg"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </button>
+
+              {/* Indicator Dots */}
+              <div className="flex justify-center gap-4">
+                {portfolioImages.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setActiveIdx(idx)}
+                    className={`h-2 rounded-full transition-all duration-300 ${activeIdx === idx ? 'bg-orange w-8' : 'bg-white/30 w-2 hover:bg-white/50'}`}
+                  />
+                ))}
               </div>
 
-              {/* Price Display */}
-              <div className="bg-[#120d07] rounded-[24px] p-8 text-center flex flex-col justify-center h-full">
-                <div className="font-sans font-light text-white/50 text-sm uppercase tracking-widest mb-2">Estimated Total</div>
-                <div className="font-antonio text-white leading-none tracking-tight text-6xl">
-                  ${(volume * editingTiers[selectedTier].price).toFixed(2)}
-                </div>
-                <div className="font-sans font-light text-orange mt-3 text-sm">
-                  @ ${editingTiers[selectedTier].price.toFixed(2)} / photo
-                </div>
-              </div>
+              <button 
+                onClick={nextImage}
+                className="w-14 h-14 bg-white/10 text-white rounded-full flex items-center justify-center hover:bg-orange transition-colors shadow-lg"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </button>
             </div>
           </div>
         </FadeIn>
@@ -459,27 +388,37 @@ export function RealEstateClient() {
         />
       </div>
 
-      {/* ── TESTIMONIALS ── */}
-      <Testimonials
-        heading="Clients. Results."
-        items={[
-          {
-            quote: "Our listing turnaround went from 3 days to overnight. The image quality is consistently excellent.",
-            name: "Sara Mendes",
-            company: "Casa Group",
-          },
-          {
-            quote: "Annopett caught issues our in-house editors missed for months. Pure quality.",
-            name: "Tom Whitaker",
-            company: "Pacific Realty",
-          },
-          {
-            quote: "Free sample edit sold us in 24 hours. Been a client for two years.",
-            name: "Lena Park",
-            company: "Aurora Listings",
-          },
-        ]}
-      />
+      {/* ── OUR CLIENTS (Logos light up automatically) ── */}
+      <section className="bg-[#fafaf8] px-6 lg:px-[8vw] py-32 border-t border-black/5">
+        <FadeIn>
+          <div className="text-center mb-20">
+            <h2 className="font-antonio uppercase text-dark leading-[0.95] tracking-tight text-[clamp(40px,5vw,64px)]" style={{ fontWeight: 300 }}>
+              Our Clients
+            </h2>
+          </div>
+          <div className="flex flex-wrap justify-center items-center gap-x-8 gap-y-4">
+            {clientLogos.map((logo, i) => (
+              <motion.div
+                key={logo.name}
+                initial={{ filter: "grayscale(100%)", opacity: 0.4 }}
+                whileInView={{ filter: "grayscale(0%)", opacity: 1 }}
+                whileHover={{ filter: "grayscale(0%)", opacity: 1 }}
+                viewport={{ once: false, amount: 0.6 }}
+                transition={{ duration: 0.6, ease: "easeOut", delay: i * 0.05 }}
+                // Padding here (instead of on the <img>) enlarges the area the
+                // cursor can be in to keep the logo lit up on hover.
+                className="p-6 -m-6"
+              >
+                <img
+                  src={logo.src}
+                  alt={logo.name}
+                  className="h-16 md:h-24 object-contain max-w-[220px]"
+                />
+              </motion.div>
+            ))}
+          </div>
+        </FadeIn>
+      </section>
     </>
   );
 }

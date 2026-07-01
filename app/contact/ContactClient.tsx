@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import { motion, useReducedMotion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { useState, useRef, useEffect, Suspense } from "react";
+import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
+import { useSearchParams } from "next/navigation";
 import { FadeIn } from "../../components/sections/Shared";
 
 const inputCls =
@@ -17,7 +18,7 @@ const shootTypes = [
   {
     id: "standard",
     label: "Standard",
-    desc: "HDR cleanup, color correction, basic retouching",
+    desc: "RAW cleanup, color correction, basic retouching",
   },
   {
     id: "advanced",
@@ -31,18 +32,33 @@ const shootTypes = [
   },
 ];
 
-export function ContactClient() {
+function ContactContent() {
+  const searchParams = useSearchParams();
+  
+  // Extract URL parameters if they exist
+  const initialService = searchParams.get("service") || "";
+  const initialShootType = searchParams.get("shootType")?.toLowerCase() || "";
+  const initialShoots = searchParams.get("shoots") || "";
+
+  // Parse the incoming ?shoots= param ("20%2B" / "20+" / a number) into a 1-20 slider value
+  const parseInitialShoots = (val: string) => {
+    if (!val) return 5;
+    if (val.toLowerCase().includes("20+")) return 20;
+    const n = parseInt(val, 10);
+    if (Number.isNaN(n)) return 5;
+    return Math.min(20, Math.max(1, n));
+  };
+
   const [sent, setSent] = useState(false);
-  const [selectedService, setSelectedService] = useState("");
-  const [selectedShootType, setSelectedShootType] = useState("");
+  const [selectedService, setSelectedService] = useState(initialService);
+  const [selectedShootType, setSelectedShootType] = useState(initialShootType);
+  const [shootsCount, setShootsCount] = useState(parseInitialShoots(initialShoots));
+  const isMaxShoots = shootsCount >= 20;
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const reduce = useReducedMotion();
-  const { scrollY } = useScroll();
-
-  const sectionPadding = useTransform(scrollY, [0, 80], ["0.75rem", "0rem"]);
-  const borderRadius   = useTransform(scrollY, [0, 80], ["16px", "0px"]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -58,70 +74,78 @@ export function ContactClient() {
   useEffect(() => {
     if (selectedService !== "Real Estate Media") {
       setSelectedShootType("");
+      setShootsCount(5);
     }
   }, [selectedService]);
 
+  // Scroll to the form when arriving via a #contact-form link. Needed because this
+  // component renders inside a Suspense boundary (for useSearchParams), so the
+  // #contact-form element doesn't exist yet at the moment the browser tries to
+  // honor the URL hash on initial navigation - we have to do it ourselves once mounted.
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.location.hash === "#contact-form") {
+      requestAnimationFrame(() => {
+        document.getElementById("contact-form")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    }
+  }, []);
+
   return (
     <>
-      {/* ── HERO ── */}
-      <motion.section className="bg-white" style={{ padding: sectionPadding }}>
-        <motion.div
-          className="relative h-[65vh] min-h-[500px] overflow-hidden flex flex-col items-center justify-center text-center z-0"
-          style={{ borderRadius }}
-        >
-          <div className="absolute inset-0 overflow-hidden -z-10" style={{ background: "#120d07" }}>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={reduce ? { opacity: 1 } : { opacity: 1, x: [0, 60, -40, 20, 0], y: [0, 40, -30, 60, 0], scale: [1, 1.15, 0.95, 1.1, 1] }}
-              transition={{ duration: 4.4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -top-[15%] -left-[5%] w-[60%] h-[70%] rounded-full"
-              style={{ background: "radial-gradient(ellipse at center, rgba(249,115,22,0.22) 0%, transparent 70%)", filter: "blur(80px)" }}
-            />
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={reduce ? { opacity: 1 } : { opacity: 1, x: [0, -80, 40, -20, 0], y: [0, -50, 70, -30, 0], scale: [1, 1.2, 0.9, 1.05, 1] }}
-              transition={{ duration: 5.6, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-[40%] -right-[10%] w-[55%] h-[80%] rounded-full"
-              style={{ background: "radial-gradient(ellipse at center, rgba(234,88,12,0.18) 0%, transparent 70%)", filter: "blur(90px)" }}
-            />
-          </div>
+      {/* ── HERO (Edge-to-Edge Full Bleed) ── */}
+      <section className="relative h-[65vh] min-h-[500px] overflow-hidden flex flex-col items-center justify-center text-center z-0">
+        <div className="absolute inset-0 overflow-hidden -z-10" style={{ background: "#120d07" }}>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={reduce ? { opacity: 1 } : { opacity: 1, x: [0, 60, -40, 20, 0], y: [0, 40, -30, 60, 0], scale: [1, 1.15, 0.95, 1.1, 1] }}
+            transition={{ duration: 4.4, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute -top-[15%] -left-[5%] w-[60%] h-[70%] rounded-full"
+            style={{ background: "radial-gradient(ellipse at center, rgba(249,115,22,0.22) 0%, transparent 70%)", filter: "blur(80px)" }}
+          />
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={reduce ? { opacity: 1 } : { opacity: 1, x: [0, -80, 40, -20, 0], y: [0, -50, 70, -30, 0], scale: [1, 1.2, 0.9, 1.05, 1] }}
+            transition={{ duration: 5.6, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-[40%] -right-[10%] w-[55%] h-[80%] rounded-full"
+            style={{ background: "radial-gradient(ellipse at center, rgba(234,88,12,0.18) 0%, transparent 70%)", filter: "blur(90px)" }}
+          />
+        </div>
 
-          <div className="relative z-10 flex flex-col items-center px-6 lg:px-[8vw] pt-20 w-full max-w-5xl">
-            <motion.p
-              initial={reduce ? {} : { opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="font-antonio uppercase text-orange tracking-[0.2em] text-sm mb-6"
-            >
-              Reach Out
-            </motion.p>
+        <div className="relative z-10 flex flex-col items-center px-6 lg:px-[8vw] pt-20 w-full max-w-5xl">
+          <motion.p
+            initial={reduce ? {} : { opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="font-antonio uppercase text-orange tracking-[0.2em] text-sm mb-6"
+          >
+            Reach Out
+          </motion.p>
 
-            <motion.h1
-              initial={reduce ? {} : { opacity: 0, y: 32 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
-              className="font-antonio uppercase text-white leading-[0.95] tracking-tight"
-              style={{ fontSize: "clamp(52px, 8.5vw, 118px)", fontWeight: 300 }}
-            >
-              Let's Work<br />
-              Together.
-            </motion.h1>
+          <motion.h1
+            initial={reduce ? {} : { opacity: 0, y: 32 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
+            className="font-antonio uppercase text-white leading-[0.95] tracking-tight"
+            style={{ fontSize: "clamp(52px, 8.5vw, 118px)", fontWeight: 300 }}
+          >
+            Let's Work<br />
+            Together.
+          </motion.h1>
 
-            <motion.p
-              initial={reduce ? {} : { opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-8 font-sans text-white/70 max-w-2xl leading-relaxed mx-auto"
-              style={{ fontSize: "clamp(16px, 1.8vw, 20px)", fontWeight: 300 }}
-            >
-              We respond within 24 hours.
-            </motion.p>
-          </div>
-        </motion.div>
-      </motion.section>
+          <motion.p
+            initial={reduce ? {} : { opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="mt-8 font-sans text-white/70 max-w-2xl leading-relaxed mx-auto"
+            style={{ fontSize: "clamp(16px, 1.8vw, 20px)", fontWeight: 300 }}
+          >
+            We respond within 24 hours.
+          </motion.p>
+        </div>
+      </section>
 
       {/* ── BODY ── */}
-      <section className="bg-[#fafaf8] px-6 lg:px-[8vw] py-28 relative">
+      <section id="contact-form" className="bg-[#fafaf8] px-6 lg:px-[8vw] py-28 relative scroll-mt-20">
         <div className="grid lg:grid-cols-[40%_1fr] gap-12 lg:gap-20 items-start">
 
           {/* ── LEFT: CONTACT INFO ── */}
@@ -235,14 +259,37 @@ export function ContactClient() {
                     >
                       <div className="flex flex-col gap-5 pb-5">
 
-                        {/* Shoots per month */}
-                        <input
-                          className={inputCls}
-                          type="number"
-                          min="1"
-                          placeholder="Estimated shoots per month"
-                          required
-                        />
+                        {/* Shoots per day (slider) */}
+                        <div className="rounded-[14px] bg-black/[0.03] px-5 py-5">
+                          <div className="flex justify-between font-sans font-medium text-sm mb-4">
+                            <span className="text-dark/50">Estimated shoots per day</span>
+                            <span className="text-orange font-bold">{isMaxShoots ? "20+" : shootsCount}</span>
+                          </div>
+
+                          <div className="relative h-2 bg-black/10 rounded-full">
+                            <div
+                              className="absolute top-0 left-0 h-full bg-orange rounded-full pointer-events-none"
+                              style={{ width: `${(shootsCount / 20) * 100}%` }}
+                            />
+                            <input
+                              type="range"
+                              min="1"
+                              max="20"
+                              step="1"
+                              value={shootsCount}
+                              onChange={(e) => setShootsCount(Number(e.target.value))}
+                              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                              aria-label="Estimated shoots per day"
+                            />
+                            <div
+                              className="absolute top-1/2 -translate-y-1/2 w-5 h-5 bg-white border-2 border-orange rounded-full pointer-events-none shadow-md"
+                              style={{ left: `calc(${(shootsCount / 20) * 100}% - 10px)` }}
+                            />
+                          </div>
+
+                          {/* Hidden field so the numeric/"20+" value is submitted with the form */}
+                          <input type="hidden" name="shoots" value={isMaxShoots ? "20+" : shootsCount} />
+                        </div>
 
                         {/* Shoot type selector */}
                         <div>
@@ -342,5 +389,14 @@ export function ContactClient() {
         </div>
       </section>
     </>
+  );
+}
+
+// Next.js Suspense boundary wrapper required when utilizing useSearchParams()
+export function ContactClient() {
+  return (
+    <Suspense fallback={<div className="h-screen w-full bg-[#FAFAF8]" />}>
+      <ContactContent />
+    </Suspense>
   );
 }
