@@ -21,6 +21,17 @@ const stats = [
   { v: "100%", l: "Async-ready" },
 ];
 
+const clientLogos = [
+  { name: "Hat Fella Productions", src: "/HFP.png" },
+  { name: "RIPTIDE MEDIA", src: "/riptide.png" },
+  { name: "KILN Media", src: "/kiln.jpg" },
+  { name: "CD HOME", src: "/cdhome.png" },
+  { name: "ONE27 Media", src: "/one27.png" },
+  { name: "ARTHOME PHOTO", src: "/arthome.png" },
+  { name: "Next Creative", src: "/nextcreative.png" },
+  { name: "Proviz Real Estate Media", src: "/proviz.png" },
+];
+
 export function BPOClient() {
   const reduce = useReducedMotion();
 
@@ -130,7 +141,7 @@ export function BPOClient() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
             >
-              <a href="#capabilities" onClick={scrollToCapabilities} className="group flex items-center gap-[2px] cursor-pointer">
+              <a href="#capabilities" onClick={scrollToCapabilities} className="group flex items-center gap-2 cursor-pointer">
                 <div
                   className="flex items-center h-[56px] px-7 text-white transition-colors duration-300 ease-in-out bg-[#1a1209] group-hover:bg-[#F97316]"
                   style={{
@@ -272,7 +283,30 @@ export function BPOClient() {
       </div>
 
       {/* ── TESTIMONIALS ── */}
-      <Testimonials />
+            <section className="bg-[#fafaf8] px-6 lg:px-[8vw] py-32 border-t border-black/5">
+              <FadeIn>
+                <div className="text-center mb-16">
+                  <p className="font-sans text-[13px] uppercase tracking-[0.15em] text-dark/40 font-medium mb-4">Trusted By</p>
+                  <h2 className="font-antonio uppercase text-dark leading-[0.95] tracking-tight text-[clamp(40px,5vw,64px)]" style={{ fontWeight: 300 }}>
+                    Our Clients
+                  </h2>
+                </div>
+                <div className="flex flex-wrap justify-center items-center gap-6">
+                  {clientLogos.map((logo) => (
+                    <div
+                      key={logo.name}
+                      className="w-36 h-36 md:w-44 md:h-44 bg-white border border-black/5 rounded-[24px] flex items-center justify-center p-6 transition-all duration-300 ease-out hover:border-orange/40 hover:scale-[1.05] hover:shadow-[0_0_40px_rgba(249,115,22,0.25)]"
+                    >
+                      <img
+                        src={logo.src}
+                        alt={logo.name}
+                        className="w-full h-full object-contain pointer-events-none"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </FadeIn>
+            </section>
 
     </>
   );

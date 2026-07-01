@@ -19,7 +19,7 @@ const fadeUp = {
 const services = [
   { label: "Data & AI", href: "/data-ai" },
   { label: "Real Estate Media", href: "/real-estate" },
-  { label: "BPO & Creative", href: "/bpo-creative" }, // Unified service link
+  { label: "BPO & Creative", href: "/bpo" }, // Unified service link
 ];
 
 const company = [

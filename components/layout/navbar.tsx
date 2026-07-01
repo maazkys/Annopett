@@ -20,7 +20,6 @@ export function Navbar() {
   const isActive         = (p: string) => pathname === p;
   const isServicesActive = ["/data-ai", "/real-estate", "/bpo"].includes(pathname ?? "");
 
-  // Using Antonio Light (300) for the thin, tall, compressed aesthetic
   const linkStyle = {
     fontFamily: "'Antonio', sans-serif",
     fontSize: "17px", 
@@ -42,37 +41,40 @@ export function Navbar() {
         className="fixed inset-x-0 z-50 flex items-center justify-between pointer-events-none"
         style={{ top: "28px", padding: "0 8vw" }}
       >
-        {/* Logo pill */}
+        {/* Logo pill - Fixed Height to match Center Pill */}
         <Link
           href="/"
-          className="pointer-events-auto flex items-center gap-2.5 transition-all duration-500"
+          className="pointer-events-auto flex items-center gap-3 transition-all duration-500"
           style={{
-            padding: "10px 18px",
-            borderRadius: "12px",
+            height: "52px",
+            padding: "0 20px",
+            borderRadius: "14px",
             background: scrolled ? "rgba(255,255,255,0.92)" : "transparent",
             backdropFilter: scrolled ? "blur(16px)" : "none",
             boxShadow: scrolled ? "0 2px 20px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.06)" : "none",
           }}
         >
-          <img src="/logo.png" alt="Annopett" style={{ height: "24px", width: "auto" }} />
+          <img src="/logo.png" alt="Annopett Logo" style={{ height: "28px", width: "auto", display: "block" }} />
           <span
             style={{
               ...linkStyle,
-              fontSize: "20px",
+              fontSize: "21px",
               fontWeight: 400,
               color: scrolled ? "#1A1209" : "#ffffff",
               letterSpacing: "0.1em",
+              paddingTop: "2px", // Minor optical alignment
             }}
           >
             Annopett
           </span>
         </Link>
 
-        {/* Center pill */}
+        {/* Center pill - Fixed Height to match Logo Pill */}
         <div
           className="pointer-events-auto hidden lg:flex items-center gap-1"
           style={{
-            padding: "6px 6px",
+            height: "52px",
+            padding: "0 6px",
             borderRadius: "14px",
             background: "rgba(255,255,255,0.92)",
             backdropFilter: "blur(20px)",
@@ -89,7 +91,7 @@ export function Navbar() {
 
           {/* Services dropdown trigger */}
           <div
-            className="relative"
+            className="relative h-full flex items-center"
             onMouseEnter={() => setServicesOpen(true)}
             onMouseLeave={() => setServicesOpen(false)}
           >
@@ -120,13 +122,13 @@ export function Navbar() {
             <AnimatePresence>
               {servicesOpen && (
                 <motion.div
-                  initial={{ opacity: 0, y: -8, scale: 0.97 }}
+                  initial={{ opacity: 0, y: 4, scale: 0.97 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -6, scale: 0.97 }}
+                  exit={{ opacity: 0, y: 2, scale: 0.97 }}
                   transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
                   style={{
                     position: "absolute",
-                    top: "calc(100% + 10px)",
+                    top: "calc(100% - 4px)",
                     left: "50%",
                     transform: "translateX(-50%)",
                     width: "260px",
@@ -178,11 +180,11 @@ export function Navbar() {
             className="transition-all duration-250 group"
             style={{
               ...linkStyle,
-              padding: "9px 20px",
+              padding: "7px 20px",
               borderRadius: "10px",
               background: "#1A1209",
               color: "#ffffff",
-              marginLeft: "2px",
+              marginLeft: "4px",
               display: "block",
             }}
             onMouseEnter={e => {
@@ -222,7 +224,7 @@ export function Navbar() {
         </button>
       </nav>
 
-      {/* ── MOBILE MENU OVERLAY (Redesigned as a floating card) ── */}
+      {/* ── MOBILE MENU OVERLAY ── */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div

@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState, useRef, useEffect, ReactElement } from "react";
+import { motion, useReducedMotion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { Link } from "next-view-transitions";
-import { FadeIn } from "../../components/sections/Shared";
+import { FadeIn, Testimonials } from "../../components/sections/Shared";
 import { img } from "../../lib/utils";
 
 const editingTiers = [
@@ -14,10 +14,10 @@ const editingTiers = [
       "Perspective Correction",
       "Colour Correction (Furniture, Floor, Walls)",
       "TV Screen Blackout/Replacement",
-      "Basic Removal (Photographer/Tripod Reflection)",
       "Virtual Twilight",
       "Image Sequencing for Delivery",
-      "Uploading & Scheduling on Delivery Platforms"
+      "Uploading & Scheduling on Delivery Platforms",
+      "Basic Removal (Photographer/Tripod Reflection)"
     ]
   },
   {
@@ -27,28 +27,28 @@ const editingTiers = [
       "Perspective Correction",
       "Colour Correction (Furniture, Floor, Walls)",
       "TV Screen Blackout/Replacement",
-      "Realistic Fireplace Fire addition",
-      "Removal of Unwanted Objects (Reflections, Wires, Vehicles, Trash Cans)",
       "Virtual Twilight",
       "Image Sequencing for Delivery",
-      "Uploading & Scheduling on Delivery Platforms"
+      "Uploading & Scheduling on Delivery Platforms",
+      "Removal of Unwanted Objects (Reflections, Wires, Vehicles, Trash Cans)",
+      "Realistic Fireplace Fire addition"
     ]
   },
   {
     name: "Luxury",
     price: 2.50,
     features: [
-      "Image sorting for Credit Optimization",
       "Perspective Correction",
-      "Customised Lighting & Colour Enhancement",
       "Colour Correction (Furniture, Floor, Walls)",
-      "Deep Window Pull",
       "TV Screen Blackout/Replacement",
-      "Realistic Fireplace Fire addition",
-      "Removal of Unwanted Objects (Reflections, Wires, Vehicles, Trash Cans)",
       "Virtual Twilight",
       "Image Sequencing for Delivery",
-      "Uploading & Scheduling on Delivery Platforms"
+      "Uploading & Scheduling on Delivery Platforms",
+      "Removal of Unwanted Objects (Reflections, Wires, Vehicles, Trash Cans)",
+      "Realistic Fireplace Fire addition",
+      "Image sorting for Credit Optimization",
+      "Customised Lighting & Colour Enhancement",
+      "Deep Window Pull"
     ]
   }
 ];
@@ -82,64 +82,178 @@ const clientLogos = [
   { name: "Proviz Real Estate Media", src: "/proviz.png" },
 ];
 
+function CheckCircleIcon({ className }: { className?: string }) {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" className={className}>
+      <circle cx="12" cy="12" r="9.25" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M8 12.5L10.5 15L16 9" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function StarIcon({ className }: { className?: string }) {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" className={className}>
+      <path d="M12 2.5L14.9 9.1L22 9.9L16.7 14.6L18.3 21.6L12 17.9L5.7 21.6L7.3 14.6L2 9.9L9.1 9.1L12 2.5Z" />
+    </svg>
+  );
+}
+
+function CrownIcon({ className }: { className?: string }) {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" className={className}>
+      <path d="M3 8L7 11L12 4L17 11L21 8L19.5 18H4.5L3 8Z" />
+      <rect x="4.5" y="19" width="15" height="1.8" rx="0.9" />
+    </svg>
+  );
+}
+
+function FeatureIcon({ feature, className }: { feature: string; className?: string }) {
+  const isLuxury = feature.includes("Credit Optimization") || feature.includes("Customised Lighting") || feature.includes("Deep Window Pull");
+  const isAdvanced = feature.includes("Removal of Unwanted") || feature.includes("Realistic Fireplace");
+
+  if (isLuxury) return <CrownIcon className={className} />;
+  if (isAdvanced) return <StarIcon className={className} />;
+  return <CheckCircleIcon className={className} />; 
+}
+
+const tierTheme: Record<string, { box: string; heading: string; sub: string; body: string; divider: string; icon: ReactElement }> = {
+  Standard: {
+    box: "bg-[#FFF7F0] text-dark border border-orange/10 hover:shadow-[0_0_45px_rgba(249,115,22,0.18)]",
+    heading: "text-dark",
+    sub: "text-dark/50",
+    body: "text-dark/70",
+    divider: "border-black/5",
+    icon: <CheckCircleIcon className="text-orange w-8 h-8" />,
+  },
+  Advanced: {
+    box: "bg-[#FDE9D7] text-dark border border-orange/20 hover:shadow-[0_0_45px_rgba(249,115,22,0.25)]",
+    heading: "text-dark",
+    sub: "text-dark/55",
+    body: "text-dark/70",
+    divider: "border-black/10",
+    icon: <StarIcon className="text-orange w-8 h-8" />,
+  },
+  Luxury: {
+    box: "bg-[#120d07] text-white border border-orange/20 hover:border-orange/60 shadow-[0_10px_40px_rgba(249,115,22,0.08)] hover:shadow-[0_0_50px_rgba(249,115,22,0.45)]",
+    heading: "text-orange",
+    sub: "text-white/50",
+    body: "text-white/80",
+    divider: "border-white/10",
+    icon: <CrownIcon className="text-orange w-8 h-8" />,
+  },
+};
+
 function TierCard({ tier }: { tier: typeof editingTiers[0] }) {
   const [shoots, setShoots] = useState(5);
+  const [daysPerWeek, setDaysPerWeek] = useState(5);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const isMax = shoots >= 20;
+  const theme = tierTheme[tier.name];
+  const isLuxury = tier.name === "Luxury";
 
-  // URL formatting for the contact form pre-fill, targeting the #contact-form anchor
-  const href = `/contact?service=Real+Estate+Media&shootType=${tier.name}&shoots=${isMax ? "20%2B" : shoots}#contact-form`;
+  useEffect(() => {
+    function handleClickOutside(event: globalThis.MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const monthlyCost = shoots * tier.price * daysPerWeek * 4.33;
+  const href = `/contact?service=Real+Estate+Media&shootType=${tier.name}&shoots=${isMax ? "20%2B" : shoots}&daysPerWeek=${daysPerWeek}#contact-form`;
 
   return (
-    <div 
-      className={`relative flex flex-col h-full rounded-[32px] p-8 md:p-10 transition-all duration-300
-        ${tier.name === 'Luxury' 
-          ? 'bg-[#120d07] text-white shadow-2xl shadow-orange/10 border border-orange/20' 
-          : 'bg-white text-dark border border-black/5 hover:border-orange/30 hover:shadow-xl'
-        }`}
-    >
-      {tier.name === 'Luxury' && (
-        <div className="absolute top-0 left-10 right-10 h-[2px] bg-gradient-to-r from-[#F97316] to-[#EA580C]" />
-      )}
-      
-      <h3 className={`font-antonio uppercase tracking-tight text-3xl mb-8 ${tier.name === 'Luxury' ? 'text-orange' : 'text-dark'}`} style={{ fontWeight: 300 }}>
-        {tier.name}
-      </h3>
-      
+    <div className={`relative flex flex-col h-full rounded-[32px] p-8 md:p-10 transition-all duration-500 ${theme.box}`}>
+      <div className="flex items-center gap-4 mb-8">
+        {theme.icon}
+        <h3 className={`font-antonio uppercase tracking-tight text-3xl ${theme.heading}`} style={{ fontWeight: 300, paddingTop: '4px' }}>
+          {tier.name}
+        </h3>
+      </div>
+
       <ul className="flex flex-col gap-4 mb-10 flex-grow">
         {tier.features.map((feature, j) => (
           <li key={j} className="flex gap-4 items-start">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className={`mt-0.5 shrink-0 ${tier.name === 'Luxury' ? 'text-orange' : 'text-orange'}`}>
-              <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-            <span className={`font-sans font-light text-[15px] leading-relaxed ${tier.name === 'Luxury' ? 'text-white/80' : 'text-dark/70'}`}>
+            <FeatureIcon feature={feature} className={`mt-0.5 shrink-0 ${tier.name === 'Luxury' ? 'text-orange' : 'text-orange'}`} />
+            <span className={`font-sans font-light text-[15px] leading-relaxed ${theme.body}`}>
               {feature}
             </span>
           </li>
         ))}
       </ul>
 
-      {/* Embedded Dynamic Pricing Slider */}
-      <div className={`mt-auto pt-8 border-t ${tier.name === 'Luxury' ? 'border-white/10' : 'border-black/5'}`}>
+      <div className={`mt-auto pt-8 border-t ${theme.divider}`}>
         <div className="flex justify-between font-sans font-medium text-sm mb-4">
-          <span className={tier.name === 'Luxury' ? 'text-white/50' : 'text-dark/50'}>Number of shoots per day</span>
+          <span className={theme.sub}>Number of shoots per day</span>
           <span className="text-orange font-bold">{isMax ? '20+' : shoots}</span>
         </div>
-        
-        <div className="relative h-2 bg-black/10 rounded-full mb-8">
-          <div 
-            className="absolute top-0 left-0 h-full bg-orange rounded-full pointer-events-none" 
-            style={{ width: `${(shoots / 20) * 100}%` }} 
+
+        <div className="relative h-2 bg-black/10 rounded-full mb-6">
+          <div
+            className="absolute top-0 left-0 h-full bg-orange rounded-full pointer-events-none"
+            style={{ width: `${(shoots / 20) * 100}%` }}
           />
-          <input 
+          <input
             type="range" min="1" max="20" step="1"
-            value={shoots} 
+            value={shoots}
             onChange={(e) => setShoots(Number(e.target.value))}
             className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
           />
-          <div 
+          <div
             className="absolute top-1/2 -translate-y-1/2 w-5 h-5 bg-white border-2 border-orange rounded-full pointer-events-none shadow-md"
             style={{ left: `calc(${(shoots / 20) * 100}% - 10px)` }}
           />
+        </div>
+
+        <div className="flex justify-between items-center font-sans font-medium text-sm mb-8">
+          <span className={theme.sub}>Days per week</span>
+
+          <div className="relative" ref={dropdownRef}>
+            <div
+              onClick={() => setDropdownOpen(!dropdownOpen)}
+              className={`flex items-center justify-between gap-3 rounded-lg pl-3.5 pr-2.5 py-1.5 font-sans text-sm font-medium cursor-pointer select-none border transition-colors
+                ${isLuxury
+                  ? 'bg-white/10 border-white/15 text-white'
+                  : 'bg-white border-black/10 text-dark'
+                }`}
+              style={dropdownOpen ? { borderColor: "rgba(249,115,22,0.5)" } : {}}
+            >
+              <span>{daysPerWeek} day{daysPerWeek > 1 ? "s" : ""}/week</span>
+              <motion.div animate={{ rotate: dropdownOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
+                <svg width="10" height="10" viewBox="0 0 14 14" fill="none">
+                  <path d="M2.5 5L7 9.5L11.5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </motion.div>
+            </div>
+
+            <AnimatePresence>
+              {dropdownOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -8, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -8, scale: 0.98 }}
+                  transition={{ duration: 0.2, ease: "easeInOut" }}
+                  className="absolute right-0 z-50 mt-2 w-32 bg-white border border-black/5 rounded-[14px] shadow-[0_20px_60px_rgba(0,0,0,0.16)] overflow-hidden"
+                >
+                  {[1, 2, 3, 4, 5, 6, 7].map((d) => (
+                    <div
+                      key={d}
+                      onClick={() => { setDaysPerWeek(d); setDropdownOpen(false); }}
+                      className={`px-4 py-2.5 cursor-pointer font-sans text-sm transition-colors ${
+                        daysPerWeek === d ? "bg-orange/10 text-orange" : "text-dark hover:bg-black/5"
+                      }`}
+                    >
+                      {d} day{d > 1 ? "s" : ""}/week
+                    </div>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
 
         {isMax ? (
@@ -152,8 +266,8 @@ function TierCard({ tier }: { tier: typeof editingTiers[0] }) {
         ) : (
           <div className="flex flex-col items-center">
             <div className="flex items-end gap-2 mb-4 h-14">
-              <span className="font-antonio text-5xl leading-none tracking-tight text-orange">${(shoots * tier.price).toFixed(2)}</span>
-              <span className={`font-sans text-sm pb-1 ${tier.name === 'Luxury' ? 'text-white/50' : 'text-dark/50'}`}>/ day</span>
+              <span className="font-antonio text-5xl leading-none tracking-tight text-orange">${monthlyCost.toFixed(2)}</span>
+              <span className={`font-sans text-sm pb-1 ${theme.sub}`}>/ month</span>
             </div>
             <Link href={href} className="w-full text-center py-4 rounded-xl bg-[#1a1209] text-white font-antonio uppercase tracking-widest hover:bg-orange transition-colors">
               Submit
@@ -206,6 +320,7 @@ function BeforeAfterSlider({ data }: { data: typeof portfolioImages[0] }) {
 }
 
 export function RealEstateClient() {
+  const reduce = useReducedMotion();
   const [activeIdx, setActiveIdx] = useState(0);
 
   const nextImage = () => setActiveIdx((prev) => (prev + 1) % portfolioImages.length);
@@ -271,7 +386,8 @@ export function RealEstateClient() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
             >
-              <Link href="/contact#contact-form" className="group flex items-center gap-[2px] cursor-pointer">
+              {/* Added gap-2 right here to space out the text pill and the icon square */}
+              <Link href="/contact#contact-form" className="group flex items-center gap-2 cursor-pointer">
                 <div
                   className="flex items-center h-[56px] px-7 text-white transition-all duration-300 ease-in-out bg-[#1a1209] group-hover:bg-[#F97316]"
                   style={{
@@ -388,33 +504,27 @@ export function RealEstateClient() {
         />
       </div>
 
-      {/* ── OUR CLIENTS (Logos light up automatically) ── */}
+      {/* ── OUR CLIENTS (always in color, glow on hover only) ── */}
       <section className="bg-[#fafaf8] px-6 lg:px-[8vw] py-32 border-t border-black/5">
         <FadeIn>
-          <div className="text-center mb-20">
+          <div className="text-center mb-16">
+            <p className="font-sans text-[13px] uppercase tracking-[0.15em] text-dark/40 font-medium mb-4">Trusted By</p>
             <h2 className="font-antonio uppercase text-dark leading-[0.95] tracking-tight text-[clamp(40px,5vw,64px)]" style={{ fontWeight: 300 }}>
               Our Clients
             </h2>
           </div>
-          <div className="flex flex-wrap justify-center items-center gap-x-8 gap-y-4">
-            {clientLogos.map((logo, i) => (
-              <motion.div
+          <div className="flex flex-wrap justify-center items-center gap-6">
+            {clientLogos.map((logo) => (
+              <div
                 key={logo.name}
-                initial={{ filter: "grayscale(100%)", opacity: 0.4 }}
-                whileInView={{ filter: "grayscale(0%)", opacity: 1 }}
-                whileHover={{ filter: "grayscale(0%)", opacity: 1 }}
-                viewport={{ once: false, amount: 0.6 }}
-                transition={{ duration: 0.6, ease: "easeOut", delay: i * 0.05 }}
-                // Padding here (instead of on the <img>) enlarges the area the
-                // cursor can be in to keep the logo lit up on hover.
-                className="p-6 -m-6"
+                className="w-36 h-36 md:w-44 md:h-44 bg-white border border-black/5 rounded-[24px] flex items-center justify-center p-6 transition-all duration-300 ease-out hover:border-orange/40 hover:scale-[1.05] hover:shadow-[0_0_40px_rgba(249,115,22,0.25)]"
               >
                 <img
                   src={logo.src}
                   alt={logo.name}
-                  className="h-16 md:h-24 object-contain max-w-[220px]"
+                  className="w-full h-full object-contain pointer-events-none"
                 />
-              </motion.div>
+              </div>
             ))}
           </div>
         </FadeIn>

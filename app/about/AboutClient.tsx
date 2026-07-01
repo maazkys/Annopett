@@ -21,6 +21,19 @@ export function AboutClient() {
       {/* ── HERO (Edge-to-Edge Full Bleed) ── */}
       <section className="relative h-screen min-h-[640px] overflow-hidden flex flex-col items-center justify-center text-center z-0">
         <div className="absolute inset-0 overflow-hidden -z-10" style={{ background: "#120d07" }}>
+          <video
+            src="/0702.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <div
+            className="absolute inset-0"
+            style={{ background: "linear-gradient(to bottom right, rgba(18,13,7,0.82) 30%, rgba(18,13,7,0.55) 100%)" }}
+          />
+
           {/* Fast Background Blobs */}
           <motion.div
             initial={{ opacity: 0 }}
