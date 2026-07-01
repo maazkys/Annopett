@@ -22,7 +22,7 @@ export function AboutClient() {
       <section className="relative h-screen min-h-[640px] overflow-hidden flex flex-col items-center justify-center text-center z-0">
         <div className="absolute inset-0 overflow-hidden -z-10" style={{ background: "#120d07" }}>
           <video
-            src="/0702.mp4"
+            src="/0702.webm"
             autoPlay
             muted
             loop
