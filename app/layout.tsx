@@ -10,6 +10,7 @@ import { Navbar } from "../components/layout/navbar";
 import { Footer } from "../components/layout/footer";
 import { ScrollToTop } from "../components/ScrollToTop";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next"
 
 // Body copy font
 const lato = Lato({
@@ -55,6 +56,7 @@ export default function RootLayout({
           <ScrollToTop />
           <Navbar />
           <main>{children}</main>
+          <Analytics />
           <Footer />
         </body>
       </html>
