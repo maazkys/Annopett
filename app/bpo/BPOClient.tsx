@@ -7,12 +7,12 @@ import { FadeIn, Testimonials } from "../../components/sections/Shared";
 import { img } from "../../lib/utils";
 
 const capabilities = [
-  { name: "Virtual Assistants", desc: "Inbox management, calendar scheduling, research, and dedicated ops support.", image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800" },
-  { name: "Customer Support", desc: "Live chat, email responses, and complex ticket triage with strict SLAs.", image: "https://images.unsplash.com/photo-1556761175-b413da4baf72?w=800" },
-  { name: "Lead Generation", desc: "Prospect sourcing, data enrichment, and outbound sequencing execution.", image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800" },
+  { name: "Virtual Assistants", desc: "Inbox management, calendar scheduling, research, and dedicated ops support.", image: "/VA.webp" },
+  { name: "Customer Support", desc: "Live chat, email responses, and complex ticket triage with strict SLAs.", image: "/Customer Support.webp" },
+  { name: "Lead Generation", desc: "Prospect sourcing, data enrichment, and outbound sequencing execution.", image: "/Lead Generation.webp" },
   { name: "Bookkeeping", desc: "Account reconciliations, AR/AP management, and monthly close preparation.", image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800" },
   { name: "Graphic Design", desc: "Comprehensive brand systems, compelling pitch decks, performance ads, and premium packaging.", image: "https://images.unsplash.com/photo-1626785774625-ddcddc3445e9?w=800" },
-  { name: "Social Media", desc: "High-retention reels, carousel designs, and full-scale content calendars delivered at pace.", image: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=800" },
+  { name: "Social Media", desc: "High-retention reels, carousel designs, and full-scale content calendars delivered at pace.", image: "/Social Media.webp" },
 ];
 
 const stats = [
@@ -22,14 +22,14 @@ const stats = [
 ];
 
 const clientLogos = [
-  { name: "Hat Fella Productions", src: "/HFP.png" },
-  { name: "RIPTIDE MEDIA", src: "/riptide.png" },
-  { name: "KILN Media", src: "/kiln.jpg" },
-  { name: "CD HOME", src: "/cdhome.png" },
-  { name: "ONE27 Media", src: "/one27.png" },
-  { name: "ARTHOME PHOTO", src: "/arthome.png" },
-  { name: "Next Creative", src: "/nextcreative.png" },
-  { name: "Proviz Real Estate Media", src: "/proviz.png" },
+  { name: "Hat Fella Productions", src: "/HFP.webp" },
+  { name: "RIPTIDE MEDIA", src: "/riptide.webp" },
+  { name: "KILN Media", src: "/kiln.webp" },
+  { name: "CD HOME", src: "/cdhome.webp" },
+  { name: "ONE27 Media", src: "/one27.webp" },
+  { name: "ARTHOME PHOTO", src: "/arthome.webp" },
+  { name: "Next Creative", src: "/nextcreative.webp" },
+  { name: "Proviz Real Estate Media", src: "/proviz.webp" },
 ];
 
 export function BPOClient() {
@@ -72,10 +72,10 @@ export function BPOClient() {
         <div className="absolute inset-0 overflow-hidden -z-10">
           {/* View Transition Image */}
           <img
-            src={img("https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=2000")}
+            src={img("/BPO.webp")}
             alt="Remote operations team"
             className="absolute inset-0 w-full h-full object-cover"
-            style={{ viewTransitionName: "service-image-bpo-creative" }}
+            style={{ viewTransitionName: "service-image-bpo" }}
           />
           {/* Dark overlay fading in smoothly */}
           <motion.div
@@ -86,20 +86,6 @@ export function BPOClient() {
             style={{ background: "linear-gradient(to bottom right, rgba(18,13,7,0.92) 30%, rgba(249,115,22,0.15) 100%)" }}
           />
           {/* Fast Background Blobs */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={reduce ? { opacity: 1 } : { opacity: 1, x: [0, 60, -40, 20, 0], y: [0, 40, -30, 60, 0], scale: [1, 1.15, 0.95, 1.1, 1] }}
-            transition={{ duration: 4.4, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -top-[15%] -left-[5%] w-[60%] h-[70%] rounded-full"
-            style={{ background: "radial-gradient(ellipse at center, rgba(249,115,22,0.22) 0%, transparent 70%)", filter: "blur(80px)" }}
-          />
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={reduce ? { opacity: 1 } : { opacity: 1, x: [0, -80, 40, -20, 0], y: [0, -50, 70, -30, 0], scale: [1, 1.2, 0.9, 1.05, 1] }}
-            transition={{ duration: 5.6, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-[40%] -right-[10%] w-[55%] h-[80%] rounded-full"
-            style={{ background: "radial-gradient(ellipse at center, rgba(234,88,12,0.18) 0%, transparent 70%)", filter: "blur(90px)" }}
-          />
         </div>
 
         <div className="relative z-10 flex flex-col h-full w-full px-6 lg:px-[8vw] pt-32 pb-12">
@@ -202,85 +188,6 @@ export function BPOClient() {
           ))}
         </div>
       </section>
-
-      {/* ── WHY OUTSOURCE — Sleek Dark Stats Layout ── */}
-      {/* <section className="px-6 lg:px-[8vw] py-28 bg-[#120d07] text-white">
-        <div className="grid lg:grid-cols-[36%_1fr] gap-12 lg:gap-16 items-center">
-          <div>
-            <FadeIn>
-              <h2
-                className="font-antonio uppercase text-white leading-[0.95] tracking-tight"
-                style={{ fontSize: "clamp(40px, 5vw, 64px)", fontWeight: 300 }}
-              >
-                Why<br />Outsource?
-              </h2>
-              <p className="mt-6 text-[16px] font-light text-white/50 max-w-xs font-sans leading-relaxed">
-                Scale your operations without scaling your overhead.
-              </p>
-            </FadeIn>
-          </div>
-
-          <div className="grid sm:grid-cols-3 gap-10">
-            {stats.map((s, i) => (
-              <FadeIn key={s.v} delay={0.1 * i}>
-                <div className="flex flex-col relative group cursor-default">
-                  <div className="absolute -top-6 left-0 w-8 h-[2px] bg-orange transition-all duration-500 ease-out group-hover:w-full" />
-                  <span
-                    className="font-antonio text-orange mb-3 leading-none tracking-tight"
-                    style={{ fontSize: "clamp(48px, 6vw, 72px)", fontWeight: 300 }}
-                  >
-                    {s.v}
-                  </span>
-                  <p className="font-sans font-light text-white/60 text-base leading-relaxed">
-                    {s.l}
-                  </p>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
-        </div>
-      </section> */}
-
-      {/* ── OUR WORK / PORTFOLIO GRID (From Creative) ── */}
-      {/* <section className="bg-[#120d07] px-6 lg:px-[8vw] py-28 text-white border-t border-white/5">
-        <FadeIn>
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
-            <div>
-              <h2
-                className="font-antonio uppercase text-white leading-[0.95] tracking-tight"
-                style={{ fontSize: "clamp(40px, 5vw, 64px)", fontWeight: 300 }}
-              >
-                Our Work.
-              </h2>
-              <p className="mt-6 text-[16px] font-light text-white/50 max-w-xs font-sans leading-relaxed">
-                A selection of our recent creative projects.
-              </p>
-            </div>
-          </div>
-        </FadeIn>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <FadeIn key={i} delay={0.06 * i}>
-              <div className="rounded-[24px] bg-white/5 border border-white/10 h-64 flex items-center justify-center group hover:bg-white/10 hover:border-white/20 transition-all duration-300">
-                <span className="font-antonio uppercase text-[15px] tracking-widest text-white/30 group-hover:text-white/60 transition-colors">
-                  Portfolio coming soon
-                </span>
-              </div>
-            </FadeIn>
-          ))}
-        </div>
-      </section> */}
-
-      {/* ── FULL-WIDTH IMAGE BREAK ── */}
-      <div className="h-[480px] overflow-hidden">
-        <img
-          src={img("https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=2000")}
-          alt="Modern workspace"
-          loading="lazy"
-          className="w-full h-full object-cover"
-        />
-      </div>
 
       {/* ── TESTIMONIALS ── */}
             <section className="bg-[#fafaf8] px-6 lg:px-[8vw] py-32 border-t border-black/5">

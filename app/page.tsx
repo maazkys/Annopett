@@ -9,20 +9,20 @@ import {
 import { img } from "../lib/utils";
 
 const services = [
-  { name: "Data & AI", href: "/data-ai", desc: "Annotation, datasets, model QA, and research support.", image: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800" },
-  { name: "Real Estate Media", href: "/real-estate", desc: "Photo and video editing, virtual staging.", image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800" },
-  { name: "BPO & Creative", href: "/bpo", desc: "Virtual assistants, support teams, and high-volume creative production.", image: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=800" },
+  { name: "Data & AI", href: "/data-ai", desc: "Annotation, datasets, model QA, and research support.", image: "/AI.webp" },
+  { name: "Real Estate Media", href: "/real-estate", desc: "Photo and video editing, virtual staging.", image: "/Real Estate.webp" },
+  { name: "BPO & Creative", href: "/bpo", desc: "Virtual assistants, support teams, and high-volume creative production.", image: "/BPO.webp" },
 ];
 
 const clientLogos = [
-  { name: "Hat Fella Productions", src: "/HFP.png" },
-  { name: "RIPTIDE MEDIA", src: "/riptide.png" },
-  { name: "KILN Media", src: "/kiln.jpg" },
-  { name: "CD HOME", src: "/cdhome.png" },
-  { name: "ONE27 Media", src: "/one27.png" },
-  { name: "ARTHOME PHOTO", src: "/arthome.png" },
-  { name: "Next Creative", src: "/nextcreative.png" },
-  { name: "Proviz Real Estate Media", src: "/proviz.png" },
+  { name: "Hat Fella Productions", src: "/HFP.webp" },
+  { name: "RIPTIDE MEDIA", src: "/Riptide.webp" },
+  { name: "KILN Media", src: "/kiln.webp" },
+  { name: "CD HOME", src: "/cdhome.webp" },
+  { name: "ONE27 Media", src: "/one27.webp" },
+  { name: "ARTHOME PHOTO", src: "/arthome.webp" },
+  { name: "Next Creative", src: "/nextcreative.webp" },
+  { name: "Proviz Real Estate Media", src: "/proviz.webp" },
 ];
 
 // Lives for the lifetime of the JS module in memory: reset to false on a genuine
@@ -116,7 +116,7 @@ export default function Home() {
       <section className="relative h-screen min-h-[640px] overflow-hidden flex flex-col z-0">
         <div className="absolute inset-0 overflow-hidden -z-10" style={{ background: "#120d07" }}>
           <video
-            src="/0702.webm"
+            src="/0703.webm"
             autoPlay
             muted
             loop
@@ -131,7 +131,7 @@ export default function Home() {
 
         <div className="relative z-10 flex flex-col h-full w-full px-6 lg:px-[8vw] pt-32 pb-12">
           
-          <div className="max-w-5xl">
+          <div className="max-w-5xl mt-11">
             <motion.h1
               initial={reduce ? {} : { opacity: 0, y: 32 }}
               animate={{ opacity: 1, y: 0 }}
@@ -234,103 +234,90 @@ export default function Home() {
 
       {/* ── BUILT FOR SCALE SECTION ── */}
       <section className="px-6 lg:px-[8vw] py-28 bg-[#120d07] text-white">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          <div>
-            <FadeIn>
+        <div className="max-w-5xl mx-auto flex flex-col items-center">
+          <FadeIn>
+            <div className="text-center">
               <h2 className="font-display uppercase tracking-tight text-[clamp(40px,4.5vw,60px)] leading-[0.95] text-white">
                 Built for <span className="text-orange">Scale.</span>
               </h2>
-              <p className="mt-6 text-[16px] font-light text-white/60 font-sans leading-relaxed max-w-md">
+              <p className="mt-6 text-[16px] font-light text-white/60 font-sans leading-relaxed max-w-md mx-auto">
                 People, processes, and technology working together to deliver exceptional results at every scale.
               </p>
-            </FadeIn>
-            
-            <div className="mt-12 grid sm:grid-cols-2 gap-4">
-              
-              {/* Card 1: Team Members */}
-              <FadeIn delay={0.1}>
-                <div className="bg-[#1a1209] border border-white/5 rounded-[24px] p-6 flex gap-4 items-start h-full">
-                  <div className="w-14 h-14 rounded-full border border-orange/20 bg-orange/5 flex items-center justify-center shrink-0 text-orange">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                      <circle cx="9" cy="7" r="4" />
-                      <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                    </svg>
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-orange text-[32px] font-sans font-semibold leading-none tracking-tighter mb-1.5">200+</span>
-                    <span className="text-white text-[15px] font-medium mb-1.5 leading-snug">Team Members</span>
-                    <span className="text-white/50 text-[13px] leading-relaxed font-light">Skilled professionals across multiple domains.</span>
-                  </div>
-                </div>
-              </FadeIn>
-
-              {/* Card 2: Service Specialties */}
-              <FadeIn delay={0.2}>
-                <div className="bg-[#1a1209] border border-white/5 rounded-[24px] p-6 flex gap-4 items-start h-full">
-                  <div className="w-14 h-14 rounded-full border border-orange/20 bg-orange/5 flex items-center justify-center shrink-0 text-orange">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                    </svg>
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-orange text-[32px] font-sans font-semibold leading-none tracking-tighter mb-1.5">15+</span>
-                    <span className="text-white text-[15px] font-medium mb-1.5 leading-snug">Service Specialties</span>
-                    <span className="text-white/50 text-[13px] leading-relaxed font-light">A wide range of services to meet diverse business needs.</span>
-                  </div>
-                </div>
-              </FadeIn>
-
-              {/* Card 3: Production Capacity */}
-              <FadeIn delay={0.3}>
-                <div className="bg-[#1a1209] border border-white/5 rounded-[24px] p-6 flex gap-4 items-start h-full">
-                  <div className="w-14 h-14 rounded-full border border-orange/20 bg-orange/5 flex items-center justify-center shrink-0 text-orange">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                      <circle cx="12" cy="12" r="10" />
-                      <polyline points="12 6 12 12 16 14" />
-                    </svg>
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-orange text-[32px] font-sans font-semibold leading-none tracking-tighter mb-1.5">24/7</span>
-                    <span className="text-white text-[15px] font-medium mb-1.5 leading-snug">Production Capacity</span>
-                    <span className="text-white/50 text-[13px] leading-relaxed font-light">Round-the-clock operations to keep your business moving.</span>
-                  </div>
-                </div>
-              </FadeIn>
-
-              {/* Card 4: On-Time Delivery */}
-              <FadeIn delay={0.4}>
-                <div className="bg-[#1a1209] border border-white/5 rounded-[24px] p-6 flex gap-4 items-start h-full">
-                  <div className="w-14 h-14 rounded-full border border-orange/20 bg-orange/5 flex items-center justify-center shrink-0 text-orange">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                      <circle cx="12" cy="12" r="10" />
-                      <circle cx="12" cy="12" r="6" />
-                      <circle cx="12" cy="12" r="2" />
-                    </svg>
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-orange text-[32px] font-sans font-semibold leading-none tracking-tighter mb-1.5">99%</span>
-                    <span className="text-white text-[15px] font-medium mb-1.5 leading-snug">On-Time Delivery</span>
-                    <span className="text-white/50 text-[13px] leading-relaxed font-light">Committed to deadlines with consistency you can trust.</span>
-                  </div>
-                </div>
-              </FadeIn>
-
-            </div>
-          </div>
-          
-          <FadeIn delay={0.15}>
-            <div className="relative rounded-[32px] overflow-hidden border border-white/10 h-full min-h-[400px] lg:min-h-[560px]">
-              <img
-                src={img("https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=900")}
-                alt="Team collaborating remotely"
-                loading="lazy"
-                className="absolute inset-0 w-full h-full object-cover opacity-80"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#120d07]/80 via-transparent to-transparent" />
             </div>
           </FadeIn>
+          
+          <div className="mt-16 grid sm:grid-cols-2 gap-4 w-full">
+            
+            {/* Card 1: Team Members */}
+            <FadeIn delay={0.1}>
+              <div className="bg-[#1a1209] border border-white/5 rounded-[24px] p-6 flex gap-4 items-start h-full">
+                <div className="w-14 h-14 rounded-full border border-orange/20 bg-orange/5 flex items-center justify-center shrink-0 text-orange">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                  </svg>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-orange text-[32px] font-sans font-semibold leading-none tracking-tighter mb-1.5">200+</span>
+                  <span className="text-white text-[15px] font-medium mb-1.5 leading-snug">Team Members</span>
+                  <span className="text-white/50 text-[13px] leading-relaxed font-light">Skilled professionals across multiple domains.</span>
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Card 2: Service Specialties */}
+            <FadeIn delay={0.2}>
+              <div className="bg-[#1a1209] border border-white/5 rounded-[24px] p-6 flex gap-4 items-start h-full">
+                <div className="w-14 h-14 rounded-full border border-orange/20 bg-orange/5 flex items-center justify-center shrink-0 text-orange">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-orange text-[32px] font-sans font-semibold leading-none tracking-tighter mb-1.5">15+</span>
+                  <span className="text-white text-[15px] font-medium mb-1.5 leading-snug">Service Specialties</span>
+                  <span className="text-white/50 text-[13px] leading-relaxed font-light">A wide range of services to meet diverse business needs.</span>
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Card 3: Production Capacity */}
+            <FadeIn delay={0.3}>
+              <div className="bg-[#1a1209] border border-white/5 rounded-[24px] p-6 flex gap-4 items-start h-full">
+                <div className="w-14 h-14 rounded-full border border-orange/20 bg-orange/5 flex items-center justify-center shrink-0 text-orange">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
+                  </svg>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-orange text-[32px] font-sans font-semibold leading-none tracking-tighter mb-1.5">24/7</span>
+                  <span className="text-white text-[15px] font-medium mb-1.5 leading-snug">Production Capacity</span>
+                  <span className="text-white/50 text-[13px] leading-relaxed font-light">Round-the-clock operations to keep your business moving.</span>
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Card 4: On-Time Delivery */}
+            <FadeIn delay={0.4}>
+              <div className="bg-[#1a1209] border border-white/5 rounded-[24px] p-6 flex gap-4 items-start h-full">
+                <div className="w-14 h-14 rounded-full border border-orange/20 bg-orange/5 flex items-center justify-center shrink-0 text-orange">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <circle cx="12" cy="12" r="6" />
+                    <circle cx="12" cy="12" r="2" />
+                  </svg>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-orange text-[32px] font-sans font-semibold leading-none tracking-tighter mb-1.5">99%</span>
+                  <span className="text-white text-[15px] font-medium mb-1.5 leading-snug">On-Time Delivery</span>
+                  <span className="text-white/50 text-[13px] leading-relaxed font-light">Committed to deadlines with consistency you can trust.</span>
+                </div>
+              </div>
+            </FadeIn>
+          </div>
         </div>
       </section>
 

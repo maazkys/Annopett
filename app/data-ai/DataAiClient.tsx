@@ -5,33 +5,26 @@ import { FadeIn } from "../../components/sections/Shared";
 import { img } from "../../lib/utils";
 
 const capabilities = [
-  { name: "Image Annotation", desc: "Bounding boxes, polygons, and high-precision segmentation masks.", image: "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=800" },
-  { name: "Text Labelling", desc: "NER, intent classification, sentiment analysis, and context tagging.", image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800" },
-  { name: "Video Annotation", desc: "Frame-level tracking, action recognition, and temporal tagging.", image: "https://images.unsplash.com/photo-1574359411659-15573a27fd0c?w=800" },
-  { name: "Audio Transcription", desc: "Timestamped multi-speaker transcripts and linguistic tagging.", image: "https://images.unsplash.com/photo-1589903308904-1010c2294adc?w=800" },
-  { name: "Dataset Creation", desc: "Sourcing, cleaning, deduplication, and balancing at scale.", image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800" },
-  { name: "AI Research Support", desc: "Literature reviews, structured summarisation, and data prep.", image: "https://images.unsplash.com/photo-1507146426996-ef05306b995a?w=800" },
-  { name: "AI Model Testing", desc: "Regression test suites, edge case probing, and hallucination checks.", image: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800" },
-  { name: "Website Testing", desc: "End-to-end QA, functional validation, and cross-browser performance testing.", image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800" },
-  { name: "Website & Full-Stack Development", desc: "Custom front-end builds and full-stack engineering, from database to deployment.", image: "https://images.unsplash.com/photo-1547658719-da2b51169166?w=800" },
+  { name: "Image Annotation", desc: "Bounding boxes, polygons, and high-precision segmentation masks.", image: "/imageannotation.webp" },
+  { name: "Text Labelling", desc: "NER, intent classification, sentiment analysis, and context tagging.", image: "/textlabeling.webp" },
+  { name: "Video Annotation", desc: "Frame-level tracking, action recognition, and temporal tagging.", image: "/videoannotation.webp" },
+  { name: "Audio Transcription", desc: "Timestamped multi-speaker transcripts and linguistic tagging.", image: "/audiotranscription.webp" },
+  { name: "Dataset Creation", desc: "Sourcing, cleaning, deduplication, and balancing at scale.", image: "/datasetcreation.webp" },
+  { name: "AI Research Support", desc: "Literature reviews, structured summarisation, and data prep.", image: "/airesearchsupport.webp" },
+  { name: "AI Model Testing", desc: "Regression test suites, edge case probing, and hallucination checks.", image: "/aimodeltesting.webp" },
+  { name: "Website Testing", desc: "End-to-end QA, functional validation, and cross-browser performance testing.", image: "/Website Testing.webp" },
+  { name: "Website & Full-Stack Development", desc: "Custom front-end builds and full-stack engineering, from database to deployment.", image: "/Website & Full-Stack Development.webp" },
 ];
 
 const clientLogos = [
-  { name: "Hat Fella Productions", src: "/HFP.png" },
-  { name: "RIPTIDE MEDIA", src: "/riptide.png" },
-  { name: "KILN Media", src: "/kiln.jpg" },
-  { name: "CD HOME", src: "/cdhome.png" },
-  { name: "ONE27 Media", src: "/one27.png" },
-  { name: "ARTHOME PHOTO", src: "/arthome.png" },
-  { name: "Next Creative", src: "/nextcreative.png" },
-  { name: "Proviz Real Estate Media", src: "/proviz.png" },
-];
-
-const steps = [
-  { num: "01", t: "Send Requirements", d: "Share your taxonomy, edge cases, and volume expectations." },
-  { num: "02", t: "Team Assigned",     d: "We spin up a dedicated, trained pod specific to your data." },
-  { num: "03", t: "Work Delivered",    d: "Batches are annotated, reviewed, and exported to your format." },
-  { num: "04", t: "You Approve",       d: "Feedback loops are integrated directly into our QA process." }
+  { name: "Hat Fella Productions", src: "/HFP.webp" },
+  { name: "RIPTIDE MEDIA", src: "/riptide.webp" },
+  { name: "KILN Media", src: "/kiln.webp" },
+  { name: "CD HOME", src: "/cdhome.webp" },
+  { name: "ONE27 Media", src: "/one27.webp" },
+  { name: "ARTHOME PHOTO", src: "/arthome.webp" },
+  { name: "Next Creative", src: "/nextcreative.webp" },
+  { name: "Proviz Real Estate Media", src: "/proviz.webp" },
 ];
 
 export function DataAIClient() {
@@ -74,7 +67,7 @@ export function DataAIClient() {
         <div className="absolute inset-0 overflow-hidden -z-10">
           {/* View Transition Image */}
           <img
-            src={img("https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=2000")}
+            src={img("/AI.webp")}
             alt="Data and AI abstraction"
             className="absolute inset-0 w-full h-full object-cover"
             style={{ viewTransitionName: "service-image-data-ai" }}
@@ -87,21 +80,7 @@ export function DataAIClient() {
             className="absolute inset-0"
             style={{ background: "linear-gradient(to bottom right, rgba(18,13,7,0.92) 30%, rgba(249,115,22,0.15) 100%)" }}
           />
-          {/* Fast Background Blobs */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={reduce ? { opacity: 1 } : { opacity: 1, x: [0, 60, -40, 20, 0], y: [0, 40, -30, 60, 0], scale: [1, 1.15, 0.95, 1.1, 1] }}
-            transition={{ duration: 4.4, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -top-[15%] -left-[5%] w-[60%] h-[70%] rounded-full"
-            style={{ background: "radial-gradient(ellipse at center, rgba(249,115,22,0.22) 0%, transparent 70%)", filter: "blur(80px)" }}
-          />
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={reduce ? { opacity: 1 } : { opacity: 1, x: [0, -80, 40, -20, 0], y: [0, -50, 70, -30, 0], scale: [1, 1.2, 0.9, 1.05, 1] }}
-            transition={{ duration: 5.6, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-[40%] -right-[10%] w-[55%] h-[80%] rounded-full"
-            style={{ background: "radial-gradient(ellipse at center, rgba(234,88,12,0.18) 0%, transparent 70%)", filter: "blur(90px)" }}
-          />
+
         </div>
 
         <div className="relative z-10 flex flex-col h-full w-full px-6 lg:px-[8vw] pt-32 pb-12">
@@ -205,60 +184,6 @@ export function DataAIClient() {
           ))}
         </div>
       </section>
-
-      {/* ── HOW IT WORKS — Numbered Card Grid ── */}
-      <section className="px-6 lg:px-[8vw] py-28 bg-[#120d07] text-white">
-        <FadeIn>
-          <div className="text-center max-w-2xl mx-auto mb-20">
-            <h2
-              className="font-antonio uppercase text-white leading-[0.95] tracking-tight"
-              style={{ fontSize: "clamp(40px, 5vw, 64px)", fontWeight: 300 }}
-            >
-              How it works.
-            </h2>
-            <p className="mt-6 text-[17px] font-light text-white/50 font-sans leading-relaxed">
-              A streamlined process designed to integrate directly into your workflow.
-            </p>
-          </div>
-        </FadeIn>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {steps.map((s, i) => (
-            <FadeIn key={s.t} delay={0.08 * i}>
-              <div className="relative flex flex-col h-full rounded-[28px] p-8 bg-white/[0.03] border border-white/[0.08] hover:border-orange/30 hover:bg-white/[0.05] transition-all duration-300">
-                <span
-                  className="font-antonio text-orange leading-none mb-6"
-                  style={{ fontSize: "clamp(32px, 3.5vw, 44px)", fontWeight: 300 }}
-                >
-                  {s.num}
-                </span>
-                <div
-                  className="font-antonio uppercase text-white tracking-tight leading-none mb-3"
-                  style={{ fontSize: "clamp(18px, 2vw, 24px)", fontWeight: 300 }}
-                >
-                  {s.t}
-                </div>
-                <p className="font-sans font-light text-white/45 text-[15px] leading-relaxed">
-                  {s.d}
-                </p>
-                {i < steps.length - 1 && (
-                  <div className="hidden lg:block absolute top-8 -right-3 w-6 h-[1px] bg-white/10" />
-                )}
-              </div>
-            </FadeIn>
-          ))}
-        </div>
-      </section>
-
-      {/* ── FULL-WIDTH IMAGE BREAK ── */}
-      <div className="h-[480px] overflow-hidden">
-        <img
-          src={img("https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=2000")}
-          alt="Data and statistics"
-          loading="lazy"
-          className="w-full h-full object-cover"
-        />
-      </div>
 
       {/* ── OUR CLIENTS ── */}
       <section className="bg-[#fafaf8] px-6 lg:px-[8vw] py-32 border-t border-black/5">

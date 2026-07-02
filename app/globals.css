@@ -55,9 +55,25 @@
 html, body {
   font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
 }
- ::view-transition-old(service-image-real-estate),
-::view-transition-new(service-image-real-estate) {
-  animation-duration: 700ms;
+ /* Service hero image morph (home page card -> service page hero).
+    Must set duration on BOTH the group (position/size morph) and the
+    old/new (crossfade) pseudo-elements, or they desync — the box
+    snaps to full size while the crossfade is still finishing, which
+    reads as the image "popping" too large too fast. */
+::view-transition-group(service-image-real-estate),
+::view-transition-group(service-image-bpo),
+::view-transition-group(service-image-data-ai) {
+  animation-duration: 900ms;
+  animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+::view-transition-old(service-image-real-estate),
+::view-transition-new(service-image-real-estate),
+::view-transition-old(service-image-bpo),
+::view-transition-new(service-image-bpo),
+::view-transition-old(service-image-data-ai),
+::view-transition-new(service-image-data-ai) {
+  animation-duration: 900ms;
   animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
 }
  

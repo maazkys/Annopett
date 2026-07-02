@@ -22,7 +22,7 @@ export function AboutClient() {
       <section className="relative h-screen min-h-[640px] overflow-hidden flex flex-col items-center justify-center text-center z-0">
         <div className="absolute inset-0 overflow-hidden -z-10" style={{ background: "#120d07" }}>
           <video
-            src="/0702.webm"
+            src="/0703.webm"
             autoPlay
             muted
             loop
@@ -32,22 +32,6 @@ export function AboutClient() {
           <div
             className="absolute inset-0"
             style={{ background: "linear-gradient(to bottom right, rgba(18,13,7,0.82) 30%, rgba(18,13,7,0.55) 100%)" }}
-          />
-
-          {/* Fast Background Blobs */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={reduce ? { opacity: 1 } : { opacity: 1, x: [0, 60, -40, 20, 0], y: [0, 40, -30, 60, 0], scale: [1, 1.15, 0.95, 1.1, 1] }}
-            transition={{ duration: 4.4, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -top-[15%] -left-[5%] w-[60%] h-[70%] rounded-full"
-            style={{ background: "radial-gradient(ellipse at center, rgba(249,115,22,0.22) 0%, transparent 70%)", filter: "blur(80px)" }}
-          />
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={reduce ? { opacity: 1 } : { opacity: 1, x: [0, -80, 40, -20, 0], y: [0, -50, 70, -30, 0], scale: [1, 1.2, 0.9, 1.05, 1] }}
-            transition={{ duration: 5.6, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-[40%] -right-[10%] w-[55%] h-[80%] rounded-full"
-            style={{ background: "radial-gradient(ellipse at center, rgba(234,88,12,0.18) 0%, transparent 70%)", filter: "blur(90px)" }}
           />
         </div>
 
@@ -68,8 +52,8 @@ export function AboutClient() {
             className="font-antonio uppercase text-white leading-[0.95] tracking-tight"
             style={{ fontSize: "clamp(52px, 8.5vw, 118px)", fontWeight: 300 }}
           >
-            Remote Team.<br />
-            Real Impact.
+            Bringing Life<br />
+            To AI.
           </motion.h1>
 
           <motion.p
@@ -104,7 +88,7 @@ export function AboutClient() {
           <FadeIn delay={0.1}>
             <div className="w-full aspect-[16/9] rounded-[28px] overflow-hidden bg-black/5 mb-12">
               <img
-                src={img("https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1600")}
+                src={img("/globe.webp")}
                 alt="Our team"
                 loading="lazy"
                 className="w-full h-full object-cover"
@@ -124,27 +108,6 @@ export function AboutClient() {
           </FadeIn>
         </div>
       </section>
-
-      {/* ── BIG STAT SECTION ── */}
-      {/* <section className="relative h-[600px] overflow-hidden flex items-center justify-center text-center px-6 border-t border-black/5">
-        <img
-          src={img("https://images.unsplash.com/photo-1531482615713-2afd69097998?w=2000")}
-          alt="Collaborative workspace"
-          loading="lazy"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-[#120d07]/85" />
-        <div className="relative z-10">
-          <FadeIn>
-            <div className="font-antonio text-orange leading-none tracking-tight" style={{ fontSize: "clamp(100px, 15vw, 200px)", fontWeight: 300 }}>
-              50+
-            </div>
-            <div className="mt-4 font-antonio uppercase tracking-widest text-xl sm:text-2xl text-white">
-              Skilled Remote Professionals
-            </div>
-          </FadeIn>
-        </div>
-      </section> */}
 
       {/* ── VALUES (compact single-row strip) ── */}
       <section className="bg-[#fafaf8] px-6 lg:px-[8vw] py-24 relative">

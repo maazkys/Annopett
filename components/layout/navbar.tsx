@@ -29,9 +29,9 @@ export function Navbar() {
   } as const;
 
   const allServices = [
-    { label: "Data & AI",          href: "/data-ai",      img: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=80&auto=format&q=80" },
-    { label: "Real Estate Media",  href: "/real-estate",  img: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=80&auto=format&q=80" },
-    { label: "BPO & Creative",     href: "/bpo", img: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=80&auto=format&q=80" },
+    { label: "Data & AI",          href: "/data-ai",      img: "/AI.webp" },
+    { label: "Real Estate Media",  href: "/real-estate",  img: "/Real Estate.webp" },
+    { label: "BPO & Creative",     href: "/bpo",          img: "/BPO.webp" },
   ];
 
   return (
@@ -54,7 +54,7 @@ export function Navbar() {
             boxShadow: scrolled ? "0 2px 20px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.06)" : "none",
           }}
         >
-          <img src="/logo.png" alt="Annopett Logo" style={{ height: "28px", width: "auto", display: "block" }} />
+          <img src="/logo.webp" alt="Annopett Logo" style={{ height: "28px", width: "auto", display: "block" }} />
           <span
             style={{
               ...linkStyle,

@@ -92,7 +92,7 @@ export function Footer() {
         <div className="grid gap-14 py-16 md:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1fr]">
           <motion.div {...fadeUp}>
             <Link href="/" className="flex items-center gap-2.5">
-              <img src="/logo.png" alt="Annopett" style={{ height: "28px", width: "auto" }} />
+              <img src="/logo.webp" alt="Annopett" style={{ height: "28px", width: "auto" }} />
               <span style={{ ...linkStyle, fontSize: "22px", fontWeight: 400, color: "#fff" }}>
                 Annopett
               </span>

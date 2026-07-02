@@ -72,14 +72,14 @@ const portfolioImages = [
 ];
 
 const clientLogos = [
-  { name: "Hat Fella Productions", src: "/HFP.png" },
-  { name: "RIPTIDE MEDIA", src: "/riptide.png" },
-  { name: "KILN Media", src: "/kiln.jpg" },
-  { name: "CD HOME", src: "/cdhome.png" },
-  { name: "ONE27 Media", src: "/one27.png" },
-  { name: "ARTHOME PHOTO", src: "/arthome.png" },
-  { name: "Next Creative", src: "/nextcreative.png" },
-  { name: "Proviz Real Estate Media", src: "/proviz.png" },
+  { name: "Hat Fella Productions", src: "/HFP.webp" },
+  { name: "RIPTIDE MEDIA", src: "/Riptide.webp" },
+  { name: "KILN Media", src: "/kiln.webp" },
+  { name: "CD HOME", src: "/cdhome.webp" },
+  { name: "ONE27 Media", src: "/one27.webp" },
+  { name: "ARTHOME PHOTO", src: "/arthome.webp" },
+  { name: "Next Creative", src: "/nextcreative.webp" },
+  { name: "Proviz Real Estate Media", src: "/proviz.webp" },
 ];
 
 function CheckCircleIcon({ className }: { className?: string }) {
@@ -332,7 +332,7 @@ export function RealEstateClient() {
       <section className="relative h-screen min-h-[640px] overflow-hidden flex flex-col z-0">
         <div className="absolute inset-0 overflow-hidden -z-10">
           <img
-            src={img("https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=2000")}
+            src={img("/Real Estate.webp")}
             alt="Real estate interior"
             className="absolute inset-0 w-full h-full object-cover"
             style={{ viewTransitionName: "service-image-real-estate" }}
@@ -364,9 +364,8 @@ export function RealEstateClient() {
               className="font-antonio uppercase text-white leading-[0.95] tracking-tight"
               style={{ fontSize: "clamp(52px, 8.5vw, 110px)", fontWeight: 300 }}
             >
-              We Perfect<br />
-              What AI<br />
-              Starts.
+              From AutoHDR to Client<br />
+              No Gaps, No Delays.
             </motion.h1>
           </div>
 
@@ -493,16 +492,6 @@ export function RealEstateClient() {
           </div>
         </FadeIn>
       </section>
-
-      {/* ── FULL-WIDTH IMAGE BREAK ── */}
-      <div className="h-[480px] overflow-hidden">
-        <img
-          src={img("https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=2000")}
-          alt="Interior architecture"
-          loading="lazy"
-          className="w-full h-full object-cover"
-        />
-      </div>
 
       {/* ── OUR CLIENTS (always in color, glow on hover only) ── */}
       <section className="bg-[#fafaf8] px-6 lg:px-[8vw] py-32 border-t border-black/5">
