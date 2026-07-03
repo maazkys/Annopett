@@ -135,7 +135,16 @@ export default function Home() {
 
         <div className="relative z-10 flex flex-col h-full w-full px-6 lg:px-[8vw] pt-32 pb-12">
           
-          <div className="max-w-5xl mt-11">
+          <div className="max-w-5xl">
+            <motion.p
+              initial={reduce ? {} : { opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: introDone ? 0 : 4.0 }}
+              className="font-antonio uppercase text-orange tracking-[0.2em] text-sm mb-6"
+            >
+              Bringing Life to AI
+            </motion.p>
+
             <motion.h1
               initial={reduce ? {} : { opacity: 0, y: 32 }}
               animate={{ opacity: 1, y: 0 }}
@@ -143,8 +152,8 @@ export default function Home() {
               className="font-display uppercase text-white leading-[0.95] tracking-tight"
               style={{ fontSize: "clamp(52px, 8.5vw, 118px)", fontWeight: 300 }}
             >
-              Precision Work.<br />
-              Remote Power.
+              Delivering Human &<br />
+              Artificial Intelligence
             </motion.h1>
           </div>
 
