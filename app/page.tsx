@@ -148,7 +148,7 @@ export default function Home() {
             </motion.h1>
           </div>
 
-          <div className="mt-auto flex flex-col md:flex-row justify-between md:items-end gap-8">
+          <div className="mt-auto flex flex-col md:flex-row justify-between md:items-end gap-8 mb-8 md:mb-0">
             
             <motion.p
               initial={reduce ? {} : { opacity: 0, y: 20 }}

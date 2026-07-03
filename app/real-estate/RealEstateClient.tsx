@@ -369,7 +369,7 @@ export function RealEstateClient() {
             </motion.h1>
           </div>
 
-          <div className="mt-auto flex flex-col md:flex-row justify-between md:items-end gap-8">
+          <div className="mt-auto flex flex-col md:flex-row justify-between md:items-end gap-8 mb-8 md:mb-0">
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}

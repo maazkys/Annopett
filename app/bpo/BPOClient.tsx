@@ -23,7 +23,7 @@ const stats = [
 
 const clientLogos = [
   { name: "Hat Fella Productions", src: "/HFP.webp" },
-  { name: "RIPTIDE MEDIA", src: "/riptide.webp" },
+  { name: "RIPTIDE MEDIA", src: "/Riptide.webp" },
   { name: "KILN Media", src: "/kiln.webp" },
   { name: "CD HOME", src: "/cdhome.webp" },
   { name: "ONE27 Media", src: "/one27.webp" },
@@ -111,7 +111,7 @@ export function BPOClient() {
             </motion.h1>
           </div>
 
-          <div className="mt-auto flex flex-col md:flex-row justify-between md:items-end gap-8">
+          <div className="mt-auto flex flex-col md:flex-row justify-between md:items-end gap-8 mb-8 md:mb-0">
             <motion.p
               initial={reduce ? {} : { opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
