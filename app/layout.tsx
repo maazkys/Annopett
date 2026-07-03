@@ -11,6 +11,7 @@ import { Footer } from "../components/layout/footer";
 import { ScrollToTop } from "../components/ScrollToTop";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next"
+import SmoothScroll from "../components/SmoothScroll";
 
 // Body copy font
 const lato = Lato({
@@ -48,6 +49,7 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <body className="bg-[#fafaf8] antialiased">
+          <SmoothScroll>          
           {/*
             ScrollToTop fires on every pathname change.
             It must be inside <body> so it has access to the window object,
@@ -58,6 +60,7 @@ export default function RootLayout({
           <main>{children}</main>
           <Analytics />
           <Footer />
+          </SmoothScroll>
         </body>
       </html>
     </ViewTransitions>

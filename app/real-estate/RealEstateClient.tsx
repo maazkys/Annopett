@@ -124,7 +124,7 @@ const tierTheme: Record<string, { box: string; heading: string; sub: string; bod
     sub: "text-dark/50",
     body: "text-dark/70",
     divider: "border-black/5",
-    icon: <CheckCircleIcon className="text-orange w-8 h-8" />,
+    icon: <CheckCircleIcon className="text-orange w-7 h-7" />,
   },
   Advanced: {
     box: "bg-[#FDE9D7] text-dark border border-orange/20 hover:shadow-[0_0_45px_rgba(249,115,22,0.25)]",
@@ -132,7 +132,7 @@ const tierTheme: Record<string, { box: string; heading: string; sub: string; bod
     sub: "text-dark/55",
     body: "text-dark/70",
     divider: "border-black/10",
-    icon: <StarIcon className="text-orange w-8 h-8" />,
+    icon: <StarIcon className="text-orange w-7 h-7" />,
   },
   Luxury: {
     box: "bg-[#120d07] text-white border border-orange/20 hover:border-orange/60 shadow-[0_10px_40px_rgba(249,115,22,0.08)] hover:shadow-[0_0_50px_rgba(249,115,22,0.45)]",
@@ -140,7 +140,7 @@ const tierTheme: Record<string, { box: string; heading: string; sub: string; bod
     sub: "text-white/50",
     body: "text-white/80",
     divider: "border-white/10",
-    icon: <CrownIcon className="text-orange w-8 h-8" />,
+    icon: <CrownIcon className="text-orange w-7 h-7" />,
   },
 };
 
@@ -167,32 +167,32 @@ function TierCard({ tier }: { tier: typeof editingTiers[0] }) {
   const href = `/contact?service=Real+Estate+Media&shootType=${tier.name}&shoots=${isMax ? "20%2B" : shoots}&daysPerWeek=${daysPerWeek}#contact-form`;
 
   return (
-    <div className={`relative flex flex-col h-full rounded-[32px] p-8 md:p-10 transition-all duration-500 ${theme.box}`}>
-      <div className="flex items-center gap-4 mb-8">
+    <div className={`relative flex flex-col h-full rounded-[28px] p-7 md:p-8 transition-all duration-500 ${theme.box}`}>
+      <div className="flex items-center gap-3.5 mb-6">
         {theme.icon}
-        <h3 className={`font-antonio uppercase tracking-tight text-3xl ${theme.heading}`} style={{ fontWeight: 300, paddingTop: '4px' }}>
+        <h3 className={`font-antonio uppercase tracking-tight text-[26px] ${theme.heading}`} style={{ fontWeight: 300, paddingTop: '3px' }}>
           {tier.name}
         </h3>
       </div>
 
-      <ul className="flex flex-col gap-4 mb-10 flex-grow">
+      <ul className="flex flex-col gap-3.5 mb-8 flex-grow">
         {tier.features.map((feature, j) => (
-          <li key={j} className="flex gap-4 items-start">
-            <FeatureIcon feature={feature} className={`mt-0.5 shrink-0 ${tier.name === 'Luxury' ? 'text-orange' : 'text-orange'}`} />
-            <span className={`font-sans font-light text-[15px] leading-relaxed ${theme.body}`}>
+          <li key={j} className="flex gap-3.5 items-start">
+            <FeatureIcon feature={feature} className={`mt-0.5 shrink-0 w-5 h-5 ${tier.name === 'Luxury' ? 'text-orange' : 'text-orange'}`} />
+            <span className={`font-sans font-light text-[14px] leading-relaxed ${theme.body}`}>
               {feature}
             </span>
           </li>
         ))}
       </ul>
 
-      <div className={`mt-auto pt-8 border-t ${theme.divider}`}>
-        <div className="flex justify-between font-sans font-medium text-sm mb-4">
+      <div className={`mt-auto pt-6 border-t ${theme.divider}`}>
+        <div className="flex justify-between font-sans font-medium text-sm mb-3.5">
           <span className={theme.sub}>Number of shoots per day</span>
           <span className="text-orange font-bold">{isMax ? '20+' : shoots}</span>
         </div>
 
-        <div className="relative h-2 bg-black/10 rounded-full mb-6">
+        <div className="relative h-1.5 bg-black/10 rounded-full mb-5">
           <div
             className="absolute top-0 left-0 h-full bg-orange rounded-full pointer-events-none"
             style={{ width: `${(shoots / 20) * 100}%` }}
@@ -204,18 +204,18 @@ function TierCard({ tier }: { tier: typeof editingTiers[0] }) {
             className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
           />
           <div
-            className="absolute top-1/2 -translate-y-1/2 w-5 h-5 bg-white border-2 border-orange rounded-full pointer-events-none shadow-md"
-            style={{ left: `calc(${(shoots / 20) * 100}% - 10px)` }}
+            className="absolute top-1/2 -translate-y-1/2 w-[18px] h-[18px] bg-white border-2 border-orange rounded-full pointer-events-none shadow-md"
+            style={{ left: `calc(${(shoots / 20) * 100}% - 9px)` }}
           />
         </div>
 
-        <div className="flex justify-between items-center font-sans font-medium text-sm mb-8">
+        <div className="flex justify-between items-center font-sans font-medium text-sm mb-6">
           <span className={theme.sub}>Days per week</span>
 
           <div className="relative" ref={dropdownRef}>
             <div
               onClick={() => setDropdownOpen(!dropdownOpen)}
-              className={`flex items-center justify-between gap-3 rounded-lg pl-3.5 pr-2.5 py-1.5 font-sans text-sm font-medium cursor-pointer select-none border transition-colors
+              className={`flex items-center justify-between gap-2.5 rounded-lg pl-3.5 pr-2.5 py-1.5 font-sans text-sm font-medium cursor-pointer select-none border transition-colors
                 ${isLuxury
                   ? 'bg-white/10 border-white/15 text-white'
                   : 'bg-white border-black/10 text-dark'
@@ -237,13 +237,13 @@ function TierCard({ tier }: { tier: typeof editingTiers[0] }) {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -8, scale: 0.98 }}
                   transition={{ duration: 0.2, ease: "easeInOut" }}
-                  className="absolute right-0 z-50 mt-2 w-32 bg-white border border-black/5 rounded-[14px] shadow-[0_20px_60px_rgba(0,0,0,0.16)] overflow-hidden"
+                  className="absolute right-0 z-50 mt-2 w-32 bg-white border border-black/5 rounded-[13px] shadow-[0_20px_60px_rgba(0,0,0,0.16)] overflow-hidden"
                 >
                   {[1, 2, 3, 4, 5, 6, 7].map((d) => (
                     <div
                       key={d}
                       onClick={() => { setDaysPerWeek(d); setDropdownOpen(false); }}
-                      className={`px-4 py-2.5 cursor-pointer font-sans text-sm transition-colors ${
+                      className={`px-3.5 py-2 cursor-pointer font-sans text-sm transition-colors ${
                         daysPerWeek === d ? "bg-orange/10 text-orange" : "text-dark hover:bg-black/5"
                       }`}
                     >
@@ -258,18 +258,18 @@ function TierCard({ tier }: { tier: typeof editingTiers[0] }) {
 
         {isMax ? (
           <div className="flex flex-col items-center">
-             <div className="h-14 flex items-center justify-center font-antonio text-3xl tracking-tight mb-4 text-orange">Custom Volume</div>
-             <Link href={href} className="w-full text-center py-4 rounded-xl bg-orange text-white font-antonio uppercase tracking-widest hover:bg-[#1a1209] transition-colors">
+             <div className="h-12 flex items-center justify-center font-antonio text-[28px] tracking-tight mb-3.5 text-orange">Custom Volume</div>
+             <Link href={href} className="w-full text-center py-3.5 rounded-xl bg-orange text-white font-antonio uppercase tracking-widest text-[15px] hover:bg-[#1a1209] transition-colors">
                Enquire
              </Link>
           </div>
         ) : (
           <div className="flex flex-col items-center">
-            <div className="flex items-end gap-2 mb-4 h-14">
-              <span className="font-antonio text-5xl leading-none tracking-tight text-orange">${monthlyCost.toFixed(2)}</span>
-              <span className={`font-sans text-sm pb-1 ${theme.sub}`}>/ month</span>
+            <div className="flex items-end gap-2 mb-3.5 h-12">
+              <span className="font-antonio text-4xl leading-none tracking-tight text-orange">${monthlyCost.toFixed(2)}</span>
+              <span className={`font-sans text-sm pb-0.5 ${theme.sub}`}>/ month</span>
             </div>
-            <Link href={href} className="w-full text-center py-4 rounded-xl bg-[#1a1209] text-white font-antonio uppercase tracking-widest hover:bg-orange transition-colors">
+            <Link href={href} className="w-full text-center py-3.5 rounded-xl bg-[#1a1209] text-white font-antonio uppercase tracking-widest text-[15px] hover:bg-orange transition-colors">
               Submit
             </Link>
           </div>
@@ -415,22 +415,22 @@ export function RealEstateClient() {
       </section>
 
       {/* ── EDITING TIERS ── */}
-      <section className="bg-[#fafaf8] px-6 lg:px-[8vw] py-28 relative">
+      <section className="bg-[#fafaf8] px-6 lg:px-[8vw] py-24 relative">
         <FadeIn>
-          <div className="text-center max-w-2xl mx-auto mb-20">
+          <div className="text-center max-w-2xl mx-auto mb-16">
             <h2
               className="font-antonio uppercase text-dark leading-[0.95] tracking-tight"
-              style={{ fontSize: "clamp(40px, 5vw, 64px)", fontWeight: 300 }}
+              style={{ fontSize: "clamp(38px, 4.6vw, 60px)", fontWeight: 300 }}
             >
               Our Editing Standards.
             </h2>
-            <p className="mt-6 text-[17px] font-light text-dark/60 font-sans leading-relaxed">
+            <p className="mt-5 text-base font-light text-dark/60 font-sans leading-relaxed">
               Choose the level of precision that matches your brand and market. Drag the slider to estimate daily volume pricing.
             </p>
           </div>
         </FadeIn>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid lg:grid-cols-3 gap-6">
           {editingTiers.map((tier, i) => (
             <FadeIn key={tier.name} delay={i * 0.1}>
               <TierCard tier={tier} />
