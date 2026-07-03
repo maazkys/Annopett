@@ -332,7 +332,7 @@ export function RealEstateClient() {
       <section className="relative h-screen min-h-[640px] overflow-hidden flex flex-col z-0">
         <div className="absolute inset-0 overflow-hidden -z-10">
           <img
-            src={img("/Real Estate.webp")}
+            src={img("/Real Estatemain.webp")}
             alt="Real estate interior"
             className="absolute inset-0 w-full h-full object-cover"
             style={{ viewTransitionName: "service-image-real-estate" }}

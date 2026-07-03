@@ -72,7 +72,7 @@ export function BPOClient() {
         <div className="absolute inset-0 overflow-hidden -z-10">
           {/* View Transition Image */}
           <img
-            src={img("/BPO.webp")}
+            src={img("/BPOmain.webp")}
             alt="Remote operations team"
             className="absolute inset-0 w-full h-full object-cover"
             style={{ viewTransitionName: "service-image-bpo" }}

@@ -22,13 +22,15 @@ export function AboutClient() {
       <section className="relative h-screen min-h-[640px] overflow-hidden flex flex-col items-center justify-center text-center z-0">
         <div className="absolute inset-0 overflow-hidden -z-10" style={{ background: "#120d07" }}>
           <video
-            src="/0703.webm"
             autoPlay
             muted
             loop
             playsInline
-            className="absolute inset-0 w-full h-full object-cover"
-          />
+            className="absolute inset-0 w-full h-full object-cover md:object-[75%_50%] lg:object-right"
+          >
+            <source src="/Loop.webm" media="(max-width: 767px)" />
+            <source src="/0703.webm" />
+          </video>
           <div
             className="absolute inset-0"
             style={{ background: "linear-gradient(to bottom right, rgba(18,13,7,0.82) 30%, rgba(18,13,7,0.55) 100%)" }}

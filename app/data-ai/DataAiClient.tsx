@@ -67,7 +67,7 @@ export function DataAIClient() {
         <div className="absolute inset-0 overflow-hidden -z-10">
           {/* View Transition Image */}
           <img
-            src={img("/AI.webp")}
+            src={img("/AImain.webp")}
             alt="Data and AI abstraction"
             className="absolute inset-0 w-full h-full object-cover"
             style={{ viewTransitionName: "service-image-data-ai" }}
