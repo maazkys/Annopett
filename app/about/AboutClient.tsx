@@ -37,35 +37,28 @@ export function AboutClient() {
           />
         </div>
 
-        <div className="relative z-10 flex flex-col items-center px-6 lg:px-[8vw] pt-32 pb-12 w-full max-w-5xl">
-          <motion.p
-            initial={reduce ? {} : { opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="font-antonio uppercase text-orange tracking-[0.2em] text-sm mb-6"
-          >
-            Who We Are
-          </motion.p>
-
+        {/* Added mb-24 md:mb-0 to push the container up on mobile */}
+        <div className="relative z-10 flex flex-col items-center px-6 lg:px-[8vw] pt-32 pb-12 w-full max-w-5xl mb-24 md:mb-0">
+          
           <motion.h1
             initial={reduce ? {} : { opacity: 0, y: 32 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.8, delay: 0, ease: [0.16, 1, 0.3, 1] }}
             className="font-antonio uppercase text-white leading-[0.95] tracking-tight"
             style={{ fontSize: "clamp(52px, 8.5vw, 118px)", fontWeight: 300 }}
           >
-            Bringing Life<br />
-            To AI.
+            WHERE PEOPLE & AI<br />
+            WORK TOGETHER
           </motion.h1>
 
           <motion.p
             initial={reduce ? {} : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
             className="mt-8 font-sans text-white/70 max-w-2xl leading-relaxed mx-auto"
             style={{ fontSize: "clamp(16px, 1.8vw, 20px)", fontWeight: 300 }}
           >
-            Founded to give growing businesses access to enterprise-grade talent, without the overhead.
+            We build high-performing remote teams and AI solutions that help businesses scale efficiently
           </motion.p>
         </div>
       </section>

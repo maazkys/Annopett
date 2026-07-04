@@ -226,7 +226,7 @@ export default function Home() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out" />
 
-                  <div className="absolute bottom-5 right-5 flex items-center justify-center w-11 h-11 rounded-full bg-white text-dark opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-400 ease-in-out">
+                  <div className="absolute bottom-5 right-5 flex items-center justify-center w-11 h-11 rounded-full bg-white text-dark opacity-100 translate-y-0 lg:opacity-0 lg:translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-400 ease-in-out shadow-lg lg:shadow-none">
                     <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                       <path d="M3 11L11 3M11 3H5M11 3V9" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>

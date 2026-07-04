@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect, Suspense } from "react";
 import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
 import { useSearchParams } from "next/navigation";
+import { useLenis } from "lenis/react";
 import { FadeIn } from "../../components/sections/Shared";
 
 const inputCls =
@@ -15,21 +16,9 @@ const serviceOptions = [
 ];
 
 const shootTypes = [
-  {
-    id: "standard",
-    label: "Standard",
-    desc: "RAW cleanup, color correction, basic retouching",
-  },
-  {
-    id: "advanced",
-    label: "Advanced",
-    desc: "Standard + sky replacement, lawn enhancement, window pulls",
-  },
-  {
-    id: "luxury",
-    label: "Luxury",
-    desc: "Advanced + virtual staging, twilight conversion, full QA",
-  },
+  { id: "standard", label: "Standard" },
+  { id: "advanced", label: "Advanced" },
+  { id: "luxury", label: "Luxury" },
 ];
 
 function ContactContent() {
@@ -59,6 +48,7 @@ function ContactContent() {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const reduce = useReducedMotion();
+  const lenis = useLenis();
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -82,13 +72,33 @@ function ContactContent() {
   // component renders inside a Suspense boundary (for useSearchParams), so the
   // #contact-form element doesn't exist yet at the moment the browser tries to
   // honor the URL hash on initial navigation - we have to do it ourselves once mounted.
+  // IMPORTANT: once Lenis controls scrolling, native scrollIntoView() gets overridden
+  // by Lenis's own scroll loop, so we must scroll through Lenis's API instead.
   useEffect(() => {
-    if (typeof window !== "undefined" && window.location.hash === "#contact-form") {
-      requestAnimationFrame(() => {
-        document.getElementById("contact-form")?.scrollIntoView({ behavior: "smooth", block: "start" });
-      });
-    }
-  }, []);
+    if (typeof window === "undefined" || window.location.hash !== "#contact-form") return;
+
+    let attempts = 0;
+    let cancelled = false;
+
+    const tryScroll = () => {
+      if (cancelled) return;
+      const el = document.getElementById("contact-form");
+      if (el) {
+        if (lenis) {
+          lenis.scrollTo(el, { offset: -100 });
+        } else {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+        return;
+      }
+      attempts++;
+      if (attempts < 20) setTimeout(tryScroll, 100);
+    };
+
+    // Small initial delay so Lenis has finished mounting/measuring the page.
+    const initial = setTimeout(tryScroll, 100);
+    return () => { cancelled = true; clearTimeout(initial); };
+  }, [lenis]);
 
   return (
     <>
@@ -145,7 +155,7 @@ function ContactContent() {
       </section>
 
       {/* ── BODY ── */}
-      <section id="contact-form" className="bg-[#fafaf8] px-6 lg:px-[8vw] py-28 relative scroll-mt-20">
+      <section className="bg-[#fafaf8] px-6 lg:px-[8vw] py-28 relative scroll-mt-20">
         <div className="grid lg:grid-cols-[40%_1fr] gap-12 lg:gap-20 items-start">
 
           {/* ── LEFT: CONTACT INFO ── */}
@@ -184,7 +194,8 @@ function ContactContent() {
           {/* ── RIGHT: FORM ── */}
           <FadeIn delay={0.1}>
             <form
-              className="rounded-[32px] bg-white border border-black/5 p-10 md:p-14 shadow-2xl shadow-black/[0.02]"
+              id="contact-form"
+              className="rounded-[32px] bg-white border border-black/5 p-10 md:p-14 shadow-2xl shadow-black/[0.02] scroll-mt-24"
               onSubmit={(e) => { e.preventDefault(); setSent(true); }}
             >
               <h2
@@ -296,7 +307,7 @@ function ContactContent() {
                           <p className="text-[13px] uppercase tracking-[0.15em] text-dark/40 font-medium font-sans mb-3">
                             Shoot Type
                           </p>
-                          <div className="grid grid-cols-3 gap-3">
+                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                             {shootTypes.map((type) => {
                               const active = selectedShootType === type.id;
                               return (
@@ -304,7 +315,7 @@ function ContactContent() {
                                   key={type.id}
                                   type="button"
                                   onClick={() => setSelectedShootType(type.id)}
-                                  className="relative text-left rounded-[14px] p-4 border transition-all duration-300 ease-in-out focus:outline-none"
+                                  className="relative text-left rounded-[14px] p-3.5 border transition-all duration-300 ease-in-out focus:outline-none"
                                   style={{
                                     background: active ? "rgba(249,115,22,0.06)" : "rgba(0,0,0,0.03)",
                                     borderColor: active ? "rgba(249,115,22,0.45)" : "transparent",
@@ -312,16 +323,16 @@ function ContactContent() {
                                   }}
                                 >
                                   {/* Active dot indicator */}
-                                  <div className="flex items-center gap-2 mb-2">
+                                  <div className="flex items-center gap-2">
                                     <div
-                                      className="w-2 h-2 rounded-full transition-all duration-300"
+                                      className="w-2 h-2 rounded-full shrink-0 transition-all duration-300"
                                       style={{
                                         background: active ? "#F97316" : "rgba(26,18,9,0.2)",
                                         transform: active ? "scale(1.3)" : "scale(1)",
                                       }}
                                     />
                                     <span
-                                      className="font-antonio uppercase tracking-wide transition-colors duration-300"
+                                      className="font-antonio uppercase tracking-wide transition-colors duration-300 truncate"
                                       style={{
                                         fontSize: "13px",
                                         fontWeight: 400,
@@ -331,15 +342,6 @@ function ContactContent() {
                                       {type.label}
                                     </span>
                                   </div>
-                                  <p
-                                    className="font-sans font-light leading-snug transition-colors duration-300"
-                                    style={{
-                                      fontSize: "12px",
-                                      color: active ? "rgba(249,115,22,0.7)" : "rgba(26,18,9,0.4)",
-                                    }}
-                                  >
-                                    {type.desc}
-                                  </p>
                                 </button>
                               );
                             })}
