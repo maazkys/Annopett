@@ -17,14 +17,16 @@ const capabilities = [
 ];
 
 const clientLogos = [
-  { name: "Hat Fella Productions", src: "/HFP.webp" },
-  { name: "RIPTIDE MEDIA", src: "/Riptide.webp" },
-  { name: "KILN Media", src: "/kiln.webp" },
-  { name: "CD HOME", src: "/cdhome.webp" },
-  { name: "ONE27 Media", src: "/one27.webp" },
-  { name: "ARTHOME PHOTO", src: "/arthome.webp" },
-  { name: "Next Creative", src: "/nextcreative.webp" },
-  { name: "Proviz Real Estate Media", src: "/proviz.webp" },
+  { name: "Moonvalley", src: "/ai10.webp" },
+  { name: "AutoHDR", src: "/ai2.webp" },
+  { name: "Sahara AI", src: "/ai4.webp" },
+  { name: "Christ Wash Systems", src: "/ai3.webp" },
+  { name: "Trutec", src: "/ai5.webp" },
+  { name: "Ultiself", src: "/ai1.webp" },
+  { name: "Foneme App", src: "/ai6.webp" },
+  { name: "Annosuppo", src: "/ai7.webp" },
+  { name: "Dent Reality", src: "/ai8.webp" },
+  { name: "Gro Health App", src: "/ai9.webp" },
 ];
 
 export function DataAIClient() {

@@ -22,14 +22,11 @@ const stats = [
 ];
 
 const clientLogos = [
-  { name: "Hat Fella Productions", src: "/HFP.webp" },
-  { name: "RIPTIDE MEDIA", src: "/Riptide.webp" },
-  { name: "KILN Media", src: "/kiln.webp" },
-  { name: "CD HOME", src: "/cdhome.webp" },
-  { name: "ONE27 Media", src: "/one27.webp" },
-  { name: "ARTHOME PHOTO", src: "/arthome.webp" },
-  { name: "Next Creative", src: "/nextcreative.webp" },
-  { name: "Proviz Real Estate Media", src: "/proviz.webp" },
+  { name: "Moonvalley", src: "/ai10.webp" },
+  { name: "AutoHDR", src: "/ai2.webp" },
+  { name: "V1 Real Estate Photography and Video", src: "/bpo3.webp" },
+  { name: "DeWulf", src: "/bpo1.webp" },
+  { name: "Claru AI", src: "/bpo2.webp" },
 ];
 
 export function BPOClient() {
@@ -190,31 +187,30 @@ export function BPOClient() {
       </section>
 
       {/* ── TESTIMONIALS ── */}
-            <section className="bg-[#fafaf8] px-6 lg:px-[8vw] py-32 border-t border-black/5">
-              <FadeIn>
-                <div className="text-center mb-16">
-                  <p className="font-sans text-[13px] uppercase tracking-[0.15em] text-dark/40 font-medium mb-4">Trusted By</p>
-                  <h2 className="font-antonio uppercase text-dark leading-[0.95] tracking-tight text-[clamp(40px,5vw,64px)]" style={{ fontWeight: 300 }}>
-                    Our Clients
-                  </h2>
-                </div>
-                <div className="flex flex-wrap justify-center items-center gap-6">
-                  {clientLogos.map((logo) => (
-                    <div
-                      key={logo.name}
-                      className="w-36 h-36 md:w-44 md:h-44 bg-white border border-black/5 rounded-[24px] flex items-center justify-center p-6 transition-all duration-300 ease-out hover:border-orange/40 hover:scale-[1.05] hover:shadow-[0_0_40px_rgba(249,115,22,0.25)]"
-                    >
-                      <img
-                        src={logo.src}
-                        alt={logo.name}
-                        className="w-full h-full object-contain pointer-events-none"
-                      />
-                    </div>
-                  ))}
-                </div>
-              </FadeIn>
-            </section>
-
+      <section className="bg-[#fafaf8] px-6 lg:px-[8vw] py-32 border-t border-black/5">
+        <FadeIn>
+          <div className="text-center mb-16">
+            <p className="font-sans text-[13px] uppercase tracking-[0.15em] text-dark/40 font-medium mb-4">Trusted By</p>
+            <h2 className="font-antonio uppercase text-dark leading-[0.95] tracking-tight text-[clamp(40px,5vw,64px)]" style={{ fontWeight: 300 }}>
+              Our Clients
+            </h2>
+          </div>
+          <div className="flex flex-wrap justify-center items-center gap-6">
+            {clientLogos.map((logo) => (
+              <div
+                key={logo.name}
+                className="w-36 h-36 md:w-44 md:h-44 bg-white border border-black/5 rounded-[24px] flex items-center justify-center p-6 transition-all duration-300 ease-out hover:border-orange/40 hover:scale-[1.05] hover:shadow-[0_0_40px_rgba(249,115,22,0.25)]"
+              >
+                <img
+                  src={logo.src}
+                  alt={logo.name}
+                  className="w-full h-full object-contain pointer-events-none"
+                />
+              </div>
+            ))}
+          </div>
+        </FadeIn>
+      </section>
     </>
   );
 }

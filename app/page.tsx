@@ -23,6 +23,19 @@ const clientLogos = [
   { name: "ARTHOME PHOTO", src: "/arthome.webp" },
   { name: "Next Creative", src: "/nextcreative.webp" },
   { name: "Proviz Real Estate Media", src: "/proviz.webp" },
+  { name: "V1 Real Estate Photography and Video", src: "/bpo3.webp" },
+  { name: "DeWulf", src: "/bpo1.webp" },
+  { name: "Claru AI", src: "/bpo2.webp" },
+  { name: "Moonvalley", src: "/ai10.webp" },
+  { name: "AutoHDR", src: "/ai2.webp" },
+  { name: "Sahara AI", src: "/ai4.webp" },
+  { name: "Christ Wash Systems", src: "/ai3.webp" },
+  { name: "Trutec", src: "/ai5.webp" },
+  { name: "Ultiself", src: "/ai1.webp" },
+  { name: "Foneme App", src: "/ai6.webp" },
+  { name: "Annosuppo", src: "/ai7.webp" },
+  { name: "Dent Reality", src: "/ai8.webp" },
+  { name: "Gro Health App", src: "/ai9.webp" },
 ];
 
 // Lives for the lifetime of the JS module in memory: reset to false on a genuine
