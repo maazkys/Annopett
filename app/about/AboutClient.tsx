@@ -86,6 +86,7 @@ export function AboutClient() {
                 src={img("/globe.webp")}
                 alt="Our team"
                 loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover"
               />
             </div>
@@ -125,6 +126,7 @@ export function AboutClient() {
                   src={img(v.i)}
                   alt={v.t}
                   loading="lazy"
+                  decoding="async"
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#120d07]/85 via-[#120d07]/10 to-transparent" />

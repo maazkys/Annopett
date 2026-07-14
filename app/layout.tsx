@@ -30,7 +30,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Annopett — Precision Work. Remote Power.",
+  title: "Annopett",
   description:
     "Annopett delivers Data & AI, Real Estate Media, BPO, and Creative services at scale.",
 };

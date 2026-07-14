@@ -90,7 +90,7 @@ export function DataAIClient() {
             initial={reduce ? {} : { opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="font-antonio uppercase text-orange tracking-[0.2em] text-sm mb-6"
+            className="font-antonio uppercase text-orange tracking-[0.2em] text-sm mb-6 inline-block ml-[2px] md:ml-[4px] lg:ml-[7px]"
           >
             Data & AI Operations
           </motion.p>
@@ -170,7 +170,7 @@ export function DataAIClient() {
             <FadeIn key={c.name} delay={(i % 3) * 0.08}>
               <div className="group flex flex-col h-full p-4 rounded-[28px] bg-white border border-black/5 hover:border-orange/30 hover:shadow-2xl hover:shadow-orange/10 transition-all duration-300">
                 <div className="w-full h-44 rounded-[20px] overflow-hidden bg-black/5 mb-5 relative">
-                  <img src={img(c.image)} alt={c.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                  <img src={img(c.image)} alt={c.name} loading="lazy" decoding="async" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
                 </div>
                 <div className="flex flex-col flex-grow px-2 pb-2">
@@ -205,6 +205,8 @@ export function DataAIClient() {
                 <img
                   src={logo.src}
                   alt={logo.name}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-contain pointer-events-none"
                 />
               </div>

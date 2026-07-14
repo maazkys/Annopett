@@ -53,23 +53,21 @@ const editingTiers = [
   }
 ];
 
-const portfolioImages = [
-  {
-    name: "Luxury Exterior",
-    before: "https://images.unsplash.com/photo-1613977257363-707ba9348227?w=1600&auto=format&fit=crop&q=60",
-    after: "https://images.unsplash.com/photo-1613977257592-4871e5fcd7c4?w=1600&auto=format&fit=crop&q=100",
-  },
-  {
-    name: "Interior Twilight",
-    before: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1600&auto=format&fit=crop&q=60",
-    after: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1600&auto=format&fit=crop&q=100",
-  },
-  {
-    name: "Color Correction",
-    before: "https://images.unsplash.com/photo-1600607687920-4e2a09cf15b4?w=1600&auto=format&fit=crop&q=60",
-    after: "https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?w=1600&auto=format&fit=crop&q=100",
-  }
+const serviceFolders = [
+  { name: "Enhancement", folder: "1) ENHANCEMENT" },
+  { name: "Perspective Correction", folder: "2) PERSPECTIVE CORRECTION" },
+  { name: "Window Pull", folder: "3) WINDOW PULL" },
+  { name: "Color Correction", folder: "4) COLOR CORRECTION" },
+  { name: "Fireplace", folder: "5) FIREPLACE" },
+  { name: "TV Screen Replacement", folder: "6) TV SCREEN REPLCAMET" },
+  { name: "Declutter", folder: "7) DECLUTTER" },
 ];
+
+const portfolioImages = serviceFolders.map(({ name, folder }) => ({
+  name,
+  before: img(`/SERVICES/${folder}/BEFORE.webp`),
+  after: img(`/SERVICES/${folder}/AFTER.webp`),
+}));
 
 const clientLogos = [
   { name: "Hat Fella Productions", src: "/HFP.webp" },
@@ -279,42 +277,38 @@ function TierCard({ tier }: { tier: typeof editingTiers[0] }) {
   );
 }
 
-function BeforeAfterSlider({ data }: { data: typeof portfolioImages[0] }) {
-  const [sliderPos, setSliderPos] = useState(50);
+function BeforeAfterToggle({ data }: { data: typeof portfolioImages[0] }) {
+  const [showAfter, setShowAfter] = useState(false);
 
   return (
     <div className="relative w-full aspect-[4/3] md:aspect-[16/9] rounded-[24px] overflow-hidden bg-black border border-white/10 select-none group">
-      <img src={data.after} alt="Final Edit" className="absolute inset-0 w-full h-full object-cover pointer-events-none" />
-      <div 
-        className="absolute inset-0 w-full h-full pointer-events-none"
-        style={{ clipPath: `inset(0 calc(100% - ${sliderPos}%) 0 0)` }}
-      >
-        <img src={data.before} alt="RAW Image" className="absolute inset-0 w-full h-full object-cover" />
-      </div>
-
-      <div 
-        className="absolute top-0 bottom-0 w-[2px] bg-orange shadow-[0_0_20px_rgba(249,115,22,0.8)] pointer-events-none z-10"
-        style={{ left: `${sliderPos}%` }}
-      >
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-orange rounded-full flex items-center justify-center shadow-xl">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-white">
-            <path d="M15 18L21 12L15 6M9 6L3 12L9 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </div>
-      </div>
-
-      <div className="absolute top-6 left-6 bg-black/60 backdrop-blur-md px-4 py-2 rounded-lg font-antonio uppercase tracking-widest text-sm text-white/90 pointer-events-none">
-        RAW
-      </div>
-      <div className="absolute top-6 right-6 bg-orange/90 backdrop-blur-md px-4 py-2 rounded-lg font-antonio uppercase tracking-widest text-sm text-white pointer-events-none">
-        {data.name}
-      </div>
-
-      <input
-        type="range" min="0" max="100" value={sliderPos}
-        onChange={(e) => setSliderPos(Number(e.target.value))}
-        className="absolute inset-0 w-full h-full opacity-0 cursor-ew-resize z-20"
+      <img
+        src={showAfter ? data.after : data.before}
+        alt={showAfter ? "After" : "Before"}
+        loading="lazy"
+        decoding="async"
+        className="absolute inset-0 w-full h-full object-cover"
       />
+
+      <button
+        onClick={() => setShowAfter((prev) => !prev)}
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center bg-black/60 backdrop-blur-md rounded-full p-1 z-20 border border-white/10"
+      >
+        <span
+          className={`px-5 py-2 rounded-full font-antonio uppercase tracking-widest text-xs transition-colors duration-300 ${
+            !showAfter ? "bg-orange text-white" : "text-white/60"
+          }`}
+        >
+          Before
+        </span>
+        <span
+          className={`px-5 py-2 rounded-full font-antonio uppercase tracking-widest text-xs transition-colors duration-300 ${
+            showAfter ? "bg-orange text-white" : "text-white/60"
+          }`}
+        >
+          After
+        </span>
+      </button>
     </div>
   );
 }
@@ -351,7 +345,7 @@ export function RealEstateClient() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="font-antonio uppercase text-orange tracking-[0.2em] text-sm mb-6"
+            className="font-antonio uppercase text-orange tracking-[0.2em] text-sm mb-6 inline-block ml-[2px] md:ml-[4px] lg:ml-[7px]"
           >
             Real Estate Media
           </motion.p>
@@ -449,14 +443,22 @@ export function RealEstateClient() {
             See the Difference.
           </h2>
           <p className="text-[17px] font-light text-white/50 font-sans leading-relaxed mb-16 max-w-lg mx-auto">
-            Drag the slider to compare the RAW images with our final delivery.
+            Toggle between the RAW image and our final delivery.
           </p>
         </FadeIn>
 
         <FadeIn delay={0.1}>
           <div className="relative max-w-5xl mx-auto">
+            {/* Service Name */}
+            <h3
+              className="font-antonio uppercase text-orange tracking-tight mb-5"
+              style={{ fontSize: "clamp(22px, 2.5vw, 32px)", fontWeight: 400 }}
+            >
+              {portfolioImages[activeIdx].name}
+            </h3>
+
             {/* The Image Container */}
-            <BeforeAfterSlider data={portfolioImages[activeIdx]} key={portfolioImages[activeIdx].name} />
+            <BeforeAfterToggle data={portfolioImages[activeIdx]} key={portfolioImages[activeIdx].name} />
 
             {/* Controls Below the Image */}
             <div className="flex items-center justify-between mt-8 px-4">
@@ -511,6 +513,8 @@ export function RealEstateClient() {
                 <img
                   src={logo.src}
                   alt={logo.name}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-contain pointer-events-none"
                 />
               </div>

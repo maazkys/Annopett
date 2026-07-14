@@ -38,6 +38,11 @@ const clientLogos = [
   { name: "Gro Health App", src: "/ai9.webp" },
 ];
 
+// Split into two uneven rows so the laptop carousel doesn't look like a
+// perfect grid — row 2 is offset and scrolls the opposite direction.
+const clientLogosRow1 = clientLogos.filter((_, i) => i % 2 === 0);
+const clientLogosRow2 = clientLogos.filter((_, i) => i % 2 !== 0);
+
 // Lives for the lifetime of the JS module in memory: reset to false on a genuine
 // browser load/refresh, but stays true across client-side (next/link) navigation,
 // so the intro only plays on first visit or a hard refresh — never on in-site nav.
@@ -55,7 +60,33 @@ export default function Home() {
     if (hasShownIntro) return;
     hasShownIntro = true;
 
-    const fallback = setTimeout(() => setIntroDone(true), 4500);
+    const vid = introVideoRef.current;
+
+    // Autoplay can silently fail to start (browser policy quirks, a slow
+    // first frame decode, etc.) — when that happens `onEnded` never fires,
+    // which is what caused the "sometimes skips straight to hero" bug.
+    // So we explicitly kick off playback ourselves and retry once if the
+    // browser rejects the initial play() call.
+    const tryPlay = () => {
+      if (!vid) return;
+      const playPromise = vid.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          setTimeout(() => {
+            vid.play().catch(() => {
+              // Genuinely can't play (unsupported format, blocked, etc.)
+              // — don't trap the user on a black screen, let them through.
+              setIntroDone(true);
+            });
+          }, 300);
+        });
+      }
+    };
+    tryPlay();
+
+    // Last-resort safety net only, in case `ended` never fires for some
+    // other reason. Generous so it never cuts the video off early.
+    const fallback = setTimeout(() => setIntroDone(true), 10000);
     return () => clearTimeout(fallback);
   }, []);
 
@@ -117,7 +148,9 @@ export default function Home() {
               autoPlay
               muted
               playsInline
+              preload="auto"
               onEnded={() => setIntroDone(true)}
+              onError={() => setIntroDone(true)}
               className="w-full h-full object-cover md:object-[75%_50%] lg:object-right"
             >
               <source src="/9 16.webm" media="(max-width: 767px)" />
@@ -153,7 +186,7 @@ export default function Home() {
               initial={reduce ? {} : { opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: introDone ? 0 : 4.0 }}
-              className="font-antonio uppercase text-orange tracking-[0.2em] text-sm mb-6"
+              className="font-antonio uppercase text-orange tracking-[0.2em] text-sm mb-6 inline-block ml-[2px] md:ml-[4px] lg:ml-[7px]"
             >
               Bringing Life to AI
             </motion.p>
@@ -235,6 +268,8 @@ export default function Home() {
                   <img
                     src={img(s.image)}
                     alt={s.name}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out" />
@@ -356,7 +391,26 @@ export default function Home() {
               Our Clients
             </h2>
           </div>
-          <div className="flex flex-wrap justify-center items-center gap-6">
+          {/* Mobile: 3 per row grid */}
+          <div className="grid grid-cols-3 gap-4 md:hidden">
+            {clientLogos.map((logo) => (
+              <div
+                key={logo.name}
+                className="aspect-square bg-white border border-black/5 rounded-2xl flex items-center justify-center p-4 transition-all duration-300 ease-out hover:border-orange/40 hover:shadow-[0_0_24px_rgba(249,115,22,0.25)]"
+              >
+                <img
+                  src={logo.src}
+                  alt={logo.name}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-contain pointer-events-none"
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* iPad: unchanged wrap layout */}
+          <div className="hidden md:flex lg:hidden flex-wrap justify-center items-center gap-6">
             {clientLogos.map((logo) => (
               <div
                 key={logo.name}
@@ -365,10 +419,62 @@ export default function Home() {
                 <img
                   src={logo.src}
                   alt={logo.name}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-contain pointer-events-none"
                 />
               </div>
             ))}
+          </div>
+
+          {/* Laptop: two-row offset carousel */}
+          <div className="hidden lg:block overflow-x-hidden overflow-y-visible py-6 -my-6">
+            <style>{`
+              @keyframes marquee-left {
+                from { transform: translateX(0); }
+                to { transform: translateX(-50%); }
+              }
+              @keyframes marquee-right {
+                from { transform: translateX(-50%); }
+                to { transform: translateX(0); }
+              }
+              .marquee-row-1 { animation: marquee-left 38s linear infinite; }
+              .marquee-row-2 { animation: marquee-right 38s linear infinite; }
+            `}</style>
+
+            <div className="flex gap-6 w-max marquee-row-1 mb-7">
+              {[...clientLogosRow1, ...clientLogosRow1].map((logo, i) => (
+                <div
+                  key={`${logo.name}-r1-${i}`}
+                  className="w-44 h-44 bg-white border border-black/5 rounded-[24px] flex items-center justify-center p-6 shrink-0 transition-all duration-300 ease-out hover:border-orange/40 hover:scale-[1.05] hover:shadow-[0_0_40px_rgba(249,115,22,0.25)]"
+                >
+                  <img
+                    src={logo.src}
+                    alt={logo.name}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-contain pointer-events-none"
+                  />
+                </div>
+              ))}
+            </div>
+
+            <div className="flex gap-6 w-max marquee-row-2 ml-24">
+              {[...clientLogosRow2, ...clientLogosRow2].map((logo, i) => (
+                <div
+                  key={`${logo.name}-r2-${i}`}
+                  className="w-44 h-44 bg-white border border-black/5 rounded-[24px] flex items-center justify-center p-6 shrink-0 transition-all duration-300 ease-out hover:border-orange/40 hover:scale-[1.05] hover:shadow-[0_0_40px_rgba(249,115,22,0.25)]"
+                >
+                  <img
+                    src={logo.src}
+                    alt={logo.name}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-contain pointer-events-none"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </FadeIn>
       </section>
