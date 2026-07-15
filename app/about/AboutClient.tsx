@@ -7,10 +7,46 @@ import { FadeIn } from "../../components/sections/Shared";
 import { img } from "../../lib/utils";
 
 const values = [
-  { t: "Precision", i: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800" },
-  { t: "Reliability", i: "https://images.unsplash.com/photo-1455849318743-b2233052fcff?w=800" },
-  { t: "Transparency", i: "https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=800" },
-  { t: "Growth", i: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=800" },
+  { 
+    t: "Precision", 
+    icon: (
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10" />
+        <circle cx="12" cy="12" r="4" />
+        <line x1="12" y1="2" x2="12" y2="4" />
+        <line x1="12" y1="20" x2="12" y2="22" />
+        <line x1="2" y1="12" x2="4" y2="12" />
+        <line x1="20" y1="12" x2="22" y2="12" />
+      </svg>
+    )
+  },
+  { 
+    t: "Reliability", 
+    icon: (
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        <path d="M9 12l2 2 4-4" />
+      </svg>
+    )
+  },
+  { 
+    t: "Transparency", 
+    icon: (
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+        <circle cx="12" cy="12" r="3" />
+      </svg>
+    )
+  },
+  { 
+    t: "Growth", 
+    icon: (
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+        <polyline points="17 6 23 6 23 12" />
+      </svg>
+    )
+  },
 ];
 
 export function AboutClient() {
@@ -108,7 +144,7 @@ export function AboutClient() {
       {/* ── VALUES (compact single-row strip) ── */}
       <section className="bg-[#fafaf8] px-6 lg:px-[8vw] py-24 relative">
         <FadeIn>
-          <div className="mb-10">
+          <div className="mb-10 text-center sm:text-left">
             <h2
               className="font-antonio uppercase text-dark leading-[0.95] tracking-tight"
               style={{ fontSize: "clamp(32px, 4vw, 48px)", fontWeight: 300 }}
@@ -118,26 +154,19 @@ export function AboutClient() {
           </div>
         </FadeIn>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 lg:gap-5">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 lg:gap-6">
           {values.map((v, i) => (
             <FadeIn key={v.t} delay={i * 0.06}>
-              <div className="group relative rounded-[20px] overflow-hidden h-[180px] sm:h-[220px] bg-black/5 border border-black/5">
-                <img
-                  src={img(v.i)}
-                  alt={v.t}
-                  loading="lazy"
-                  decoding="async"
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#120d07]/85 via-[#120d07]/10 to-transparent" />
-                <div className="absolute bottom-0 left-0 p-5 w-full">
-                  <h3
-                    className="font-antonio uppercase tracking-tight text-white group-hover:text-orange transition-colors duration-500"
-                    style={{ fontSize: "clamp(17px, 1.6vw, 22px)", fontWeight: 300 }}
-                  >
-                    {v.t}
-                  </h3>
+              <div className="group flex flex-col justify-between rounded-[20px] p-6 sm:p-8 h-[160px] sm:h-[200px] bg-white border border-black/5 hover:border-orange/30 hover:shadow-[0_10px_40px_rgba(249,115,22,0.06)] transition-all duration-500">
+                <div className="text-dark/30 group-hover:text-orange transition-colors duration-500">
+                  {v.icon}
                 </div>
+                <h3
+                  className="font-antonio uppercase tracking-tight text-dark group-hover:text-orange transition-colors duration-500"
+                  style={{ fontSize: "clamp(20px, 2vw, 26px)", fontWeight: 300 }}
+                >
+                  {v.t}
+                </h3>
               </div>
             </FadeIn>
           ))}
