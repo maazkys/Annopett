@@ -6,6 +6,30 @@ import { Link } from "next-view-transitions";
 import { FadeIn, Testimonials } from "../../components/sections/Shared";
 import { img } from "../../lib/utils";
 
+type PricingMatrix = {
+  [key in 'Standard' | 'Advanced' | 'Luxury']: {
+    [days in 5 | 6 | 7]: number[];
+  };
+};
+
+const pricingMatrix: PricingMatrix = {
+  Standard: {
+    5: [99, 149, 199, 239, 279, 329, 369, 409, 449, 489, 529, 569, 599, 639, 669, 699, 739, 769, 799, 829],
+    6: [109, 169, 219, 269, 329, 379, 429, 479, 519, 569, 619, 659, 699, 749, 789, 829, 869, 899, 939, 979],
+    7: [119, 189, 249, 319, 379, 439, 499, 559, 619, 669, 729, 779, 829, 879, 929, 979, 1019, 1089, 1099, 1149]
+  },
+  Advanced: {
+    5: [159, 249, 349, 449, 539, 639, 729, 819, 899, 989, 1069, 1149, 1229, 1299, 1379, 1449, 1519, 1589, 1649, 1719],
+    6: [179, 299, 399, 519, 629, 739, 849, 959, 1059, 1159, 1259, 1349, 1439, 1529, 1619, 1699, 1789, 1869, 1959, 2019],
+    7: [199, 339, 469, 609, 739, 869, 989, 1119, 1239, 1349, 1469, 1579, 1689, 1799, 1899, 1999, 2099, 2189, 2279, 2369]
+  },
+  Luxury: {
+    5: [249, 439, 629, 819, 999, 1179, 1349, 1519, 1689, 1849, 2009, 2159, 2309, 2459, 2599, 2739, 2869, 2999, 3129, 3249],
+    6: [289, 519, 749, 969, 1189, 1399, 1609, 1809, 2009, 2199, 2389, 2569, 2749, 2929, 3099, 3259, 3419, 3579, 3729, 3889],
+    7: [329, 599, 859, 1119, 1369, 1619, 1869, 2099, 2329, 2559, 2779, 2999, 3199, 3409, 3599, 3799, 3989, 4169, 4339, 4509]
+  }
+};
+
 const editingTiers = [
   {
     name: "Standard",
@@ -144,10 +168,12 @@ const tierTheme: Record<string, { box: string; heading: string; sub: string; bod
 
 function TierCard({ tier }: { tier: typeof editingTiers[0] }) {
   const [shoots, setShoots] = useState(5);
-  const [daysPerWeek, setDaysPerWeek] = useState(5);
+  const [daysPerWeek, setDaysPerWeek] = useState<5 | 6 | 7>(5);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const isMax = shoots >= 20;
+  
+  // Custom logic begins at value 21 (which represents 20+)
+  const isMax = shoots === 21; 
   const theme = tierTheme[tier.name];
   const isLuxury = tier.name === "Luxury";
 
@@ -161,7 +187,10 @@ function TierCard({ tier }: { tier: typeof editingTiers[0] }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const monthlyCost = shoots * tier.price * daysPerWeek * 4.33;
+  const monthlyCost = isMax 
+    ? 0 
+    : pricingMatrix[tier.name as keyof PricingMatrix][daysPerWeek][shoots - 1];
+
   const href = `/contact?service=Real+Estate+Media&shootType=${tier.name}&shoots=${isMax ? "20%2B" : shoots}&daysPerWeek=${daysPerWeek}#contact-form`;
 
   return (
@@ -186,24 +215,24 @@ function TierCard({ tier }: { tier: typeof editingTiers[0] }) {
 
       <div className={`mt-auto pt-6 border-t ${theme.divider}`}>
         <div className="flex justify-between font-sans font-medium text-sm mb-3.5">
-          <span className={theme.sub}>Number of shoots per day</span>
+          <span className={theme.sub}>Standard Daily Shoot Capacity</span>
           <span className="text-orange font-bold">{isMax ? '20+' : shoots}</span>
         </div>
 
         <div className="relative h-1.5 bg-black/10 rounded-full mb-5">
           <div
             className="absolute top-0 left-0 h-full bg-orange rounded-full pointer-events-none"
-            style={{ width: `${(shoots / 20) * 100}%` }}
+            style={{ width: `${((shoots - 1) / 20) * 100}%` }}
           />
           <input
-            type="range" min="1" max="20" step="1"
+            type="range" min="1" max="21" step="1"
             value={shoots}
             onChange={(e) => setShoots(Number(e.target.value))}
             className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
           />
           <div
             className="absolute top-1/2 -translate-y-1/2 w-[18px] h-[18px] bg-white border-2 border-orange rounded-full pointer-events-none shadow-md"
-            style={{ left: `calc(${(shoots / 20) * 100}% - 9px)` }}
+            style={{ left: `calc(${((shoots - 1) / 20) * 100}% - 9px)` }}
           />
         </div>
 
@@ -237,7 +266,7 @@ function TierCard({ tier }: { tier: typeof editingTiers[0] }) {
                   transition={{ duration: 0.2, ease: "easeInOut" }}
                   className="absolute right-0 z-50 mt-2 w-32 bg-white border border-black/5 rounded-[13px] shadow-[0_20px_60px_rgba(0,0,0,0.16)] overflow-hidden"
                 >
-                  {[1, 2, 3, 4, 5, 6, 7].map((d) => (
+                  {([5, 6, 7] as const).map((d) => (
                     <div
                       key={d}
                       onClick={() => { setDaysPerWeek(d); setDropdownOpen(false); }}
@@ -264,7 +293,7 @@ function TierCard({ tier }: { tier: typeof editingTiers[0] }) {
         ) : (
           <div className="flex flex-col items-center">
             <div className="flex items-end gap-2 mb-3.5 h-12">
-              <span className="font-antonio text-4xl leading-none tracking-tight text-orange">${monthlyCost.toFixed(2)}</span>
+              <span className="font-antonio text-4xl leading-none tracking-tight text-orange">${monthlyCost.toLocaleString('en-US')}</span>
               <span className={`font-sans text-sm pb-0.5 ${theme.sub}`}>/ month</span>
             </div>
             <Link href={href} className="w-full text-center py-3.5 rounded-xl bg-[#1a1209] text-white font-antonio uppercase tracking-widest text-[15px] hover:bg-orange transition-colors">
@@ -379,7 +408,6 @@ export function RealEstateClient() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
             >
-              {/* Added gap-2 right here to space out the text pill and the icon square */}
               <Link href="/contact#contact-form" className="group flex items-center gap-2 cursor-pointer">
                 <div
                   className="flex items-center h-[56px] px-7 text-white transition-all duration-300 ease-in-out bg-[#1a1209] group-hover:bg-[#F97316]"
