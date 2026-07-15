@@ -142,7 +142,7 @@ export function Footer() {
             </div>
             <ul className="flex flex-col gap-3.5 font-sans text-[14px] font-light text-[rgba(250,250,248,0.5)]">
               <li>max@annopett.com</li>
-              <li>Remote-first, globally</li>
+              <li>+92 318 1950895</li>
               <li>24hr response</li>
             </ul>
           </motion.div>

@@ -9,8 +9,9 @@ import { img } from "../../lib/utils";
 const values = [
   { 
     t: "Precision", 
+    desc: "Every workflow and deliverable is meticulously executed to meet the highest enterprise standards.",
     icon: (
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="12" cy="12" r="10" />
         <circle cx="12" cy="12" r="4" />
         <line x1="12" y1="2" x2="12" y2="4" />
@@ -22,8 +23,9 @@ const values = [
   },
   { 
     t: "Reliability", 
+    desc: "We ensure consistent, round-the-clock outcomes you can depend on, no matter the scale.",
     icon: (
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
         <path d="M9 12l2 2 4-4" />
       </svg>
@@ -31,8 +33,9 @@ const values = [
   },
   { 
     t: "Transparency", 
+    desc: "Clear communication and visible processes mean you always know exactly what is happening.",
     icon: (
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
         <circle cx="12" cy="12" r="3" />
       </svg>
@@ -40,8 +43,9 @@ const values = [
   },
   { 
     t: "Growth", 
+    desc: "We partner with you to build scalable operations that naturally adapt as your business expands.",
     icon: (
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
         <polyline points="17 6 23 6 23 12" />
       </svg>
@@ -141,35 +145,32 @@ export function AboutClient() {
         </div>
       </section>
 
-      {/* ── VALUES (compact single-row strip) ── */}
-      <section className="bg-[#fafaf8] px-6 lg:px-[8vw] py-24 relative">
-        <FadeIn>
-          <div className="mb-10 text-center sm:text-left">
-            <h2
-              className="font-antonio uppercase text-dark leading-[0.95] tracking-tight"
-              style={{ fontSize: "clamp(32px, 4vw, 48px)", fontWeight: 300 }}
-            >
-              What we stand for.
-            </h2>
-          </div>
-        </FadeIn>
+      {/* ── WHAT WE STAND FOR (2x2 Grid) ── */}
+      <section className="bg-[#120d07] px-6 lg:px-[8vw] py-28 relative">
+        <div className="max-w-5xl mx-auto flex flex-col items-center">
+          <FadeIn>
+            <div className="text-center mb-16">
+              <h2 className="font-antonio uppercase text-white leading-[0.95] tracking-tight" style={{ fontSize: "clamp(40px, 5vw, 64px)", fontWeight: 300 }}>
+                What we <span className="text-orange">stand for.</span>
+              </h2>
+            </div>
+          </FadeIn>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 lg:gap-6">
-          {values.map((v, i) => (
-            <FadeIn key={v.t} delay={i * 0.06}>
-              <div className="group flex flex-col justify-between rounded-[20px] p-6 sm:p-8 h-[160px] sm:h-[200px] bg-white border border-black/5 hover:border-orange/30 hover:shadow-[0_10px_40px_rgba(249,115,22,0.06)] transition-all duration-500">
-                <div className="text-dark/30 group-hover:text-orange transition-colors duration-500">
-                  {v.icon}
+          <div className="grid sm:grid-cols-2 gap-4 w-full">
+            {values.map((v, i) => (
+              <FadeIn key={v.t} delay={i * 0.1}>
+                <div className="bg-[#1a1209] border border-white/5 rounded-[24px] p-6 flex gap-4 items-start h-full transition-all duration-300 hover:border-orange/20">
+                  <div className="w-14 h-14 rounded-full border border-orange/20 bg-orange/5 flex items-center justify-center shrink-0 text-orange">
+                    {v.icon}
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-white text-[24px] font-antonio uppercase font-light tracking-tight mb-2 leading-none">{v.t}</span>
+                    <span className="text-white/50 text-[14px] leading-relaxed font-light">{v.desc}</span>
+                  </div>
                 </div>
-                <h3
-                  className="font-antonio uppercase tracking-tight text-dark group-hover:text-orange transition-colors duration-500"
-                  style={{ fontSize: "clamp(20px, 2vw, 26px)", fontWeight: 300 }}
-                >
-                  {v.t}
-                </h3>
-              </div>
-            </FadeIn>
-          ))}
+              </FadeIn>
+            ))}
+          </div>
         </div>
       </section>
 

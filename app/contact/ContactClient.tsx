@@ -173,7 +173,7 @@ function ContactContent() {
                   </div>
                   <div>
                     <div className="text-[13px] uppercase tracking-[0.15em] text-dark/40 font-medium font-sans mb-2">Phone</div>
-                    <div className="text-lg font-sans font-light text-dark">+1 (415) 555 0142</div>
+                    <div className="text-lg font-sans font-light text-dark">+92 318 1950895</div>
                   </div>
                   <div>
                     <div className="text-[13px] uppercase tracking-[0.15em] text-dark/40 font-medium font-sans mb-2">Hours</div>
