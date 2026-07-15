@@ -29,9 +29,8 @@ const company = [
 ];
 
 const socials = [
-  { label: "LinkedIn", href: "https://linkedin.com" },
-  { label: "Instagram", href: "https://instagram.com" },
-  { label: "X", href: "https://x.com" },
+  { label: "LinkedIn", href: "https://linkedin.com/company/annopett/" },
+  { label: "Instagram", href: "https://instagram.com/annopett" },
 ];
 
 function FooterLink({ href, children }: { href: string; children: React.ReactNode }) {
@@ -142,7 +141,7 @@ export function Footer() {
               Contact
             </div>
             <ul className="flex flex-col gap-3.5 font-sans text-[14px] font-light text-[rgba(250,250,248,0.5)]">
-              <li>hello@annopett.com</li>
+              <li>max@annopett.com</li>
               <li>Remote-first, globally</li>
               <li>24hr response</li>
             </ul>

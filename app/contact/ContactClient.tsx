@@ -167,8 +167,8 @@ function ContactContent() {
                 <div className="space-y-8">
                   <div>
                     <div className="text-[13px] uppercase tracking-[0.15em] text-dark/40 font-medium font-sans mb-2">Email</div>
-                    <a href="mailto:hello@annopett.com" className="block text-lg font-sans font-light text-dark hover:text-orange transition-colors duration-300">
-                      hello@annopett.com
+                    <a href="mailto:max@annopett.com" className="block text-lg font-sans font-light text-dark hover:text-orange transition-colors duration-300">
+                      max@annopett.com
                     </a>
                   </div>
                   <div>
