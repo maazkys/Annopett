@@ -196,18 +196,18 @@ function TierCard({ tier }: { tier: typeof editingTiers[0] }) {
   return (
     <div className={`relative flex flex-col h-full rounded-[28px] p-7 md:p-8 transition-all duration-500 ${theme.box}`}>
       
-      {/* Bookmark Style Hot Selling Tag */}
+      {/* Bookmark Style Hot Selling Tag - Thicker, Longer, Brighter Glow, Lower Text */}
       {tier.name === "Advanced" && (
         <div
-          className="absolute -top-1 right-6 md:right-8 w-20 pt-4 pb-8 bg-orange text-white flex flex-col items-center justify-start z-10"
+          className="absolute -top-1 right-6 md:right-8 w-16 md:w-[72px] pt-6 pb-16 flex flex-col items-center justify-start z-10 bg-gradient-to-b from-[#ff9a55] to-[#F97316]"
           style={{
-            clipPath: "polygon(0 0, 100% 0, 100% 100%, 50% 82%, 0 100%)",
-            filter: "drop-shadow(0 12px 18px rgba(249,115,22,0.45))",
+            clipPath: "polygon(0 0, 100% 0, 100% 100%, 50% 90%, 0 100%)",
+            filter: "drop-shadow(0 0 30px rgba(249,115,22,1)) drop-shadow(0 15px 25px rgba(249,115,22,0.9))",
             borderTopLeftRadius: "6px",
             borderTopRightRadius: "6px"
           }}
         >
-          <span className="font-antonio uppercase tracking-[0.18em] text-[13px] leading-[1.2] text-center mt-1">
+          <span className="font-antonio uppercase tracking-widest text-[12px] md:text-[14px] leading-[1.2] text-center text-white mt-3">
             Hot<br />Selling
           </span>
         </div>
