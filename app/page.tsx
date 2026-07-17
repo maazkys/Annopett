@@ -43,6 +43,11 @@ const clientLogos = [
 const clientLogosRow1 = clientLogos.filter((_, i) => i % 2 === 0);
 const clientLogosRow2 = clientLogos.filter((_, i) => i % 2 !== 0);
 
+// Split into three rows for the mobile 4-wide moving carousel.
+const clientLogosRowM1 = clientLogos.filter((_, i) => i % 3 === 0);
+const clientLogosRowM2 = clientLogos.filter((_, i) => i % 3 === 1);
+const clientLogosRowM3 = clientLogos.filter((_, i) => i % 3 === 2);
+
 // Lives for the lifetime of the JS module in memory: reset to false on a genuine
 // browser load/refresh, but stays true across client-side (next/link) navigation,
 // so the intro only plays on first visit or a hard refresh — never on in-site nav.
@@ -391,22 +396,72 @@ export default function Home() {
               Our Clients
             </h2>
           </div>
-          {/* Mobile: 3 per row grid */}
-          <div className="grid grid-cols-3 gap-4 md:hidden">
-            {clientLogos.map((logo) => (
-              <div
-                key={logo.name}
-                className="aspect-square bg-white border border-black/5 rounded-2xl flex items-center justify-center p-4 transition-all duration-300 ease-out hover:border-orange/40 hover:shadow-[0_0_24px_rgba(249,115,22,0.25)]"
-              >
-                <img
-                  src={logo.src}
-                  alt={logo.name}
-                  loading="lazy"
-                  decoding="async"
-                  className="w-full h-full object-contain pointer-events-none"
-                />
-              </div>
-            ))}
+          {/* Mobile: 3-row moving carousel, ~4 logos visible per row */}
+          <div className="md:hidden overflow-x-hidden overflow-y-visible py-4 -my-4">
+            <style>{`
+              @keyframes marquee-left-m {
+                from { transform: translateX(0); }
+                to { transform: translateX(-50%); }
+              }
+              @keyframes marquee-right-m {
+                from { transform: translateX(-50%); }
+                to { transform: translateX(0); }
+              }
+              .marquee-row-1-m { animation: marquee-left-m 20s linear infinite; }
+              .marquee-row-2-m { animation: marquee-right-m 20s linear infinite; }
+              .marquee-row-3-m { animation: marquee-left-m 20s linear infinite; }
+            `}</style>
+
+            <div className="flex gap-2.5 w-max marquee-row-1-m mb-2.5">
+              {[...clientLogosRowM1, ...clientLogosRowM1].map((logo, i) => (
+                <div
+                  key={`${logo.name}-m1-${i}`}
+                  className="w-[22vw] h-[22vw] bg-white border border-black/5 rounded-2xl flex items-center justify-center p-3 shrink-0"
+                >
+                  <img
+                    src={logo.src}
+                    alt={logo.name}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-contain pointer-events-none"
+                  />
+                </div>
+              ))}
+            </div>
+
+            <div className="flex gap-2.5 w-max marquee-row-2-m mb-2.5 ml-8">
+              {[...clientLogosRowM2, ...clientLogosRowM2].map((logo, i) => (
+                <div
+                  key={`${logo.name}-m2-${i}`}
+                  className="w-[22vw] h-[22vw] bg-white border border-black/5 rounded-2xl flex items-center justify-center p-3 shrink-0"
+                >
+                  <img
+                    src={logo.src}
+                    alt={logo.name}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-contain pointer-events-none"
+                  />
+                </div>
+              ))}
+            </div>
+
+            <div className="flex gap-2.5 w-max marquee-row-3-m">
+              {[...clientLogosRowM3, ...clientLogosRowM3].map((logo, i) => (
+                <div
+                  key={`${logo.name}-m3-${i}`}
+                  className="w-[22vw] h-[22vw] bg-white border border-black/5 rounded-2xl flex items-center justify-center p-3 shrink-0"
+                >
+                  <img
+                    src={logo.src}
+                    alt={logo.name}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-contain pointer-events-none"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* iPad: unchanged wrap layout */}

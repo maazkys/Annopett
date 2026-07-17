@@ -17,6 +17,28 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Lock background scroll while the mobile menu is open
+  useEffect(() => {
+    if (mobileOpen) {
+      const scrollY = window.scrollY;
+      const { body } = document;
+      body.style.position = "fixed";
+      body.style.top = `-${scrollY}px`;
+      body.style.left = "0";
+      body.style.right = "0";
+      body.style.width = "100%";
+
+      return () => {
+        body.style.position = "";
+        body.style.top = "";
+        body.style.left = "";
+        body.style.right = "";
+        body.style.width = "";
+        window.scrollTo(0, scrollY);
+      };
+    }
+  }, [mobileOpen]);
+
   const isActive         = (p: string) => pathname === p;
   const isServicesActive = ["/data-ai", "/real-estate", "/bpo"].includes(pathname ?? "");
 
@@ -44,6 +66,12 @@ export function Navbar() {
         {/* Logo pill - Fixed Height to match Center Pill */}
         <Link
           href="/"
+          onClick={(e) => {
+            if (pathname === "/") {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+          }}
           className="pointer-events-auto flex items-center gap-3 transition-all duration-500"
           style={{
             height: "52px",
