@@ -33,6 +33,10 @@ export const metadata: Metadata = {
   title: "Annopett",
   description:
     "Annopett delivers Data & AI, Real Estate Media, BPO, and Creative services at scale.",
+
+  verification: {
+    google: 'PopHRLH_1KwNs8NtKVl8IQIDLstFqedSKiX-daKWLQ0',
+  },
 };
 
 export default function RootLayout({
